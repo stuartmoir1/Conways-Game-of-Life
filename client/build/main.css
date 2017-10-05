@@ -3,10 +3,6 @@ body {
   margin: 20px;
 }
 
-ol {
-  padding: 0 0 0 30px;
-}
-
 .grid-row:after {
   clear: both;
   content: '';
@@ -25,10 +21,7 @@ ol {
 .cell {
   background: #fff;
   border: 1px solid #000;
-  /*border-radius: 5px;*/
   float: left;
-  /*font-size: 15px;*/
-  /*font-weight: bold;*/
   height: 20px;
   line-height: 20px;
   margin: -1px -1px 0 0;
@@ -43,9 +36,4 @@ ol {
 
 .cell:hover {
   background: #c0c0c0;
-}
-
-.status {
-  font-size: 20px;
-  margin-bottom: 20px;
 }
