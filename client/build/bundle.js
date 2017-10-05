@@ -9607,6 +9607,9 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__models_play__);
+
 
 
 
@@ -9634,6 +9637,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   handleClickResetBtn() {
     console.log('Game, handleClickResetBtn');
+    const squares = this.state.squares;
+    squares.fill(false);
+    this.setState({ squares: squares });
   }
 
   render() {
@@ -22374,6 +22380,12 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Control);
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports) {
+
+
 
 /***/ })
 /******/ ]);

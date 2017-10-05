@@ -2,6 +2,7 @@ import React from 'react'
 import Grid from '../components/grid'
 import Cell from '../components/cell'
 import Control from '../components/control'
+import Play from '../models/play'
 
 class Game extends React.Component{
 
@@ -25,6 +26,9 @@ class Game extends React.Component{
 
   handleClickResetBtn(){
     console.log('Game, handleClickResetBtn')
+    const squares = this.state.squares
+    squares.fill(false)
+    this.setState({squares: squares})
   }
 
   render() { 
