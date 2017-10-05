@@ -9606,6 +9606,8 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(189);
+
 
 
 
@@ -9619,11 +9621,19 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     };
   }
 
-  handleClick(i) {
-    //console.log('Game, handleClick; Cell selected...', i, this.state.squares[i])
+  handleClickCell(i) {
+    //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares;
     squares[i] ? squares[i] = false : squares[i] = true;
     this.setState({ squares: squares });
+  }
+
+  handleClickStartStopBtn() {
+    console.log('Game, handleClickStartStopBtn');
+  }
+
+  handleClickResetBtn() {
+    console.log('Game, handleClickResetBtn');
   }
 
   render() {
@@ -9640,10 +9650,18 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         { className: 'game' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'game-grid' },
+          { className: 'grid' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
             squares: this.state.squares,
-            onClick: i => this.handleClick(i)
+            onClick: i => this.handleClickCell(i)
+          })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
+            onClickStartStop: () => this.handleClickStartStopBtn(),
+            onClickReset: () => this.handleClickResetBtn()
           })
         )
       )
@@ -22303,12 +22321,6 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.renderCell(97),
         this.renderCell(98),
         this.renderCell(99)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'btn', onClick: '', title: 'Start' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'btn', onClick: '', title: 'Reset' })
       )
     );
   }
@@ -22331,6 +22343,37 @@ function Cell(props) {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Cell);
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-start-stop', className: 'btn', onClick: this.props.onClickStartStop },
+        'Start'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-reset', className: 'btn', onClick: this.props.onClickReset },
+        'Reset'
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Control);
 
 /***/ })
 /******/ ]);

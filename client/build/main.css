@@ -45,8 +45,8 @@ body {
 }
 
 .game {
-  display: flex;
-  flex-direction: row;
+  /*display: flex;*/
+  /*flex-direction: row;*/
 }
 
 .grid-row:after {
