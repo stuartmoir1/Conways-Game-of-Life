@@ -7,6 +7,8 @@ body {
   background: #808080;
   border: 1px solid #000;
   float: left;
+  font-family: 'Courier New', 'Century Gothic', Futura, sans-serif;
+  font-weight: bold;
   height: 20px;
   line-height: 20px;
   margin: 20px 19px 0 0;
