@@ -9615,51 +9615,18 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
-      history: [{ squares: Array(99).fill(false) }],
-      stepNumber: 0
+      squares: Array(99).fill(false)
     };
   }
 
   handleClick(i) {
-    //console.log('Grid, handleClick...', i)
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-
-    console.log('Cell selected...');
-    squares[i] = true; // Toggle
-    console.log('Array index: ', i, squares[i]);
-    // Set background
-
-    //if (squares[i]) { return }
-    //squares[i] = (this.state.oIsNext = 'X')
-    //this.setState({
-    //  history: history.concat([{squares: squares}]),
-    //  stepNumber: history.length,
-    //})
-  }
-
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      oIsNext: step % 2 === 0
-    });
+    console.log('Game, handleClick; Cell selected...', i, this.state.squares[i]);
+    const squares = this.state.squares;
+    squares[i] ? squares[i] = false : squares[i] = true;
+    this.setState({ squares: squares });
   }
 
   render() {
-    //console.log('Game, render...')
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-
-    //const moves = history.map((step, move) =>{
-    //  const desc = move ? 'Move #' + move : 'Game start'
-    //  return (
-    //    <li key={move}>
-    //      <a href='#' onClick={() => this.jumpTo(move)}>{desc}</a>
-    //    </li>
-    //  )
-    //})
-
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9673,13 +9640,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         { className: 'game' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'game-board' },
+          { className: 'game-grid' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
-            squares: current.squares,
+            squares: this.state.squares,
             onClick: i => this.handleClick(i)
           })
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'game-info' })
+        )
       )
     );
   }
