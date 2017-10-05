@@ -22185,9 +22185,10 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   renderCell(i) {
     //console.log('Grid, renderCell...')
+    let bgColor = undefined;
+    this.props.squares[i] ? bgColor = '#000' : bgColor = '#fff';
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cell__["a" /* default */], {
-      id: this.props.i,
-      value: this.props.squares[i],
+      bgColor: { background: bgColor },
       onClick: () => this.props.onClick(i)
     });
   }
@@ -22354,11 +22355,7 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 function Cell(props) {
   //console.log('Cell...')
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'button',
-    { id: props, className: 'cell', onClick: props.onClick },
-    props.value
-  );
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'cell', onClick: props.onClick, style: props.bgColor });
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Cell);
