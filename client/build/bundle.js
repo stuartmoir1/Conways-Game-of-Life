@@ -9620,7 +9620,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClick(i) {
-    console.log('Game, handleClick; Cell selected...', i, this.state.squares[i]);
+    //console.log('Game, handleClick; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares;
     squares[i] ? squares[i] = false : squares[i] = true;
     this.setState({ squares: squares });
@@ -22303,6 +22303,12 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.renderCell(97),
         this.renderCell(98),
         this.renderCell(99)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'btn', onClick: '', title: 'Start' }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'btn', onClick: '', title: 'Reset' })
       )
     );
   }

@@ -1,21 +1,26 @@
 body {
-  font: 14px 'Century Gothic', Futura, sans-serif;
+  font: 14px 'Courier New', 'Century Gothic', Futura, sans-serif;
   margin: 20px;
 }
 
-.grid-row:after {
-  clear: both;
-  content: '';
-  display: table;
+.btn {
+  background: #808080;
+  border: 1px solid #000;
+  float: left;
+  height: 20px;
+  line-height: 20px;
+  margin: 20px 19px 0 0;
+  padding: 0;
+  text-align: center;
+  width: 38px;
 }
 
-.game {
-  display: flex;
-  flex-direction: row;
+.btn:hover {
+  background: #c0c0c0;
 }
 
-.game-info{
-  margin: 0 0 0 20px;
+.btn:focus {
+  outline: none;
 }
 
 .cell {
@@ -30,10 +35,22 @@ body {
   width: 20px;
 }
 
+/* Overridden in React */
+/*.cell:hover {
+  background: #c0c0c0;
+}*/
+
 .cell:focus {
   outline: none;
 }
 
-.cell:hover {
-  background: #c0c0c0;
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid-row:after {
+  clear: both;
+  content: '';
+  display: table;
 }

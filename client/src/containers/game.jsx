@@ -12,7 +12,7 @@ class Game extends React.Component{
   }
 
   handleClick(i){
-    console.log('Game, handleClick; Cell selected...', i, this.state.squares[i])
+    //console.log('Game, handleClick; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares
     squares[i] ? squares[i] = false : squares[i] = true
     this.setState({squares: squares})

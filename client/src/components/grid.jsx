@@ -137,6 +137,12 @@ class Grid extends React.Component{
           {this.renderCell(98)}
           {this.renderCell(99)}
         </div>
+        <div> 
+          <button className='btn' onClick='' title='Start'>
+          </button>
+          <button className='btn' onClick='' title='Reset'>
+          </button>
+        </div>
       </div>
     )
   }
