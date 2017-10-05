@@ -1,26 +1,27 @@
 import React from 'react'
-import Board from '../components/board'
-import Square from '../components/square'
+import Grid from '../components/grid'
+import Cell from '../components/cell'
 
 class Game extends React.Component{
 
   constructor(){
     super()
     this.state = {
-      history: [{squares: Array(99).fill(null)}],
+      history: [{squares: Array(99).fill(false)}],
       stepNumber: 0
     }
   }
 
   handleClick(i){
-    //console.log('Board, handleClick...', i)
+    //console.log('Grid, handleClick...', i)
     const history = this.state.history.slice(0, this.state.stepNumber + 1)
     const current = history[history.length - 1]
     const squares = current.squares.slice()
 
     console.log('Cell selected...')
-    squares[i] = true
+    squares[i] = true // Toggle
     console.log('Array index: ', i, squares[i])
+    // Set background
 
     //if (squares[i]) { return }
     //squares[i] = (this.state.oIsNext = 'X')
@@ -56,7 +57,7 @@ class Game extends React.Component{
         <h1>Conway's Game of Life</h1>
         <div className='game'>
           <div className='game-board'>
-            <Board
+            <Grid
               squares={current.squares}
               onClick={(i) => this.handleClick(i)}
             />

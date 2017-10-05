@@ -7,7 +7,7 @@ ol {
   padding: 0 0 0 30px;
 }
 
-.board-row:after {
+.grid-row:after {
   clear: both;
   content: '';
   display: table;
@@ -22,7 +22,7 @@ ol {
   margin: 0 0 0 20px;
 }
 
-.square {
+.cell {
   background: #fff;
   border: 1px solid #999;
   /*border-radius: 5px;*/
@@ -37,11 +37,11 @@ ol {
   width: 20px;
 }
 
-.square:focus {
+.cell:focus {
   outline: none;
 }
 
-.square:hover {
+.cell:hover {
   background: #c0c0c0;
 }
 

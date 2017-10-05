@@ -6479,26 +6479,7 @@ module.exports = lowPriorityWarning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 50 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-
-
-function Square(props) {
-  //console.log('Square...')
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'button',
-    { id: props, className: 'square', onClick: props.onClick },
-    props.value
-  );
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Square);
-
-/***/ }),
+/* 50 */,
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9623,8 +9604,8 @@ module.exports = getIteratorFn;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_board__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_square__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(188);
 
 
 
@@ -9634,20 +9615,21 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
-      history: [{ squares: Array(99).fill(null) }],
+      history: [{ squares: Array(99).fill(false) }],
       stepNumber: 0
     };
   }
 
   handleClick(i) {
-    //console.log('Board, handleClick...', i)
+    //console.log('Grid, handleClick...', i)
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
 
     console.log('Cell selected...');
-    squares[i] = true;
+    squares[i] = true; // Toggle
     console.log('Array index: ', i, squares[i]);
+    // Set background
 
     //if (squares[i]) { return }
     //squares[i] = (this.state.oIsNext = 'X')
@@ -9692,7 +9674,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'game-board' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_board__["a" /* default */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
             squares: current.squares,
             onClick: i => this.handleClick(i)
           })
@@ -9735,179 +9717,7 @@ window.addEventListener('load', function () {
 });
 
 /***/ }),
-/* 86 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__square__ = __webpack_require__(50);
-
-
-
-class Board extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-
-  renderSquare(i) {
-    //console.log('Board, renderSquare...')
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__square__["a" /* default */], {
-      id: this.props.i,
-      value: this.props.squares[i],
-      onClick: () => this.props.onClick(i)
-    });
-  }
-
-  render() {
-    //console.log('Board, render...')
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(0),
-        this.renderSquare(1),
-        this.renderSquare(2),
-        this.renderSquare(3),
-        this.renderSquare(4),
-        this.renderSquare(5),
-        this.renderSquare(6),
-        this.renderSquare(7),
-        this.renderSquare(8),
-        this.renderSquare(9)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(10),
-        this.renderSquare(11),
-        this.renderSquare(12),
-        this.renderSquare(13),
-        this.renderSquare(14),
-        this.renderSquare(15),
-        this.renderSquare(16),
-        this.renderSquare(17),
-        this.renderSquare(18),
-        this.renderSquare(19)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(20),
-        this.renderSquare(21),
-        this.renderSquare(22),
-        this.renderSquare(23),
-        this.renderSquare(24),
-        this.renderSquare(25),
-        this.renderSquare(26),
-        this.renderSquare(27),
-        this.renderSquare(28),
-        this.renderSquare(29)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(30),
-        this.renderSquare(31),
-        this.renderSquare(32),
-        this.renderSquare(33),
-        this.renderSquare(34),
-        this.renderSquare(35),
-        this.renderSquare(36),
-        this.renderSquare(37),
-        this.renderSquare(38),
-        this.renderSquare(39)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(40),
-        this.renderSquare(41),
-        this.renderSquare(42),
-        this.renderSquare(43),
-        this.renderSquare(44),
-        this.renderSquare(45),
-        this.renderSquare(46),
-        this.renderSquare(47),
-        this.renderSquare(48),
-        this.renderSquare(49)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(50),
-        this.renderSquare(51),
-        this.renderSquare(52),
-        this.renderSquare(53),
-        this.renderSquare(54),
-        this.renderSquare(55),
-        this.renderSquare(56),
-        this.renderSquare(57),
-        this.renderSquare(58),
-        this.renderSquare(59)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(60),
-        this.renderSquare(61),
-        this.renderSquare(62),
-        this.renderSquare(63),
-        this.renderSquare(64),
-        this.renderSquare(65),
-        this.renderSquare(66),
-        this.renderSquare(67),
-        this.renderSquare(68),
-        this.renderSquare(69)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(70),
-        this.renderSquare(71),
-        this.renderSquare(72),
-        this.renderSquare(73),
-        this.renderSquare(74),
-        this.renderSquare(75),
-        this.renderSquare(76),
-        this.renderSquare(77),
-        this.renderSquare(78),
-        this.renderSquare(79)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(80),
-        this.renderSquare(81),
-        this.renderSquare(82),
-        this.renderSquare(83),
-        this.renderSquare(84),
-        this.renderSquare(85),
-        this.renderSquare(86),
-        this.renderSquare(87),
-        this.renderSquare(88),
-        this.renderSquare(89)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'board-row' },
-        this.renderSquare(90),
-        this.renderSquare(91),
-        this.renderSquare(92),
-        this.renderSquare(93),
-        this.renderSquare(94),
-        this.renderSquare(95),
-        this.renderSquare(96),
-        this.renderSquare(97),
-        this.renderSquare(98),
-        this.renderSquare(99)
-      )
-    );
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Board);
-
-/***/ }),
+/* 86 */,
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22359,6 +22169,199 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 187 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cell__ = __webpack_require__(188);
+
+
+
+class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  renderCell(i) {
+    //console.log('Grid, renderCell...')
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cell__["a" /* default */], {
+      id: this.props.i,
+      value: this.props.squares[i],
+      onClick: () => this.props.onClick(i)
+    });
+  }
+
+  render() {
+    //console.log('Grid, render...')
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(0),
+        this.renderCell(1),
+        this.renderCell(2),
+        this.renderCell(3),
+        this.renderCell(4),
+        this.renderCell(5),
+        this.renderCell(6),
+        this.renderCell(7),
+        this.renderCell(8),
+        this.renderCell(9)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(10),
+        this.renderCell(11),
+        this.renderCell(12),
+        this.renderCell(13),
+        this.renderCell(14),
+        this.renderCell(15),
+        this.renderCell(16),
+        this.renderCell(17),
+        this.renderCell(18),
+        this.renderCell(19)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(20),
+        this.renderCell(21),
+        this.renderCell(22),
+        this.renderCell(23),
+        this.renderCell(24),
+        this.renderCell(25),
+        this.renderCell(26),
+        this.renderCell(27),
+        this.renderCell(28),
+        this.renderCell(29)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(30),
+        this.renderCell(31),
+        this.renderCell(32),
+        this.renderCell(33),
+        this.renderCell(34),
+        this.renderCell(35),
+        this.renderCell(36),
+        this.renderCell(37),
+        this.renderCell(38),
+        this.renderCell(39)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(40),
+        this.renderCell(41),
+        this.renderCell(42),
+        this.renderCell(43),
+        this.renderCell(44),
+        this.renderCell(45),
+        this.renderCell(46),
+        this.renderCell(47),
+        this.renderCell(48),
+        this.renderCell(49)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(50),
+        this.renderCell(51),
+        this.renderCell(52),
+        this.renderCell(53),
+        this.renderCell(54),
+        this.renderCell(55),
+        this.renderCell(56),
+        this.renderCell(57),
+        this.renderCell(58),
+        this.renderCell(59)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(60),
+        this.renderCell(61),
+        this.renderCell(62),
+        this.renderCell(63),
+        this.renderCell(64),
+        this.renderCell(65),
+        this.renderCell(66),
+        this.renderCell(67),
+        this.renderCell(68),
+        this.renderCell(69)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(70),
+        this.renderCell(71),
+        this.renderCell(72),
+        this.renderCell(73),
+        this.renderCell(74),
+        this.renderCell(75),
+        this.renderCell(76),
+        this.renderCell(77),
+        this.renderCell(78),
+        this.renderCell(79)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(80),
+        this.renderCell(81),
+        this.renderCell(82),
+        this.renderCell(83),
+        this.renderCell(84),
+        this.renderCell(85),
+        this.renderCell(86),
+        this.renderCell(87),
+        this.renderCell(88),
+        this.renderCell(89)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'grid-row' },
+        this.renderCell(90),
+        this.renderCell(91),
+        this.renderCell(92),
+        this.renderCell(93),
+        this.renderCell(94),
+        this.renderCell(95),
+        this.renderCell(96),
+        this.renderCell(97),
+        this.renderCell(98),
+        this.renderCell(99)
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Grid);
+
+/***/ }),
+/* 188 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+function Cell(props) {
+  //console.log('Cell...')
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'button',
+    { id: props, className: 'cell', onClick: props.onClick },
+    props.value
+  );
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Cell);
 
 /***/ })
 /******/ ]);
