@@ -3,10 +3,11 @@ import React from 'react'
 class Control extends React.Component{
 
   render(){
+    //console.log('Control, render...')
     return (
       <div> 
         <button id='btn-start-stop' className='btn' onClick={this.props.onClickStartStop}>
-          Start
+          {this.props.label}
         </button>
         <button id='btn-reset' className='btn' onClick={this.props.onClickReset}>
           Reset

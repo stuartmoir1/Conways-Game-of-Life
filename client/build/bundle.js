@@ -9619,7 +9619,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
-      squares: Array(99).fill(false)
+      squares: Array(99).fill(false),
+      btnLabel: 'Start'
     };
   }
 
@@ -9631,7 +9632,10 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClickStartStopBtn() {
-    console.log('Game, handleClickStartStopBtn');
+    //console.log('Game, handleClickStartStopBtn...')
+    let label = this.state.btnLabel;
+    label === 'Start' ? label = 'Stop' : label = 'Start';
+    this.setState({ btnLabel: label });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__models_play__["a" /* default */], null);
   }
 
@@ -9643,6 +9647,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
+    //console.log('Game, render...')
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9650,6 +9655,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         'h1',
         null,
         'Conway\'s Game of Life'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h4',
+        null,
+        'Click on the cells to create your pattern then click \'Start\''
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -9666,6 +9676,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           'div',
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
+            label: this.state.btnLabel,
             onClickStartStop: () => this.handleClickStartStopBtn(),
             onClickReset: () => this.handleClickResetBtn()
           })
@@ -22362,13 +22373,14 @@ function Cell(props) {
 class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   render() {
+    //console.log('Control, render...')
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
         { id: 'btn-start-stop', className: 'btn', onClick: this.props.onClickStartStop },
-        'Start'
+        this.props.label
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
@@ -22391,7 +22403,7 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 
 function Play() {
-  console.log('Play...');
+  //console.log('Play...')
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Play);

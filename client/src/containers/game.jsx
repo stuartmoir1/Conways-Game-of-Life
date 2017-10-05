@@ -9,7 +9,8 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      squares: Array(99).fill(false)
+      squares: Array(99).fill(false),
+      btnLabel: 'Start'
     }  
   }
 
@@ -21,7 +22,10 @@ class Game extends React.Component{
   }
 
   handleClickStartStopBtn(){
-   console.log('Game, handleClickStartStopBtn')
+   //console.log('Game, handleClickStartStopBtn...')
+   let label = this.state.btnLabel
+   label === 'Start' ? label = 'Stop' : label = 'Start'
+   this.setState({btnLabel: label})
    return <Play />
   }
 
@@ -33,9 +37,11 @@ class Game extends React.Component{
   }
 
   render() { 
+    //console.log('Game, render...')
     return (
       <div>
         <h1>Conway's Game of Life</h1>
+        <h4>Click on the cells to create your pattern then click 'Start'</h4>
         <div className='game'>
           <div className='grid'>
             <Grid
@@ -45,6 +51,7 @@ class Game extends React.Component{
           </div>
           <div>
             <Control
+              label={this.state.btnLabel}
               onClickStartStop = {() => this.handleClickStartStopBtn()}
               onClickReset = {() => this.handleClickResetBtn()}
             />
