@@ -9608,7 +9608,6 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__models_play__);
 
 
 
@@ -9633,10 +9632,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   handleClickStartStopBtn() {
     console.log('Game, handleClickStartStopBtn');
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__models_play__["a" /* default */], null);
   }
 
   handleClickResetBtn() {
-    console.log('Game, handleClickResetBtn');
+    //console.log('Game, handleClickResetBtn')
     const squares = this.state.squares;
     squares.fill(false);
     this.setState({ squares: squares });
@@ -22383,9 +22383,18 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 /***/ }),
 /* 190 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 
+function Play() {
+  console.log('Play...');
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Play);
 
 /***/ })
 /******/ ]);

@@ -22,10 +22,11 @@ class Game extends React.Component{
 
   handleClickStartStopBtn(){
    console.log('Game, handleClickStartStopBtn')
+   return <Play />
   }
 
   handleClickResetBtn(){
-    console.log('Game, handleClickResetBtn')
+    //console.log('Game, handleClickResetBtn')
     const squares = this.state.squares
     squares.fill(false)
     this.setState({squares: squares})
