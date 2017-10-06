@@ -9,7 +9,7 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      squares: Array(99).fill(false),
+      squares: Array(100).fill(false),
       btnLabel: 'Start'
     }  
   }

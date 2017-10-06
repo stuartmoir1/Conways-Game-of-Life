@@ -9622,7 +9622,7 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(88);
 
 
 
@@ -9634,7 +9634,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
-      squares: Array(99).fill(false),
+      squares: Array(100).fill(false),
       btnLabel: 'Start'
     };
   }
@@ -9940,7 +9940,49 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony default export */ __webpack_exports__["a"] = (Grid);
 
 /***/ }),
-/* 88 */,
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const play = grid => {
+  //console.log('Play...')
+  //console.log(grid)
+
+  let newGrid = Array(100).fill(false);
+
+  let i = 11;
+
+  let count = 0;
+  const cells = [-11, -10, -9, -1, 1, 9, 10, 11]; // Relative cells.
+  for (let j = 0; j < cells.length; j++) {
+    if (grid[i + cells[j]]) {
+      count++;
+    }
+  }
+
+  console.log(count);
+
+  if (grid[i] && (count < 2 || count > 3)) {
+    newGrid[i] = false; // Live cell dies.
+    console.log('Live cell dies...', newGrid[i]);
+  } else if (!grid[i] && count === 3) {
+    newGrid[i] = true; // Dead cell lives.
+    console.log('Dead cell lives...', newGrid[i]);
+  } else if (grid[i]) {
+    newGrid[i] = true; // Live cell lives.
+    console.log('Live cell lives...', newGrid[i]);
+  } else {
+    newGrid[i] = false; // Dead cell remains dead.
+    console.log('Dead cell remains dead...', newGrid[i]);
+  }
+
+  console.log(newGrid[i]);
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = play;
+
+
+/***/ }),
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22392,20 +22434,6 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 189 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// export const play = (grid) => {
-const play = grid => {
-  console.log('Play...');
-  console.log(grid);
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = play;
-
 
 /***/ })
 /******/ ]);
