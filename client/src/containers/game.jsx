@@ -27,7 +27,9 @@ class Game extends React.Component{
     label === 'Start' ? label = 'Stop' : label = 'Start'
     this.setState({btnLabel: label})
     // play(this.state.squares)
-    play(this.state.squares)
+    let newGrid
+    newGrid = play(this.state.squares)
+    this.setState({squares: newGrid})
   }
 
   handleClickResetBtn(){
@@ -35,10 +37,11 @@ class Game extends React.Component{
     const squares = this.state.squares
     squares.fill(false)
     this.setState({squares: squares})
+    console.log(this.state.squares)
   }
 
   render() { 
-    //console.log('Game, render...')
+    console.log('Game, render...')
     return (
       <div>
         <h1>Conway's Game of Life</h1>
