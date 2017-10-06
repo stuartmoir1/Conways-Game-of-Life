@@ -2,7 +2,7 @@ import React from 'react'
 import Grid from '../components/grid'
 import Cell from '../components/cell'
 import Control from '../components/control'
-import Play from '../models/play'
+import {play} from '../models/play.js'
 
 class Game extends React.Component{
 
@@ -14,6 +14,11 @@ class Game extends React.Component{
     }  
   }
 
+  // play(grid){
+  //   console.log('Play...')
+  //   console.log(grid);
+  // }
+
   handleClickCell(i){
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares
@@ -22,11 +27,12 @@ class Game extends React.Component{
   }
 
   handleClickStartStopBtn(){
-   //console.log('Game, handleClickStartStopBtn...')
-   let label = this.state.btnLabel
-   label === 'Start' ? label = 'Stop' : label = 'Start'
-   this.setState({btnLabel: label})
-   return <Play />
+    //console.log('Game, handleClickStartStopBtn...')
+    let label = this.state.btnLabel
+    label === 'Start' ? label = 'Stop' : label = 'Start'
+    this.setState({btnLabel: label})
+    // play(this.state.squares)
+    play()
   }
 
   handleClickResetBtn(){
