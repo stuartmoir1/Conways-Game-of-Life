@@ -9655,7 +9655,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
 
-    setInterval(() => {
+    let playGame = setInterval(() => {
       const grid = this.state.squares;
       const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
       let counter = this.state.counter;
@@ -9663,8 +9663,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         squares: newGrid,
         counter: counter + 1
       });
-      const gameDone = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid);
-      console.log('gameDone:', gameDone);
+      if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+        clearInterval(playGame);
+      }
     }, 500);
   }
 

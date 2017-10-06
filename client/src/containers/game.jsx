@@ -29,7 +29,7 @@ class Game extends React.Component{
     label === 'Start' ? label = 'Stop' : label = 'Start'
     this.setState({btnLabel: label})
 
-    setInterval(() => {
+    let playGame = setInterval(() => {
       const grid = this.state.squares
       const newGrid = play(grid)
       let counter = this.state.counter
@@ -37,9 +37,9 @@ class Game extends React.Component{
         squares: newGrid,
         counter: counter + 1
       })
-      const gameDone = compareArrays(grid, newGrid)
-      console.log('gameDone:', gameDone)
+      if (compareArrays(grid, newGrid)) { clearInterval(playGame) }
     }, 500)
+
   }
 
   handleClickResetBtn(){
