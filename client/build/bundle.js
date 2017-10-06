@@ -9623,6 +9623,7 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__models_play_js__);
 
 
 
@@ -9652,7 +9653,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
     // play(this.state.squares)
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(this.state.squares);
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["play"])(this.state.squares);
   }
 
   handleClickResetBtn() {
@@ -9941,44 +9942,10 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 /***/ }),
 /* 88 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-
-const play = grid => {
-  //console.log('Play...')
-  //console.log(grid)
-
-  let newGrid = Array(100).fill(false);
-
-  for (let i = 11; i < 19; i++) {
-
-    let count = 0;
-    const cells = [-11, -10, -9, -1, 1, 9, 10, 11]; // Relative cells.
-    for (let j = 0; j < cells.length; j++) {
-      if (grid[i + cells[j]]) {
-        count++;
-      }
-    }
-
-    if (grid[i] && (count < 2 || count > 3)) {
-      newGrid[i] = false; // Live cell dies.
-      //console.log ('Live cell dies...', newGrid[i])
-    } else if (!grid[i] && count === 3) {
-      newGrid[i] = true; // Dead cell lives.
-      //console.log('Dead cell lives...', newGrid[i])
-    } else if (grid[i]) {
-      newGrid[i] = true; // Live cell lives.
-      //console.log('Live cell lives...', newGrid[i])
-    } else {
-      newGrid[i] = false; // Dead cell remains dead.
-      //console.log('Dead cell remains dead...', newGrid[i])
-    }
-    console.log(newGrid[i]);
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = play;
-
+throw new Error("Module build failed: SyntaxError: Unexpected token (18:42)\n\n\u001b[0m \u001b[90m 16 | \u001b[39m      \u001b[36mconst\u001b[39m cells \u001b[33m=\u001b[39m [\u001b[35m1\u001b[39m\u001b[33m,\u001b[39m \u001b[35m10\u001b[39m\u001b[33m,\u001b[39m \u001b[35m11\u001b[39m]\n \u001b[90m 17 | \u001b[39m      console\u001b[33m.\u001b[39mlog(\u001b[32m'Top-left corner cell...'\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 | \u001b[39m    } \u001b[36melse\u001b[39m \u001b[36mif\u001b[39m (i \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m \u001b[33m&&\u001b[39m \u001b[33m<\u001b[39m firstRowLastCell){ \u001b[90m// Top row cells.\u001b[39m\n \u001b[90m    | \u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 | \u001b[39m      \u001b[36mconst\u001b[39m cells \u001b[33m=\u001b[39m [\u001b[33m-\u001b[39m\u001b[35m1\u001b[39m\u001b[33m,\u001b[39m \u001b[35m1\u001b[39m\u001b[33m,\u001b[39m \u001b[35m9\u001b[39m\u001b[33m,\u001b[39m \u001b[35m10\u001b[39m\u001b[33m,\u001b[39m \u001b[35m11\u001b[39m]\n \u001b[90m 20 | \u001b[39m      console\u001b[33m.\u001b[39mlog(\u001b[32m'Top row cells...'\u001b[39m)\n \u001b[90m 21 | \u001b[39m    } \u001b[36melse\u001b[39m \u001b[36mif\u001b[39m (i \u001b[33m===\u001b[39m rowLen){ \u001b[90m// Top-right corner cell.\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 89 */
