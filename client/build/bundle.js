@@ -9638,7 +9638,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     this.state = {
       squares: Array(100).fill(false),
       btnLabel: 'Start',
-      counter: 0
+      counter: 0,
+      period: 500
     };
   }
 
@@ -9650,23 +9651,34 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClickStartStopBtn() {
-    console.log('Game, handleClickStartStopBtn...');
+    //console.log('Game, handleClickStartStopBtn...')
+
+    let playGame = setInterval(() => {
+      const label = this.state.btnLabel;
+      // console.log(label)
+
+      if (label === 'Stop') {
+        // Button displays 'Start.'
+        const grid = this.state.squares;
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+        let counter = this.state.counter;
+        this.setState({
+          squares: newGrid,
+          counter: counter + 1
+        });
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+          clearInterval(playGame);
+          this.setState({ btnLabel: 'Start' });
+        }
+      } else {
+        // Button displays 'Stop'
+        clearInterval(playGame);
+      }
+    }, this.state.period);
+
     let label = this.state.btnLabel;
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
-
-    let playGame = setInterval(() => {
-      const grid = this.state.squares;
-      const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
-      let counter = this.state.counter;
-      this.setState({
-        squares: newGrid,
-        counter: counter + 1
-      });
-      if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid)) {
-        clearInterval(playGame);
-      }
-    }, 500);
   }
 
   handleClickResetBtn() {

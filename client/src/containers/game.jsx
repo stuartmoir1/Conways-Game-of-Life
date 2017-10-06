@@ -12,7 +12,8 @@ class Game extends React.Component{
     this.state = {
       squares: Array(100).fill(false),
       btnLabel: 'Start',
-      counter: 0
+      counter: 0,
+      period: 500
     }  
   }
 
@@ -24,22 +25,32 @@ class Game extends React.Component{
   }
 
   handleClickStartStopBtn(){
-    console.log('Game, handleClickStartStopBtn...')
+    //console.log('Game, handleClickStartStopBtn...')
+
+    let playGame = setInterval(() => {
+      const label = this.state.btnLabel
+      // console.log(label)
+      
+      if (label === 'Stop'){ // Button displays 'Start.'
+        const grid = this.state.squares
+        const newGrid = play(grid)
+        let counter = this.state.counter
+        this.setState({
+         squares: newGrid,
+         counter: counter + 1
+        })
+        if (compareArrays(grid, newGrid)) {
+          clearInterval(playGame)
+          this.setState({btnLabel: 'Start'})
+        }
+      } else { // Button displays 'Stop'
+        clearInterval(playGame)
+      }
+    },this.state.period)
+
     let label = this.state.btnLabel
     label === 'Start' ? label = 'Stop' : label = 'Start'
     this.setState({btnLabel: label})
-
-    let playGame = setInterval(() => {
-      const grid = this.state.squares
-      const newGrid = play(grid)
-      let counter = this.state.counter
-      this.setState({
-        squares: newGrid,
-        counter: counter + 1
-      })
-      if (compareArrays(grid, newGrid)) { clearInterval(playGame) }
-    }, 500)
-
   }
 
   handleClickResetBtn(){
