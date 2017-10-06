@@ -9623,6 +9623,8 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__ = __webpack_require__(189);
+
 
 
 
@@ -9635,7 +9637,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     super();
     this.state = {
       squares: Array(100).fill(false),
-      btnLabel: 'Start'
+      btnLabel: 'Start',
+      counter: 0
     };
   }
 
@@ -9647,26 +9650,36 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClickStartStopBtn() {
-    //console.log('Game, handleClickStartStopBtn...')
+    console.log('Game, handleClickStartStopBtn...');
     let label = this.state.btnLabel;
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
-    // play(this.state.squares)
-    let newGrid;
-    newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(this.state.squares);
-    this.setState({ squares: newGrid });
+
+    setInterval(() => {
+      const grid = this.state.squares;
+      const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+      let counter = this.state.counter;
+      this.setState({
+        squares: newGrid,
+        counter: counter + 1
+      });
+      const gameDone = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid);
+      console.log('gameDone:', gameDone);
+    }, 500);
   }
 
   handleClickResetBtn() {
     //console.log('Game, handleClickResetBtn')
     const squares = this.state.squares;
     squares.fill(false);
-    this.setState({ squares: squares });
-    console.log(this.state.squares);
+    this.setState({
+      squares: squares,
+      counter: 0
+    });
   }
 
   render() {
-    console.log('Game, render...');
+    //console.log('Game, render...')
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9686,6 +9699,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'grid' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            { className: 'counter' },
+            'Counter: ',
+            this.state.counter
+          ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
             squares: this.state.squares,
             onClick: i => this.handleClickCell(i)
@@ -9949,7 +9968,7 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 "use strict";
 
 const play = grid => {
-  //console.log('Play...')
+  //console.log('play...')
 
   let newGrid = Array(100).fill(false);
 
@@ -22481,6 +22500,26 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const compareArrays = (arr1, arr2) => {
+  //console.log('compareArrays...')
+
+  for (let i = 0; i < arr1.length - 1; i++) {
+    //console.log(arr1[i], arr2[i])
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
+
 
 /***/ })
 /******/ ]);

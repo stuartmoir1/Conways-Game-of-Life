@@ -46,6 +46,10 @@ body {
   outline: none;
 }
 
+.counter {
+  font-size: 10px;
+}
+
 .game {
   /*display: flex;*/
   /*flex-direction: row;*/

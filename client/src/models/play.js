@@ -1,6 +1,6 @@
 
 export const play = (grid) => {
-  //console.log('Play...')
+  //console.log('play...')
 
   let newGrid = Array(100).fill(false)
 
@@ -67,5 +67,4 @@ export const play = (grid) => {
   }
 
   return newGrid
-
 }

@@ -3,6 +3,7 @@ import Grid from '../components/grid'
 import Cell from '../components/cell'
 import Control from '../components/control'
 import {play} from '../models/play.js'
+import {compareArrays} from '../models/compareArrays.js'
 
 class Game extends React.Component{
 
@@ -10,7 +11,8 @@ class Game extends React.Component{
     super()
     this.state = {
       squares: Array(100).fill(false),
-      btnLabel: 'Start'
+      btnLabel: 'Start',
+      counter: 0
     }  
   }
 
@@ -22,32 +24,43 @@ class Game extends React.Component{
   }
 
   handleClickStartStopBtn(){
-    //console.log('Game, handleClickStartStopBtn...')
+    console.log('Game, handleClickStartStopBtn...')
     let label = this.state.btnLabel
     label === 'Start' ? label = 'Stop' : label = 'Start'
     this.setState({btnLabel: label})
-    // play(this.state.squares)
-    let newGrid
-    newGrid = play(this.state.squares)
-    this.setState({squares: newGrid})
+
+    setInterval(() => {
+      const grid = this.state.squares
+      const newGrid = play(grid)
+      let counter = this.state.counter
+      this.setState({
+        squares: newGrid,
+        counter: counter + 1
+      })
+      const gameDone = compareArrays(grid, newGrid)
+      console.log('gameDone:', gameDone)
+    }, 500)
   }
 
   handleClickResetBtn(){
     //console.log('Game, handleClickResetBtn')
     const squares = this.state.squares
     squares.fill(false)
-    this.setState({squares: squares})
-    console.log(this.state.squares)
+    this.setState({
+      squares: squares,
+      counter: 0
+    })
   }
 
-  render() { 
-    console.log('Game, render...')
+  render(){ 
+    //console.log('Game, render...')
     return (
       <div>
         <h1>Conway's Game of Life</h1>
         <h4>Click on the cells to create your pattern then click 'Start'</h4>
         <div className='game'>
           <div className='grid'>
+            <p className='counter'>Counter: {this.state.counter}</p>
             <Grid
               squares={this.state.squares}
               onClick={(i) => this.handleClickCell(i)}
