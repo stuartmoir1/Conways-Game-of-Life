@@ -14,11 +14,6 @@ class Game extends React.Component{
     }  
   }
 
-  // play(grid){
-  //   console.log('Play...')
-  //   console.log(grid);
-  // }
-
   handleClickCell(i){
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares
@@ -32,7 +27,7 @@ class Game extends React.Component{
     label === 'Start' ? label = 'Stop' : label = 'Start'
     this.setState({btnLabel: label})
     // play(this.state.squares)
-    play()
+    play(this.state.squares)
   }
 
   handleClickResetBtn(){

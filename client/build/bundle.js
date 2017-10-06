@@ -9639,11 +9639,6 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     };
   }
 
-  // play(grid){
-  //   console.log('Play...')
-  //   console.log(grid);
-  // }
-
   handleClickCell(i) {
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares;
@@ -9657,7 +9652,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
     // play(this.state.squares)
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])();
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(this.state.squares);
   }
 
   handleClickResetBtn() {
@@ -22405,9 +22400,9 @@ module.exports = traverseAllChildren;
 "use strict";
 
 // export const play = (grid) => {
-const play = () => {
+const play = grid => {
   console.log('Play...');
-  // console.log(grid)
+  console.log(grid);
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = play;
 
