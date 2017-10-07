@@ -9728,6 +9728,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     const squares = this.state.squares;
     squares.fill(false);
     this.setState({
+
       squares: squares,
       counter: 0
     });
@@ -9746,7 +9747,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h4',
         null,
-        'Click on the cells to create your pattern then click \'Start\''
+        'Click on the cells to create your pattern then click \'Start\' or \'+\''
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',

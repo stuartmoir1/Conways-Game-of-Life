@@ -100,6 +100,7 @@ class Game extends React.Component{
     const squares = this.state.squares
     squares.fill(false)
     this.setState({
+
       squares: squares,
       counter: 0
     })
@@ -110,7 +111,7 @@ class Game extends React.Component{
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <h4>Click on the cells to create your pattern then click 'Start'</h4>
+        <h4>Click on the cells to create your pattern then click 'Start' or '+'</h4>
         <div className='game'>
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>
