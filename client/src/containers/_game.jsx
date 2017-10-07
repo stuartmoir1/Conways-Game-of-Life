@@ -10,7 +10,6 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      history: [{steps: Array(100)}].slice(0, 0), // Array of empty arrays.
       squares: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
@@ -65,29 +64,15 @@ class Game extends React.Component{
   }
 
   handleClickBackBtn(){
-    //console.log('Game, handleClickBackBtn...')
-    const history = this.state.history
-    const counter = this.state.counter
-
-    if (counter > 0){
-      const oldGrid = history[history.length - 1].steps
-      this.setState({
-        history: history.slice(0, history.length - 1),
-        squares: oldGrid,
-        counter: counter - 1
-      })
-    }
+    console.log('Game, handleClickBackBtn...')
   }
 
   handleClickForwardBtn(){
     //console.log('Game, handleClickForwardBtn...')
-    const history = this.state.history
     const grid = this.state.squares
     const newGrid = play(grid)
     let counter = this.state.counter
-
     this.setState({
-      history: history.concat([{steps: grid}]),
       squares: newGrid,
       counter: counter + 1
     })

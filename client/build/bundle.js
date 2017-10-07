@@ -9622,7 +9622,6 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_control__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__ = __webpack_require__(189);
 
@@ -9637,11 +9636,22 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
+      history: [{ steps: Array(100) }].slice(0, 0), // Array of empty arrays.
       squares: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
       period: 500
     };
+  }
+
+  playGame() {
+    const grid = this.state.squares;
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+    let counter = this.state.counter;
+    this.setState({
+      squares: newGrid,
+      counter: counter + 1
+    });
   }
 
   handleClickCell(i) {
@@ -9680,6 +9690,35 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let label = this.state.btnLabel;
     label === 'Start' ? label = 'Stop' : label = 'Start';
     this.setState({ btnLabel: label });
+  }
+
+  handleClickBackBtn() {
+    //console.log('Game, handleClickBackBtn...')
+    const history = this.state.history;
+    const counter = this.state.counter;
+
+    if (counter > 0) {
+      const oldGrid = history[history.length - 1].steps;
+      this.setState({
+        history: history.slice(0, history.length - 1),
+        squares: oldGrid,
+        counter: counter - 1
+      });
+    }
+  }
+
+  handleClickForwardBtn() {
+    //console.log('Game, handleClickForwardBtn...')
+    const history = this.state.history;
+    const grid = this.state.squares;
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+    let counter = this.state.counter;
+
+    this.setState({
+      history: history.concat([{ steps: grid }]),
+      squares: newGrid,
+      counter: counter + 1
+    });
   }
 
   handleClickResetBtn() {
@@ -9727,9 +9766,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["default"], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
             label: this.state.btnLabel,
             onClickStartStop: () => this.handleClickStartStopBtn(),
+            onClickBack: () => this.handleClickBackBtn(),
+            onClickForward: () => this.handleClickForwardBtn(),
             onClickReset: () => this.handleClickResetBtn()
           })
         )
@@ -9771,9 +9812,45 @@ window.addEventListener('load', function () {
 
 /***/ }),
 /* 86 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: JSX attributes must only be assigned a non-empty expression (12:46)\n\n\u001b[0m \u001b[90m 10 | \u001b[39m          {\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mlabel}\n \u001b[90m 11 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mbutton\u001b[39m\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 12 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33mbutton\u001b[39m id\u001b[33m=\u001b[39m\u001b[32m''\u001b[39m classname\u001b[33m=\u001b[39m\u001b[32m'btn'\u001b[39m onClick\u001b[33m=\u001b[39m{}\u001b[33m>\u001b[39m\n \u001b[90m    | \u001b[39m                                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 13 | \u001b[39m          \u001b[33m<<\u001b[39m\n \u001b[90m 14 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mbutton\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 15 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33mbutton\u001b[39m id\u001b[33m=\u001b[39m\u001b[32m''\u001b[39m classname\u001b[33m=\u001b[39m\u001b[32m'btn'\u001b[39m onClick\u001b[33m=\u001b[39m{}\u001b[33m>\u001b[39m\u001b[0m\n");
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  render() {
+    //console.log('Control, render...')
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-start-stop', className: 'btn', onClick: this.props.onClickStartStop },
+        this.props.label
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-back', className: 'btn-small', onClick: this.props.onClickBack },
+        '-'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-forward', className: 'btn-small', onClick: this.props.onClickForward },
+        '+'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-reset', className: 'btn', onClick: this.props.onClickReset },
+        'Reset'
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Control);
 
 /***/ }),
 /* 87 */
