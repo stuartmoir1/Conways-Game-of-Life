@@ -11,4 +11,4 @@ export const createCells = (rowLen) => {
   return cells
 }
 
-//<div className='grid-row'>{cells.splice(0,10)}</div>
+//<div classNacme='grid-row'>{cells.splice(0,10)}</div>
