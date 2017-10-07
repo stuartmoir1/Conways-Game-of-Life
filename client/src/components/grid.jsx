@@ -1,5 +1,6 @@
 import React from 'react'
 import Cell from './cell'
+import {createCells} from '../models/createCells.js'
 
 class Grid extends React.Component{
 

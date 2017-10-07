@@ -9808,6 +9808,8 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cell__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_createCells_js__ = __webpack_require__(190);
+
 
 
 
@@ -22533,6 +22535,28 @@ const compareArrays = (arr1, arr2) => {
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
 
+
+/***/ }),
+/* 190 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const createCells = rowLen => {
+
+  let cells = [];
+  for (let i = 0; i < rowLen; i++) {
+    for (let j = 0; j < rowLen; j++) {
+      let index = i * rowLen + j;
+      cells.push('this.renderCell(' + index + ')');
+    }
+  }
+  //console.log(cells)
+  return cells;
+};
+/* unused harmony export createCells */
+
+
+//<div className='grid-row'>{cells.splice(0,10)}</div>
 
 /***/ })
 /******/ ]);
