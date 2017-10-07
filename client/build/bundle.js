@@ -9670,10 +9670,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
       if (label === 'Stop') {
         // Button displays 'Start.'
+        const history = this.state.history;
         const grid = this.state.squares;
         const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
         let counter = this.state.counter;
         this.setState({
+          history: history.concat([{ steps: grid }]),
           squares: newGrid,
           counter: counter + 1
         });

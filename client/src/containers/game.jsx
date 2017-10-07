@@ -43,10 +43,12 @@ class Game extends React.Component{
       // console.log(label)
       
       if (label === 'Stop'){ // Button displays 'Start.'
+        const history = this.state.history
         const grid = this.state.squares
         const newGrid = play(grid)
         let counter = this.state.counter
         this.setState({
+          history: history.concat([{steps: grid}]),
           squares: newGrid,
           counter: counter + 1
         })
