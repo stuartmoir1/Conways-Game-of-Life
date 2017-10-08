@@ -9728,8 +9728,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
   }
 
-  handlePatternSelect() {
-    console.log('Game, handlePatternSelect...');
+  handlePatternSelect(pattern) {
+    //console.log('Game, handlePatternSelect...')
+    console.log(pattern);
   }
 
   render() {
@@ -9751,7 +9752,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, onSelectPattern: () => this.handlePatterSelect() })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -22588,9 +22589,21 @@ module.exports = traverseAllChildren;
 
 class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
-  render() {
-    console.log('PatternSelector, render...');
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedPattern: undefined
+    };
+  }
 
+  handleChange(event) {
+    //console.log('PatternSelector, handleChange...')
+    this.setState({ selectedPattern: event.target.value });
+    this.props.onSelectPattern(this.props.patterns[event.target.value]);
+  }
+
+  render() {
+    //console.log('PatternSelector, render...')
     const patterns = this.props.patterns.map((pattern, index) => {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'option',
@@ -22600,7 +22613,7 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
     });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'select',
-      { className: 'select', value: '', onChange: '' },
+      { id: 'patterns', className: 'select', value: this.state.selectedPattern, onChange: event => this.handleChange(event) },
       patterns
     );
   }

@@ -98,8 +98,9 @@ class Game extends React.Component{
     })
   }
 
-  handlePatternSelect(){
-    console.log('Game, handlePatternSelect...')
+  handlePatternSelect(pattern){
+    //console.log('Game, handlePatternSelect...')
+    console.log(pattern)
   }
 
   render(){ 
@@ -110,7 +111,7 @@ class Game extends React.Component{
         <h1>Conway's Game of Life</h1>
         <h5>Select a pattern and/ or click on the cells to create your own pattern. Then click 'Start' or '+'.</h5>
         <div>
-          <PatternSelector patterns={patterns} onSelectPattern= {() => this.handlePatterSelect()}>
+          <PatternSelector patterns={patterns} onSelectPattern={(pattern) =>this.handlePatternSelect(pattern)}>
           </PatternSelector>
         </div>
         <div className='game'>
