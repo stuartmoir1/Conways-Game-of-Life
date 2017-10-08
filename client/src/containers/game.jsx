@@ -2,8 +2,11 @@ import React from 'react'
 import Grid from '../components/grid'
 import Cell from '../components/cell'
 import Control from '../components/control'
+import PatternSelector from '../components/pattern_selector'
+
 import {play} from '../models/play.js'
-import {compareArrays} from '../models/compareArrays.js'
+import {compareArrays} from '../models/compare_arrays.js'
+import {dynamicPatterns} from '../models/dynamic_patterns.js'
 
 class Game extends React.Component{
 
@@ -86,7 +89,7 @@ class Game extends React.Component{
   }
 
   handleClickResetBtn(){
-    //console.log('Game, handleClickResetBtn')
+    //console.log('Game, handleClickResetBtn...')
     const squares = this.state.squares
     squares.fill(false)
     this.setState({
@@ -95,13 +98,20 @@ class Game extends React.Component{
     })
   }
 
+  handlePatternSelect(){
+    console.log('Game, handlePatternSelect...')
+  }
+
   render(){ 
     //console.log('Game, render...')
+    let patterns = dynamicPatterns()
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <h5>Select a pattern or click on the cells to create your own pattern. Then click 'Start' or '+'.</h5>
+        <h5>Select a pattern and/ or click on the cells to create your own pattern. Then click 'Start' or '+'.</h5>
         <div>
+          <PatternSelector patterns={patterns} onSelectPattern= {() => this.handlePatterSelect()}>
+          </PatternSelector>
         </div>
         <div className='game'>
           <div className='grid'>

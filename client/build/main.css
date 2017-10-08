@@ -83,3 +83,11 @@ body {
   content: '';
   display: table;
 }
+
+.select {
+  background: #808080;
+  border: 1px solid #000;
+  font: 14px 'Courier New', 'Century Gothic', Futura, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+}

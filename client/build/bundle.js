@@ -9622,8 +9622,13 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_play_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_play_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__ = __webpack_require__(192);
+
+
+
 
 
 
@@ -9662,14 +9667,14 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         // Button displays 'Start.'
         const history = this.state.history;
         const grid = this.state.squares;
-        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
         let counter = this.state.counter;
         this.setState({
           history: history.concat([{ steps: grid }]),
           squares: newGrid,
           counter: counter + 1
         });
-        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_compareArrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
           clearInterval(playGame);
           this.setState({ btnLabel: 'Start' });
         }
@@ -9703,7 +9708,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     //console.log('Game, handleClickForwardBtn...')
     const history = this.state.history;
     const grid = this.state.squares;
-    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
     let counter = this.state.counter;
 
     this.setState({
@@ -9714,7 +9719,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClickResetBtn() {
-    //console.log('Game, handleClickResetBtn')
+    //console.log('Game, handleClickResetBtn...')
     const squares = this.state.squares;
     squares.fill(false);
     this.setState({
@@ -9723,8 +9728,13 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
   }
 
+  handlePatternSelect() {
+    console.log('Game, handlePatternSelect...');
+  }
+
   render() {
     //console.log('Game, render...')
+    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])();
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9736,9 +9746,13 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h5',
         null,
-        'Select a pattern or click on the cells to create your own pattern. Then click \'Start\' or \'+\'.'
+        'Select a pattern and/ or click on the cells to create your own pattern. Then click \'Start\' or \'+\'.'
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, onSelectPattern: () => this.handlePatterSelect() })
+      ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'game' },
@@ -9853,7 +9867,7 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cell__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_createCells_js__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_create_cells_js__ = __webpack_require__(193);
 
 
 
@@ -22562,27 +22576,68 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 189 */
+/* 189 */,
+/* 190 */,
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  render() {
+    console.log('PatternSelector, render...');
+
+    const patterns = this.props.patterns.map((pattern, index) => {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'option',
+        { className: 'option', value: index, key: index },
+        pattern.name
+      );
+    });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'select',
+      { className: 'select', value: '', onChange: '' },
+      patterns
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (PatternSelector);
+
+/***/ }),
+/* 192 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-const compareArrays = (arr1, arr2) => {
-  //console.log('compareArrays...')
-
-  for (let i = 0; i < arr1.length - 1; i++) {
-    //console.log(arr1[i], arr2[i])
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
-  }
-  return true;
+const dynamicPatterns = () => {
+  //console.log('dynamicPatterns...')
+  return [{
+    "name": "Blinker",
+    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+  }, {
+    "name": "Toad",
+    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false]
+  }, {
+    "name": "Beacon",
+    "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
+  }, {
+    "name": "Glider",
+    "cells": [false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+  }, {
+    "name": "Lightweight spaceship",
+    "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+  }];
 };
-/* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
+/* harmony export (immutable) */ __webpack_exports__["a"] = dynamicPatterns;
 
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22602,6 +22657,26 @@ const createCells = rowLen => {
 
 
 //<div classNacme='grid-row'>{cells.splice(0,10)}</div>
+
+/***/ }),
+/* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const compareArrays = (arr1, arr2) => {
+  //console.log('compareArrays...')
+
+  for (let i = 0; i < arr1.length - 1; i++) {
+    //console.log(arr1[i], arr2[i])
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
+
 
 /***/ })
 /******/ ]);
