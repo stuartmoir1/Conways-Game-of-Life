@@ -9729,8 +9729,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handlePatternSelect(pattern) {
-    //console.log('Game, handlePatternSelect...')
-    console.log(pattern);
+    console.log('Game, handlePatternSelect...');
+    const squares = pattern.cells.concat(Array(50).fill(false));
+    this.setState({
+      squares: squares
+    });
   }
 
   render() {
@@ -22630,20 +22633,23 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
 const dynamicPatterns = () => {
   //console.log('dynamicPatterns...')
   return [{
+    "name": "",
+    "cells": []
+  }, {
     "name": "Blinker",
     "cells": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   }, {
     "name": "Toad",
-    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false]
+    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   }, {
     "name": "Beacon",
-    "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
+    "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
   }, {
     "name": "Glider",
     "cells": [false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   }, {
     "name": "Lightweight spaceship",
-    "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   }];
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = dynamicPatterns;

@@ -99,8 +99,11 @@ class Game extends React.Component{
   }
 
   handlePatternSelect(pattern){
-    //console.log('Game, handlePatternSelect...')
-    console.log(pattern)
+    console.log('Game, handlePatternSelect...')
+    const squares = pattern.cells.concat(Array(50).fill(false))
+    this.setState({
+      squares: squares
+    })
   }
 
   render(){ 
