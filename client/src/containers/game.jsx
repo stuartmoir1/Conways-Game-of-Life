@@ -14,7 +14,7 @@ class Game extends React.Component{
     super()
     this.state = {
       history: [{steps: Array(100)}].slice(0, 0), // Array of empty arrays.
-      squares: Array(100).fill(false),
+      cells: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
       period: 500
@@ -22,10 +22,10 @@ class Game extends React.Component{
   }
 
   handleClickCell(i){
-    //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
-    const squares = this.state.squares
-    squares[i] ? squares[i] = false : squares[i] = true
-    this.setState({squares: squares})
+    //console.log('Game, handleClickCell; Cell selected...', i, this.state.cells[i])
+    const cells = this.state.cells
+    cells[i] ? cells[i] = false : cells[i] = true
+    this.setState({cells: cells})
   }
 
   handleClickStartStopBtn(){
@@ -37,12 +37,12 @@ class Game extends React.Component{
       
       if (label === 'Stop'){ // Button displays 'Start.'
         const history = this.state.history
-        const grid = this.state.squares
+        const grid = this.state.cells
         const newGrid = play(grid)
         let counter = this.state.counter
         this.setState({
           history: history.concat([{steps: grid}]),
-          squares: newGrid,
+          cells: newGrid,
           counter: counter + 1
         })
         if (compareArrays(grid, newGrid)) {
@@ -68,7 +68,7 @@ class Game extends React.Component{
       const oldGrid = history[history.length - 1].steps
       this.setState({
         history: history.slice(0, history.length - 1),
-        squares: oldGrid,
+        cells: oldGrid,
         counter: counter - 1
       })
     }
@@ -77,32 +77,32 @@ class Game extends React.Component{
   handleClickForwardBtn(){
     //console.log('Game, handleClickForwardBtn...')
     const history = this.state.history
-    const grid = this.state.squares
+    const grid = this.state.cells
     const newGrid = play(grid)
     let counter = this.state.counter
 
     this.setState({
       history: history.concat([{steps: grid}]),
-      squares: newGrid,
+      cells: newGrid,
       counter: counter + 1
     })
   }
 
   handleClickResetBtn(){
     //console.log('Game, handleClickResetBtn...')
-    const squares = this.state.squares
-    squares.fill(false)
+    const cells = this.state.cells
+    cells.fill(false)
     this.setState({
-      squares: squares,
+      cells: cells,
       counter: 0
     })
   }
 
   handlePatternSelect(pattern){
-    console.log('Game, handlePatternSelect...')
-    const squares = pattern.cells.concat(Array(50).fill(false))
+    //console.log('Game, handlePatternSelect...')
+    const cells = pattern.cells.concat(Array(50).fill(false))
     this.setState({
-      squares: squares
+      cells: cells
     })
   }
 
@@ -121,7 +121,7 @@ class Game extends React.Component{
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>
             <Grid
-              squares={this.state.squares}
+              cells={this.state.cells}
               onClick={(i) => this.handleClickCell(i)}
             />
           </div>

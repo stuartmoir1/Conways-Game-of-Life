@@ -7,7 +7,7 @@ class Grid extends React.Component{
   renderCell(i){
     //console.log('Grid, renderCell...')
     let bgColor = undefined
-    this.props.squares[i] ? bgColor = '#000' : bgColor = '#fff'
+    this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff'
     return <Cell
       bgColor={{background:bgColor}}
       onClick={() => this.props.onClick(i)}

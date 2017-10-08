@@ -9642,7 +9642,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     super();
     this.state = {
       history: [{ steps: Array(100) }].slice(0, 0), // Array of empty arrays.
-      squares: Array(100).fill(false),
+      cells: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
       period: 500
@@ -9650,10 +9650,10 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handleClickCell(i) {
-    //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
-    const squares = this.state.squares;
-    squares[i] ? squares[i] = false : squares[i] = true;
-    this.setState({ squares: squares });
+    //console.log('Game, handleClickCell; Cell selected...', i, this.state.cells[i])
+    const cells = this.state.cells;
+    cells[i] ? cells[i] = false : cells[i] = true;
+    this.setState({ cells: cells });
   }
 
   handleClickStartStopBtn() {
@@ -9666,12 +9666,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       if (label === 'Stop') {
         // Button displays 'Start.'
         const history = this.state.history;
-        const grid = this.state.squares;
+        const grid = this.state.cells;
         const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
         let counter = this.state.counter;
         this.setState({
           history: history.concat([{ steps: grid }]),
-          squares: newGrid,
+          cells: newGrid,
           counter: counter + 1
         });
         if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
@@ -9698,7 +9698,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       const oldGrid = history[history.length - 1].steps;
       this.setState({
         history: history.slice(0, history.length - 1),
-        squares: oldGrid,
+        cells: oldGrid,
         counter: counter - 1
       });
     }
@@ -9707,32 +9707,32 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   handleClickForwardBtn() {
     //console.log('Game, handleClickForwardBtn...')
     const history = this.state.history;
-    const grid = this.state.squares;
+    const grid = this.state.cells;
     const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
     let counter = this.state.counter;
 
     this.setState({
       history: history.concat([{ steps: grid }]),
-      squares: newGrid,
+      cells: newGrid,
       counter: counter + 1
     });
   }
 
   handleClickResetBtn() {
     //console.log('Game, handleClickResetBtn...')
-    const squares = this.state.squares;
-    squares.fill(false);
+    const cells = this.state.cells;
+    cells.fill(false);
     this.setState({
-      squares: squares,
+      cells: cells,
       counter: 0
     });
   }
 
   handlePatternSelect(pattern) {
-    console.log('Game, handlePatternSelect...');
-    const squares = pattern.cells.concat(Array(50).fill(false));
+    //console.log('Game, handlePatternSelect...')
+    const cells = pattern.cells.concat(Array(50).fill(false));
     this.setState({
-      squares: squares
+      cells: cells
     });
   }
 
@@ -9770,7 +9770,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             this.state.counter
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
-            squares: this.state.squares,
+            cells: this.state.cells,
             onClick: i => this.handleClickCell(i)
           })
         ),
@@ -9881,7 +9881,7 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   renderCell(i) {
     //console.log('Grid, renderCell...')
     let bgColor = undefined;
-    this.props.squares[i] ? bgColor = '#000' : bgColor = '#fff';
+    this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff';
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cell__["a" /* default */], {
       bgColor: { background: bgColor },
       onClick: () => this.props.onClick(i)
