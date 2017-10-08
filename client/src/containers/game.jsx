@@ -18,16 +18,6 @@ class Game extends React.Component{
     }  
   }
 
-  playGame(){
-    const grid = this.state.squares
-    const newGrid = play(grid)
-    let counter = this.state.counter
-    this.setState({
-      squares: newGrid,
-      counter: counter + 1
-    })
-  }
-
   handleClickCell(i){
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares
@@ -100,7 +90,6 @@ class Game extends React.Component{
     const squares = this.state.squares
     squares.fill(false)
     this.setState({
-
       squares: squares,
       counter: 0
     })
@@ -111,7 +100,9 @@ class Game extends React.Component{
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <h4>Click on the cells to create your pattern then click 'Start' or '+'</h4>
+        <h5>Select a pattern or click on the cells to create your own pattern. Then click 'Start' or '+'.</h5>
+        <div>
+        </div>
         <div className='game'>
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>

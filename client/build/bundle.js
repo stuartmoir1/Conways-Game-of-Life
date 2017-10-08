@@ -9644,16 +9644,6 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     };
   }
 
-  playGame() {
-    const grid = this.state.squares;
-    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__models_play_js__["a" /* play */])(grid);
-    let counter = this.state.counter;
-    this.setState({
-      squares: newGrid,
-      counter: counter + 1
-    });
-  }
-
   handleClickCell(i) {
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.squares[i])
     const squares = this.state.squares;
@@ -9728,7 +9718,6 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     const squares = this.state.squares;
     squares.fill(false);
     this.setState({
-
       squares: squares,
       counter: 0
     });
@@ -9745,10 +9734,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         'Conway\'s Game of Life'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h4',
+        'h5',
         null,
-        'Click on the cells to create your pattern then click \'Start\' or \'+\''
+        'Select a pattern or click on the cells to create your own pattern. Then click \'Start\' or \'+\'.'
       ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'game' },
