@@ -17,7 +17,8 @@ class Game extends React.Component{
       cells: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
-      period: 500
+      period: 500,
+      selectedPattern: ''
     }  
   }
 
@@ -94,27 +95,32 @@ class Game extends React.Component{
     cells.fill(false)
     this.setState({
       cells: cells,
-      counter: 0
+      counter: 0,
+      selectedPattern: ''
     })
   }
 
   handlePatternSelect(pattern){
-    //console.log('Game, handlePatternSelect...')
+    // console.log('Game, handlePatternSelect...')
+    console.log(this.state.selectedPattern)
+    const name = pattern.name
     const cells = pattern.cells.concat(Array(50).fill(false))
     this.setState({
-      cells: cells
+      cells: cells,
+      selectedPattern: name
     })
   }
 
   render(){ 
     //console.log('Game, render...')
     let patterns = dynamicPatterns()
+    console.log(this.state.selectedPattern)
     return (
       <div>
         <h1>Conway's Game of Life</h1>
         <h5>Select a pattern and/ or click on the cells to create your own pattern. Then click 'Start' or '+'.</h5>
         <div>
-          <PatternSelector patterns={patterns} onSelectPattern={(pattern) =>this.handlePatternSelect(pattern)}>
+          <PatternSelector patterns={patterns} selectedPattern={this.state.selectedPattern} onSelectPattern={(pattern) => this.handlePatternSelect(pattern)}>
           </PatternSelector>
         </div>
         <div className='game'>

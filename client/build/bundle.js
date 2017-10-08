@@ -9645,7 +9645,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       cells: Array(100).fill(false),
       btnLabel: 'Start',
       counter: 0,
-      period: 500
+      period: 500,
+      selectedPattern: ''
     };
   }
 
@@ -9724,21 +9725,26 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     cells.fill(false);
     this.setState({
       cells: cells,
-      counter: 0
+      counter: 0,
+      selectedPattern: ''
     });
   }
 
   handlePatternSelect(pattern) {
-    //console.log('Game, handlePatternSelect...')
+    // console.log('Game, handlePatternSelect...')
+    console.log(this.state.selectedPattern);
+    const name = pattern.name;
     const cells = pattern.cells.concat(Array(50).fill(false));
     this.setState({
-      cells: cells
+      cells: cells,
+      selectedPattern: name
     });
   }
 
   render() {
     //console.log('Game, render...')
     let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])();
+    console.log(this.state.selectedPattern);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9755,7 +9761,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPattern: this.state.selectedPattern, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -22592,16 +22598,8 @@ module.exports = traverseAllChildren;
 
 class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedPattern: undefined
-    };
-  }
-
   handleChange(event) {
     //console.log('PatternSelector, handleChange...')
-    this.setState({ selectedPattern: event.target.value });
     this.props.onSelectPattern(this.props.patterns[event.target.value]);
   }
 
@@ -22616,7 +22614,7 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
     });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'select',
-      { id: 'patterns', className: 'select', value: this.state.selectedPattern, onChange: event => this.handleChange(event) },
+      { id: 'patterns', className: 'select', value: this.props.selectedPattern, onChange: event => this.handleChange(event) },
       patterns
     );
   }
