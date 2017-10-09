@@ -14,7 +14,7 @@ class Game extends React.Component{
     super()
     this.state = {
       history: [{steps: Array(100)}].slice(0, 0), // Array of empty arrays.
-      cells: Array(100).fill(false),
+      cells: Array(400).fill(false),
       btnLabel: 'Start',
       counter: 0,
       period: 500,

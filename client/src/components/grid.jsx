@@ -32,6 +32,14 @@ class Grid extends React.Component{
     //  }
     //})
     //console.log(rows)
+
+    //render(){
+    //  return (
+    //    <div>
+    //      {rows} 
+    //    </div>
+    //  )
+    //}
     
     if (this.props.rowLen === 10){
       return (
@@ -173,7 +181,7 @@ class Grid extends React.Component{
             {this.renderCell(7)}
             {this.renderCell(8)}
             {this.renderCell(9)}
-            {this.renderCell(0)}
+            {this.renderCell(10)}
             {this.renderCell(11)}
             {this.renderCell(12)}
             {this.renderCell(13)}

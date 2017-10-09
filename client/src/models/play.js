@@ -2,9 +2,9 @@
 export const play = (grid) => {
   //console.log('play...')
 
-  let newGrid = Array(100).fill(false)
+  let newGrid = Array(grid.length).fill(false)
 
-  for (let i = 0; i < 100; i++){
+  for (let i = 0; i < grid.length; i++){
 
     //console.log('CELL', i)
     let rowLen = Math.sqrt(grid.length)
@@ -12,43 +12,77 @@ export const play = (grid) => {
     let cells
 
     // Relative cells to check.
-    if (i === 0){ // Top-left corner cell.
-      cells = [1, 10, 11]
-      //console.log('Top-left corner cell...')
-    } else if (i === firstRowLastCell){ // Top-right corner cell.
-      cells = [-11, -10, -1, 9, 10]      
-      //console.log('Top-right corner cell...')
-    } else if (i === (grid.length - rowLen)){ // Botton-left corner cell.
-      cells = [-10, -9, 1]
-      //console.log('Botton-left corner cell...')
-    } else if (i === (grid.length - 1)){ // Bottom-right corner cell.
-      cells = [-11, -10, -1]
-      //console.log('Bottom-right corner cell...')
-    } else if (i > 0 && i < firstRowLastCell){ // Top row cells/ not corners.
-      cells = [-1, 1, 9, 10, 11]
-      //console.log('Top row cells/ not corners...')
-    } else if (i % rowLen === 0){ // Far-left column cells/ not corners
-      cells = [-10, -9, 1, 10, 11]
-      //console.log('Far-left column cells/ not corners...')
-    // Far-right column cells/ not corners.
-    } else if (i % rowLen === firstRowLastCell){
-      cells = [-11, -10, -1, 9, 10]
-      //console.log('Far-right column cells/ not corners...')
-    // Bottom row cells/ not corners.
-    } else if (i > (grid.length - rowLen) && i < (grid.length - 1)){
-      cells = [-11, -10, -9, -1, 1]
-      //console.log('Bottom row cells/ not corners...')
-    } else { // All non-boundary cells.
-      cells = [-11, -10, -9, -1, 1, 9, 10, 11]
-      //console.log('All non-boundary cells...')
+    if (rowLen === 10){
+      if (i === 0){ // Top-left corner cell.
+        cells = [1, 10, 11]
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell){ // Top-right corner cell.
+        cells = [-1, 9, 10]      
+        //console.log('Top-right corner cell...')
+      } else if (i === (grid.length - rowLen)){ // Botton-left corner cell.
+        cells = [-10, -9, 1]
+        //console.log('Botton-left corner cell...')
+      } else if (i === (grid.length - 1)){ // Bottom-right corner cell.
+        cells = [-11, -10, -1]
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell){ // Top row cells/ not corners.
+        cells = [-1, 1, 9, 10, 11]
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0){ // Far-left column cells/ not corners
+        cells = [-10, -9, 1, 10, 11]
+        //console.log('Far-left column cells/ not corners...')
+      // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell){
+        cells = [-11, -10, -1, 9, 10]
+        //console.log('Far-right column cells/ not corners...')
+      // Bottom row cells/ not corners.
+      } else if (i > (grid.length - rowLen) && i < (grid.length - 1)){
+        cells = [-11, -10, -9, -1, 1]
+        //console.log('Bottom row cells/ not corners...')
+      } else { // All non-boundary cells.
+        cells = [-11, -10, -9, -1, 1, 9, 10, 11]
+        //console.log('All non-boundary cells...')
+      }
     }
-    //console.log(cells)
     
+    // Relative cells to check.
+    if (rowLen === 20){
+      if (i === 0){ // Top-left corner cell.
+        cells = [1, 20, 21]
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell){ // Top-right corner cell.
+        cells = [-1, 19, 20]      
+        //console.log('Top-right corner cell...')
+      } else if (i === (grid.length - rowLen)){ // Botton-left corner cell.
+        cells = [-20, -19, 1]
+        //console.log('Botton-left corner cell...')
+      } else if (i === (grid.length - 1)){ // Bottom-right corner cell.
+        cells = [-21, -20, -1]
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell){ // Top row cells/ not corners.
+        cells = [-1, 1, 19, 20, 21]
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0){ // Far-left column cells/ not corners
+        cells = [-20, -19, 1, 20, 21]
+        //console.log('Far-left column cells/ not corners...')
+      // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell){
+        cells = [-21, -20, -1, 19, 20]
+        //console.log('Far-right column cells/ not corners...')
+      // Bottom row cells/ not corners.
+      } else if (i > (grid.length - rowLen) && i < (grid.length - 1)){
+        cells = [-21, -20, -19, -1, 1]
+        //console.log('Bottom row cells/ not corners...')
+      } else { // All non-boundary cells.
+        cells = [-21, -20, -19, -1, 1, 19, 20, 21]
+        //console.log('All non-boundary cells...')
+      }
+    }
+
     let count = 0
     for (let j = 0; j < cells.length; j++){
       if (grid[i + cells[j]]) { count++ }
     }
-    //console.log(count)
 
     if (grid[i] && (count < 2 || count > 3)){
       newGrid[i] = false // Live cell dies.
