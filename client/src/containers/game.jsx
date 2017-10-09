@@ -110,21 +110,40 @@ class Game extends React.Component{
 
   handlePatternSelect(pattern){
     // console.log('Game, handlePatternSelect...')
-    const name = pattern.name
-    if (this.state.rowLen === 10){
-      const cells = pattern.cells.concat(Array(50).fill(false))
-    }
-    else if (this.state.rowLen === 20){
-      const cells = pattern.cells.concat(Array(200).fill(false))
-    }
-    else {
-      null
+    const selectedCells = pattern.cells  
+    let j = 0
+    let cells = []
+
+    for (let i = 0; i < (this.state.rowLen * this.state.rowLen); i++){
+      if (i = selectedCells[j]){
+        cells[i] = true
+        j++
+      } else {
+        cells[i] = false
     }
     this.setState({
       cells: cells,
       selectedPattern: pattern
     })
   }
+
+  // handlePatternSelect(pattern){
+  //   // console.log('Game, handlePatternSelect...')
+  //   const name = pattern.name
+  //   if (this.state.rowLen === 10){
+  //     const cells = pattern.cells.concat(Array(50).fill(false))
+  //   }
+  //   else if (this.state.rowLen === 20){
+  //     const cells = pattern.cells.concat(Array(200).fill(false))
+  //   }
+  //   else {
+  //     null
+  //   }
+  //   this.setState({
+  //     cells: cells,
+  //     selectedPattern: pattern
+  //   })
+  // }
 
   render(){ 
     let patterns = dynamicPatterns(this.state.rowLen)
