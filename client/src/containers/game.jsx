@@ -19,7 +19,7 @@ class Game extends React.Component{
       counter: 0,
       period: 500,
       selectedPattern: '',
-      btnState: true
+      btnDisabled: false
     }  
   }
 
@@ -45,7 +45,8 @@ class Game extends React.Component{
         this.setState({
           history: history.concat([{steps: grid}]),
           cells: newGrid,
-          counter: counter + 1
+          counter: counter + 1,
+          btnDisabled: true
         })
         if (compareArrays(grid, newGrid)) {
           clearInterval(playGame)
@@ -53,6 +54,9 @@ class Game extends React.Component{
         }
       } else { // Button displays 'Stop'
         clearInterval(playGame)
+        this.setState({
+          btnDisabled: false
+        })
       }
     },this.state.period)
 
@@ -134,7 +138,8 @@ class Game extends React.Component{
           </div>
           <div>
             <Control
-              label={this.state.btnLabel}
+              label = {this.state.btnLabel}
+              disabled = {this.state.btnDisabled}
               onClickStartStop = {() => this.handleClickStartStopBtn()}
               onClickBack = {() => this.handleClickBackBtn()}
               onClickForward = {() => this.handleClickForwardBtn()}

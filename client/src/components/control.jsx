@@ -9,13 +9,13 @@ class Control extends React.Component{
         <button id='btn-start-stop' className='btn' onClick={this.props.onClickStartStop}>
           {this.props.label}
         </button>
-        <button id='btn-back' className='btn-small' onClick={this.props.onClickBack}>
+        <button id='btn-back' className='btn-small' disabled={this.props.disabled} onClick={this.props.onClickBack}>
           -
         </button>
-        <button id='btn-forward' className='btn-small' onClick={this.props.onClickForward}>
+        <button id='btn-forward' className='btn-small' disabled={this.props.disabled} onClick={this.props.onClickForward}>
           +
         </button>
-        <button id='btn-reset' className='btn' onClick={this.props.onClickReset}>
+        <button id='btn-reset' className='btn' disabled={this.props.disabled} onClick={this.props.onClickReset}>
           Reset
         </button>
       </div>

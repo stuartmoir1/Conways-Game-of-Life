@@ -9647,7 +9647,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       counter: 0,
       period: 500,
       selectedPattern: '',
-      btnState: true
+      btnDisabled: false
     };
   }
 
@@ -9674,7 +9674,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.setState({
           history: history.concat([{ steps: grid }]),
           cells: newGrid,
-          counter: counter + 1
+          counter: counter + 1,
+          btnDisabled: true
         });
         if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
           clearInterval(playGame);
@@ -9683,6 +9684,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       } else {
         // Button displays 'Stop'
         clearInterval(playGame);
+        this.setState({
+          btnDisabled: false
+        });
       }
     }, this.state.period);
 
@@ -9786,6 +9790,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
             label: this.state.btnLabel,
+            disabled: this.state.btnDisabled,
             onClickStartStop: () => this.handleClickStartStopBtn(),
             onClickBack: () => this.handleClickBackBtn(),
             onClickForward: () => this.handleClickForwardBtn(),
@@ -9851,17 +9856,17 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
-        { id: 'btn-back', className: 'btn-small', onClick: this.props.onClickBack },
+        { id: 'btn-back', className: 'btn-small', disabled: this.props.disabled, onClick: this.props.onClickBack },
         '-'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
-        { id: 'btn-forward', className: 'btn-small', onClick: this.props.onClickForward },
+        { id: 'btn-forward', className: 'btn-small', disabled: this.props.disabled, onClick: this.props.onClickForward },
         '+'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
-        { id: 'btn-reset', className: 'btn', onClick: this.props.onClickReset },
+        { id: 'btn-reset', className: 'btn', disabled: this.props.disabled, onClick: this.props.onClickReset },
         'Reset'
       )
     );
