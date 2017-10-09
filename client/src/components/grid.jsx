@@ -9,6 +9,7 @@ class Grid extends React.Component{
     let bgColor = undefined
     this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff'
     return <Cell
+      disabled = {this.props.disabled}
       bgColor={{background:bgColor}}
       onClick={() => this.props.onClick(i)}
     />

@@ -6489,7 +6489,7 @@ module.exports = lowPriorityWarning;
 
 function Cell(props) {
   //console.log('Cell...')
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'cell', onClick: props.onClick, style: props.bgColor });
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'cell', onClick: props.onClick, style: props.bgColor, disabled: props.disabled });
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Cell);
@@ -9781,6 +9781,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             this.state.counter
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
+            disabled: this.state.btnDisabled,
             cells: this.state.cells,
             onClick: i => this.handleClickCell(i)
           })
@@ -9895,6 +9896,7 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let bgColor = undefined;
     this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff';
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cell__["a" /* default */], {
+      disabled: this.props.disabled,
       bgColor: { background: bgColor },
       onClick: () => this.props.onClick(i)
     });

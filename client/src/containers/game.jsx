@@ -132,6 +132,7 @@ class Game extends React.Component{
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>
             <Grid
+              disabled = {this.state.btnDisabled}
               cells={this.state.cells}
               onClick={(i) => this.handleClickCell(i)}
             />
