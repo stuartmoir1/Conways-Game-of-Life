@@ -19,7 +19,8 @@ class Game extends React.Component{
       counter: 0,
       period: 500,
       selectedPattern: '',
-      btnDisabled: false
+      btnDisabled: false,
+      rowLen: 20
     }  
   }
 
@@ -132,6 +133,7 @@ class Game extends React.Component{
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>
             <Grid
+              rowLen = {this.state.rowLen}
               disabled = {this.state.btnDisabled}
               cells={this.state.cells}
               onClick={(i) => this.handleClickCell(i)}
