@@ -9626,6 +9626,7 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_play_js__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__);
 
 
 
@@ -9670,7 +9671,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         // Button displays 'Start.'
         const history = this.state.history;
         const grid = this.state.cells;
-        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
+        const rowLen = this.state.rowLen;
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
         let counter = this.state.counter;
         this.setState({
           history: history.concat([{ steps: grid }]),
@@ -9715,7 +9717,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     //console.log('Game, handleClickForwardBtn...')
     const history = this.state.history;
     const grid = this.state.cells;
-    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid);
+    const rowLen = this.state.rowLen;
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
     let counter = this.state.counter;
 
     this.setState({
@@ -9739,7 +9742,13 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   handlePatternSelect(pattern) {
     // console.log('Game, handlePatternSelect...')
     const name = pattern.name;
-    const cells = pattern.cells.concat(Array(50).fill(false));
+    if (this.state.rowLen === 10) {
+      const cells = pattern.cells.concat(Array(50).fill(false));
+    } else if (this.state.rowLen === 20) {
+      const cells = pattern.cells.concat(Array(200).fill(false));
+    } else {
+      null;
+    }
     this.setState({
       cells: cells,
       selectedPattern: pattern
@@ -9747,7 +9756,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])();
+    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["dynamicPatterns"])(this.state.rowLen);
     let selectedPatternIndex = patterns.findIndex(element => {
       return element.name === this.state.selectedPattern.name;
     });
@@ -10573,7 +10582,7 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 "use strict";
 
-const play = grid => {
+const play = (grid, rowLen) => {
   //console.log('play...')
 
   let newGrid = Array(grid.length).fill(false);
@@ -10581,7 +10590,6 @@ const play = grid => {
   for (let i = 0; i < grid.length; i++) {
 
     //console.log('CELL', i)
-    let rowLen = Math.sqrt(grid.length);
     let firstRowLastCell = rowLen - 1;
     let cells;
 
@@ -23187,34 +23195,9 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
 
 /***/ }),
 /* 192 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-const dynamicPatterns = () => {
-  //console.log('dynamicPatterns...')
-  return [{
-    "name": "",
-    "cells": []
-  }, {
-    "name": "Blinker",
-    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  }, {
-    "name": "Toad",
-    "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  }, {
-    "name": "Beacon",
-    "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
-  }, {
-    "name": "Glider",
-    "cells": [false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  }, {
-    "name": "Lightweight spaceship",
-    "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  }];
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = dynamicPatterns;
-
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (760:8)\n\n\u001b[0m \u001b[90m 758 | \u001b[39m        \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 759 | \u001b[39m        \u001b[35m101\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 760 | \u001b[39m        \u001b[35m102\u001b[39m\n \u001b[90m     | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 761 | \u001b[39m        \u001b[35m103\u001b[39m\n \u001b[90m 762 | \u001b[39m        \u001b[35m104\u001b[39m\n \u001b[90m 763 | \u001b[39m        \u001b[35m105\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 193 */

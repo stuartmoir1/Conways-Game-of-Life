@@ -41,7 +41,8 @@ class Game extends React.Component{
       if (label === 'Stop'){ // Button displays 'Start.'
         const history = this.state.history
         const grid = this.state.cells
-        const newGrid = play(grid)
+        const rowLen = this.state.rowLen
+        const newGrid = play(grid, rowLen)
         let counter = this.state.counter
         this.setState({
           history: history.concat([{steps: grid}]),
@@ -85,7 +86,8 @@ class Game extends React.Component{
     //console.log('Game, handleClickForwardBtn...')
     const history = this.state.history
     const grid = this.state.cells
-    const newGrid = play(grid)
+    const rowLen = this.state.rowLen
+    const newGrid = play(grid, rowLen)
     let counter = this.state.counter
 
     this.setState({
@@ -109,7 +111,15 @@ class Game extends React.Component{
   handlePatternSelect(pattern){
     // console.log('Game, handlePatternSelect...')
     const name = pattern.name
-    const cells = pattern.cells.concat(Array(50).fill(false))
+    if (this.state.rowLen === 10){
+      const cells = pattern.cells.concat(Array(50).fill(false))
+    }
+    else if (this.state.rowLen === 20){
+      const cells = pattern.cells.concat(Array(200).fill(false))
+    }
+    else {
+      null
+    }
     this.setState({
       cells: cells,
       selectedPattern: pattern
@@ -117,7 +127,7 @@ class Game extends React.Component{
   }
 
   render(){ 
-    let patterns = dynamicPatterns()
+    let patterns = dynamicPatterns(this.state.rowLen)
     let selectedPatternIndex = patterns.findIndex((element) => {
         return element.name === this.state.selectedPattern.name
       })

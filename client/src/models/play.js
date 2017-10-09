@@ -1,5 +1,5 @@
 
-export const play = (grid) => {
+export const play = (grid, rowLen) => {
   //console.log('play...')
 
   let newGrid = Array(grid.length).fill(false)
@@ -7,7 +7,6 @@ export const play = (grid) => {
   for (let i = 0; i < grid.length; i++){
 
     //console.log('CELL', i)
-    let rowLen = Math.sqrt(grid.length)
     let firstRowLastCell = rowLen - 1
     let cells
 
