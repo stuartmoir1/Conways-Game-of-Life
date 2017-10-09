@@ -9646,7 +9646,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       btnLabel: 'Start',
       counter: 0,
       period: 500,
-      selectedPattern: ''
+      selectedPattern: '',
+      btnState: true
     };
   }
 
@@ -9732,19 +9733,19 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   handlePatternSelect(pattern) {
     // console.log('Game, handlePatternSelect...')
-    console.log(this.state.selectedPattern);
     const name = pattern.name;
     const cells = pattern.cells.concat(Array(50).fill(false));
     this.setState({
       cells: cells,
-      selectedPattern: name
+      selectedPattern: pattern
     });
   }
 
   render() {
-    //console.log('Game, render...')
     let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])();
-    console.log(this.state.selectedPattern);
+    let selectedPatternIndex = patterns.findIndex(element => {
+      return element.name === this.state.selectedPattern.name;
+    });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9761,7 +9762,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPattern: this.state.selectedPattern, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPattern: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
