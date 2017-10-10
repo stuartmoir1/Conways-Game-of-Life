@@ -184,7 +184,7 @@ class Game extends React.Component{
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <h5>Select a grid size.</h5>
+        <h5>Select a grid size and boundary conditions.</h5>
         <div>
           <GridSelector grids={grids} selectedGridIndex={selectedGridIndex} onSelectGrid={(grid) => this.handleGridSelect(grid)}>
           </GridSelector>

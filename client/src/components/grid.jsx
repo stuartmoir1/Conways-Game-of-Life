@@ -18,7 +18,6 @@ class Grid extends React.Component{
 
   render(){
     //console.log('Grid, render...')
-
     let rows = []
 
     if (this.props.rowLen === 10){
