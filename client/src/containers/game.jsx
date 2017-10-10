@@ -44,6 +44,7 @@ class Game extends React.Component{
         const rowLen = this.state.rowLen
         const newGrid = play(grid, rowLen)
         let counter = this.state.counter
+
         this.setState({
           history: history.concat([{steps: grid}]),
           cells: newGrid,
@@ -101,6 +102,7 @@ class Game extends React.Component{
     //console.log('Game, handleClickResetBtn...')
     const cells = this.state.cells
     cells.fill(false)
+
     this.setState({
       cells: cells,
       counter: 0,
@@ -109,18 +111,20 @@ class Game extends React.Component{
   }
 
   handlePatternSelect(pattern){
-    // console.log('Game, handlePatternSelect...')
+    console.log('Game, handlePatternSelect...')
     const selectedCells = pattern.cells  
     let j = 0
     let cells = []
 
     for (let i = 0; i < (this.state.rowLen * this.state.rowLen); i++){
-      if (i = selectedCells[j]){
+      if (i === selectedCells[j]){
         cells[i] = true
         j++
       } else {
         cells[i] = false
+      }
     }
+    
     this.setState({
       cells: cells,
       selectedPattern: pattern

@@ -401,7 +401,7 @@ class Grid extends React.Component{
             {this.renderCell(207)}
             {this.renderCell(208)}
             {this.renderCell(209)}
-            {this.renderCell(200)}
+            {this.renderCell(210)}
             {this.renderCell(211)}
             {this.renderCell(212)}
             {this.renderCell(213)}

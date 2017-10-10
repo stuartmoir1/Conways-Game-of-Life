@@ -6479,7 +6479,22 @@ module.exports = lowPriorityWarning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 50 */,
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+function Cell(props) {
+  //console.log('Cell...')
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { className: 'cell', onClick: props.onClick, style: props.bgColor, disabled: props.disabled });
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Cell);
+
+/***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9599,10 +9614,231 @@ module.exports = getIteratorFn;
 
 /***/ }),
 /* 83 */
-/***/ (function(module, __webpack_exports__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (148:10)\n\n\u001b[0m \u001b[90m 146 | \u001b[39m  \u001b[90m// }\u001b[39m\n \u001b[90m 147 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 148 | \u001b[39m  render(){ \n \u001b[90m     | \u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 149 | \u001b[39m    let patterns \u001b[33m=\u001b[39m dynamicPatterns(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mrowLen)\n \u001b[90m 150 | \u001b[39m    let selectedPatternIndex \u001b[33m=\u001b[39m patterns\u001b[33m.\u001b[39mfindIndex((element) \u001b[33m=>\u001b[39m {\n \u001b[90m 151 | \u001b[39m        \u001b[36mreturn\u001b[39m element\u001b[33m.\u001b[39mname \u001b[33m===\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mselectedPattern\u001b[33m.\u001b[39mname\u001b[0m\n");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_play_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__ = __webpack_require__(192);
+
+
+
+
+
+
+
+
+
+
+class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      history: [{ steps: Array(100) }].slice(0, 0), // Array of empty arrays.
+      cells: Array(400).fill(false),
+      btnLabel: 'Start',
+      counter: 0,
+      period: 500,
+      selectedPattern: '',
+      btnDisabled: false,
+      rowLen: 20
+    };
+  }
+
+  handleClickCell(i) {
+    //console.log('Game, handleClickCell; Cell selected...', i, this.state.cells[i])
+    const cells = this.state.cells;
+    cells[i] ? cells[i] = false : cells[i] = true;
+    this.setState({ cells: cells });
+  }
+
+  handleClickStartStopBtn() {
+    //console.log('Game, handleClickStartStopBtn...')
+
+    let playGame = setInterval(() => {
+      const label = this.state.btnLabel;
+      // console.log(label)
+
+      if (label === 'Stop') {
+        // Button displays 'Start.'
+        const history = this.state.history;
+        const grid = this.state.cells;
+        const rowLen = this.state.rowLen;
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
+        let counter = this.state.counter;
+
+        this.setState({
+          history: history.concat([{ steps: grid }]),
+          cells: newGrid,
+          counter: counter + 1,
+          btnDisabled: true
+        });
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+          clearInterval(playGame);
+          this.setState({ btnLabel: 'Start' });
+        }
+      } else {
+        // Button displays 'Stop'
+        clearInterval(playGame);
+        this.setState({
+          btnDisabled: false
+        });
+      }
+    }, this.state.period);
+
+    let label = this.state.btnLabel;
+    label === 'Start' ? label = 'Stop' : label = 'Start';
+    this.setState({ btnLabel: label });
+  }
+
+  handleClickBackBtn() {
+    //console.log('Game, handleClickBackBtn...')
+    const history = this.state.history;
+    const counter = this.state.counter;
+
+    if (counter > 0) {
+      const oldGrid = history[history.length - 1].steps;
+      this.setState({
+        history: history.slice(0, history.length - 1),
+        cells: oldGrid,
+        counter: counter - 1
+      });
+    }
+  }
+
+  handleClickForwardBtn() {
+    //console.log('Game, handleClickForwardBtn...')
+    const history = this.state.history;
+    const grid = this.state.cells;
+    const rowLen = this.state.rowLen;
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
+    let counter = this.state.counter;
+
+    this.setState({
+      history: history.concat([{ steps: grid }]),
+      cells: newGrid,
+      counter: counter + 1
+    });
+  }
+
+  handleClickResetBtn() {
+    //console.log('Game, handleClickResetBtn...')
+    const cells = this.state.cells;
+    cells.fill(false);
+
+    this.setState({
+      cells: cells,
+      counter: 0,
+      selectedPattern: ''
+    });
+  }
+
+  handlePatternSelect(pattern) {
+    console.log('Game, handlePatternSelect...');
+    const selectedCells = pattern.cells;
+    let j = 0;
+    let cells = [];
+
+    for (let i = 0; i < this.state.rowLen * this.state.rowLen; i++) {
+      if (i === selectedCells[j]) {
+        cells[i] = true;
+        j++;
+      } else {
+        cells[i] = false;
+      }
+    }
+
+    this.setState({
+      cells: cells,
+      selectedPattern: pattern
+    });
+  }
+
+  // handlePatternSelect(pattern){
+  //   // console.log('Game, handlePatternSelect...')
+  //   const name = pattern.name
+  //   if (this.state.rowLen === 10){
+  //     const cells = pattern.cells.concat(Array(50).fill(false))
+  //   }
+  //   else if (this.state.rowLen === 20){
+  //     const cells = pattern.cells.concat(Array(200).fill(false))
+  //   }
+  //   else {
+  //     null
+  //   }
+  //   this.setState({
+  //     cells: cells,
+  //     selectedPattern: pattern
+  //   })
+  // }
+
+  render() {
+    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])(this.state.rowLen);
+    let selectedPatternIndex = patterns.findIndex(element => {
+      return element.name === this.state.selectedPattern.name;
+    });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h1',
+        null,
+        'Conway\'s Game of Life'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h5',
+        null,
+        'Select a pattern and/ or click on the cells to create your own pattern. Then click \'Start\' or \'+\'.'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPattern: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'game' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            { className: 'counter' },
+            'Counter: ',
+            this.state.counter
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
+            rowLen: this.state.rowLen,
+            disabled: this.state.btnDisabled,
+            cells: this.state.cells,
+            onClick: i => this.handleClickCell(i)
+          })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
+            label: this.state.btnLabel,
+            disabled: this.state.btnDisabled,
+            onClickStartStop: () => this.handleClickStartStopBtn(),
+            onClickBack: () => this.handleClickBackBtn(),
+            onClickForward: () => this.handleClickForwardBtn(),
+            onClickReset: () => this.handleClickResetBtn()
+          })
+        )
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Game);
 
 /***/ }),
 /* 84 */
@@ -9625,19 +9861,873 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__containers_game__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__containers_game___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__containers_game__);
 
 
 
 
 window.addEventListener('load', function () {
-  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__containers_game__["default"], null), document.getElementById('app'));
+  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__containers_game__["a" /* default */], null), document.getElementById('app'));
 });
 
 /***/ }),
-/* 86 */,
-/* 87 */,
-/* 88 */,
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  render() {
+    //console.log('Control, render...')
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-start-stop', className: 'btn', onClick: this.props.onClickStartStop },
+        this.props.label
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-back', className: 'btn-small', disabled: this.props.disabled, onClick: this.props.onClickBack },
+        '-'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-forward', className: 'btn-small', disabled: this.props.disabled, onClick: this.props.onClickForward },
+        '+'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-reset', className: 'btn', disabled: this.props.disabled, onClick: this.props.onClickReset },
+        'Reset'
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Control);
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cell__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_create_cells_js__ = __webpack_require__(193);
+
+
+
+
+class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  renderCell(i) {
+    //console.log('Grid, renderCell...')
+    let bgColor = undefined;
+    this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff';
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cell__["a" /* default */], {
+      disabled: this.props.disabled,
+      bgColor: { background: bgColor },
+      onClick: () => this.props.onClick(i)
+    });
+  }
+
+  render() {
+    //console.log('Grid, render...')
+    //let indices = []
+    //for (let i = 0; i < (this.props.rowLen * this.props.rowLen); i++){ indices.push(i)
+    //}
+
+    //let rows = createCells().forEach((row) => {
+    //  if (index % this.state.rowLen === 0){
+    //    return <div className='grid-row'> 
+    //  } else if (index % this.state.rowLen === rowLen - 1) {
+    //    return <div>{this.renderCell}(index)</div></div>
+    // } else {
+    //    return <div>{this.renderCell}(index)</div>
+    //  }
+    //})
+    //console.log(rows)
+
+    //render(){
+    //  return (
+    //    <div>
+    //      {rows} 
+    //    </div>
+    //  )
+    //}
+
+    if (this.props.rowLen === 10) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(0),
+          this.renderCell(1),
+          this.renderCell(2),
+          this.renderCell(3),
+          this.renderCell(4),
+          this.renderCell(5),
+          this.renderCell(6),
+          this.renderCell(7),
+          this.renderCell(8),
+          this.renderCell(9)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(10),
+          this.renderCell(11),
+          this.renderCell(12),
+          this.renderCell(13),
+          this.renderCell(14),
+          this.renderCell(15),
+          this.renderCell(16),
+          this.renderCell(17),
+          this.renderCell(18),
+          this.renderCell(19)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(20),
+          this.renderCell(21),
+          this.renderCell(22),
+          this.renderCell(23),
+          this.renderCell(24),
+          this.renderCell(25),
+          this.renderCell(26),
+          this.renderCell(27),
+          this.renderCell(28),
+          this.renderCell(29)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(30),
+          this.renderCell(31),
+          this.renderCell(32),
+          this.renderCell(33),
+          this.renderCell(34),
+          this.renderCell(35),
+          this.renderCell(36),
+          this.renderCell(37),
+          this.renderCell(38),
+          this.renderCell(39)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(40),
+          this.renderCell(41),
+          this.renderCell(42),
+          this.renderCell(43),
+          this.renderCell(44),
+          this.renderCell(45),
+          this.renderCell(46),
+          this.renderCell(47),
+          this.renderCell(48),
+          this.renderCell(49)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(50),
+          this.renderCell(51),
+          this.renderCell(52),
+          this.renderCell(53),
+          this.renderCell(54),
+          this.renderCell(55),
+          this.renderCell(56),
+          this.renderCell(57),
+          this.renderCell(58),
+          this.renderCell(59)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(60),
+          this.renderCell(61),
+          this.renderCell(62),
+          this.renderCell(63),
+          this.renderCell(64),
+          this.renderCell(65),
+          this.renderCell(66),
+          this.renderCell(67),
+          this.renderCell(68),
+          this.renderCell(69)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(70),
+          this.renderCell(71),
+          this.renderCell(72),
+          this.renderCell(73),
+          this.renderCell(74),
+          this.renderCell(75),
+          this.renderCell(76),
+          this.renderCell(77),
+          this.renderCell(78),
+          this.renderCell(79)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(80),
+          this.renderCell(81),
+          this.renderCell(82),
+          this.renderCell(83),
+          this.renderCell(84),
+          this.renderCell(85),
+          this.renderCell(86),
+          this.renderCell(87),
+          this.renderCell(88),
+          this.renderCell(89)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(90),
+          this.renderCell(91),
+          this.renderCell(92),
+          this.renderCell(93),
+          this.renderCell(94),
+          this.renderCell(95),
+          this.renderCell(96),
+          this.renderCell(97),
+          this.renderCell(98),
+          this.renderCell(99)
+        )
+      );
+    }
+
+    if (this.props.rowLen === 20) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(0),
+          this.renderCell(1),
+          this.renderCell(2),
+          this.renderCell(3),
+          this.renderCell(4),
+          this.renderCell(5),
+          this.renderCell(6),
+          this.renderCell(7),
+          this.renderCell(8),
+          this.renderCell(9),
+          this.renderCell(10),
+          this.renderCell(11),
+          this.renderCell(12),
+          this.renderCell(13),
+          this.renderCell(14),
+          this.renderCell(15),
+          this.renderCell(16),
+          this.renderCell(17),
+          this.renderCell(18),
+          this.renderCell(19)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(20),
+          this.renderCell(21),
+          this.renderCell(22),
+          this.renderCell(23),
+          this.renderCell(24),
+          this.renderCell(25),
+          this.renderCell(26),
+          this.renderCell(27),
+          this.renderCell(28),
+          this.renderCell(29),
+          this.renderCell(30),
+          this.renderCell(31),
+          this.renderCell(32),
+          this.renderCell(33),
+          this.renderCell(34),
+          this.renderCell(35),
+          this.renderCell(36),
+          this.renderCell(37),
+          this.renderCell(38),
+          this.renderCell(39)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(40),
+          this.renderCell(41),
+          this.renderCell(42),
+          this.renderCell(43),
+          this.renderCell(44),
+          this.renderCell(45),
+          this.renderCell(46),
+          this.renderCell(47),
+          this.renderCell(48),
+          this.renderCell(49),
+          this.renderCell(50),
+          this.renderCell(51),
+          this.renderCell(52),
+          this.renderCell(53),
+          this.renderCell(54),
+          this.renderCell(55),
+          this.renderCell(56),
+          this.renderCell(57),
+          this.renderCell(58),
+          this.renderCell(59)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(60),
+          this.renderCell(61),
+          this.renderCell(62),
+          this.renderCell(63),
+          this.renderCell(64),
+          this.renderCell(65),
+          this.renderCell(66),
+          this.renderCell(67),
+          this.renderCell(68),
+          this.renderCell(69),
+          this.renderCell(70),
+          this.renderCell(71),
+          this.renderCell(72),
+          this.renderCell(73),
+          this.renderCell(74),
+          this.renderCell(75),
+          this.renderCell(76),
+          this.renderCell(77),
+          this.renderCell(78),
+          this.renderCell(79)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(80),
+          this.renderCell(81),
+          this.renderCell(82),
+          this.renderCell(83),
+          this.renderCell(84),
+          this.renderCell(85),
+          this.renderCell(86),
+          this.renderCell(87),
+          this.renderCell(88),
+          this.renderCell(89),
+          this.renderCell(90),
+          this.renderCell(91),
+          this.renderCell(92),
+          this.renderCell(93),
+          this.renderCell(94),
+          this.renderCell(95),
+          this.renderCell(96),
+          this.renderCell(97),
+          this.renderCell(98),
+          this.renderCell(99)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(100),
+          this.renderCell(101),
+          this.renderCell(102),
+          this.renderCell(103),
+          this.renderCell(104),
+          this.renderCell(105),
+          this.renderCell(106),
+          this.renderCell(107),
+          this.renderCell(108),
+          this.renderCell(109),
+          this.renderCell(110),
+          this.renderCell(111),
+          this.renderCell(112),
+          this.renderCell(113),
+          this.renderCell(114),
+          this.renderCell(115),
+          this.renderCell(116),
+          this.renderCell(117),
+          this.renderCell(118),
+          this.renderCell(119)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(120),
+          this.renderCell(121),
+          this.renderCell(122),
+          this.renderCell(123),
+          this.renderCell(124),
+          this.renderCell(125),
+          this.renderCell(126),
+          this.renderCell(127),
+          this.renderCell(128),
+          this.renderCell(129),
+          this.renderCell(130),
+          this.renderCell(131),
+          this.renderCell(132),
+          this.renderCell(133),
+          this.renderCell(134),
+          this.renderCell(135),
+          this.renderCell(136),
+          this.renderCell(137),
+          this.renderCell(138),
+          this.renderCell(139)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(140),
+          this.renderCell(141),
+          this.renderCell(142),
+          this.renderCell(143),
+          this.renderCell(144),
+          this.renderCell(145),
+          this.renderCell(146),
+          this.renderCell(147),
+          this.renderCell(148),
+          this.renderCell(149),
+          this.renderCell(150),
+          this.renderCell(151),
+          this.renderCell(152),
+          this.renderCell(153),
+          this.renderCell(154),
+          this.renderCell(155),
+          this.renderCell(156),
+          this.renderCell(157),
+          this.renderCell(158),
+          this.renderCell(159)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(160),
+          this.renderCell(161),
+          this.renderCell(162),
+          this.renderCell(163),
+          this.renderCell(164),
+          this.renderCell(165),
+          this.renderCell(166),
+          this.renderCell(167),
+          this.renderCell(168),
+          this.renderCell(169),
+          this.renderCell(170),
+          this.renderCell(171),
+          this.renderCell(172),
+          this.renderCell(173),
+          this.renderCell(174),
+          this.renderCell(175),
+          this.renderCell(176),
+          this.renderCell(177),
+          this.renderCell(178),
+          this.renderCell(179)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(180),
+          this.renderCell(181),
+          this.renderCell(182),
+          this.renderCell(183),
+          this.renderCell(184),
+          this.renderCell(185),
+          this.renderCell(186),
+          this.renderCell(187),
+          this.renderCell(188),
+          this.renderCell(189),
+          this.renderCell(190),
+          this.renderCell(191),
+          this.renderCell(192),
+          this.renderCell(193),
+          this.renderCell(194),
+          this.renderCell(195),
+          this.renderCell(196),
+          this.renderCell(197),
+          this.renderCell(198),
+          this.renderCell(199)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(200),
+          this.renderCell(201),
+          this.renderCell(202),
+          this.renderCell(203),
+          this.renderCell(204),
+          this.renderCell(205),
+          this.renderCell(206),
+          this.renderCell(207),
+          this.renderCell(208),
+          this.renderCell(209),
+          this.renderCell(210),
+          this.renderCell(211),
+          this.renderCell(212),
+          this.renderCell(213),
+          this.renderCell(214),
+          this.renderCell(215),
+          this.renderCell(216),
+          this.renderCell(217),
+          this.renderCell(218),
+          this.renderCell(219)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(220),
+          this.renderCell(221),
+          this.renderCell(222),
+          this.renderCell(223),
+          this.renderCell(224),
+          this.renderCell(225),
+          this.renderCell(226),
+          this.renderCell(227),
+          this.renderCell(228),
+          this.renderCell(229),
+          this.renderCell(230),
+          this.renderCell(231),
+          this.renderCell(232),
+          this.renderCell(233),
+          this.renderCell(234),
+          this.renderCell(235),
+          this.renderCell(236),
+          this.renderCell(237),
+          this.renderCell(238),
+          this.renderCell(239)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(240),
+          this.renderCell(241),
+          this.renderCell(242),
+          this.renderCell(243),
+          this.renderCell(244),
+          this.renderCell(245),
+          this.renderCell(246),
+          this.renderCell(247),
+          this.renderCell(248),
+          this.renderCell(249),
+          this.renderCell(250),
+          this.renderCell(251),
+          this.renderCell(252),
+          this.renderCell(253),
+          this.renderCell(254),
+          this.renderCell(255),
+          this.renderCell(256),
+          this.renderCell(257),
+          this.renderCell(258),
+          this.renderCell(259)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(260),
+          this.renderCell(261),
+          this.renderCell(262),
+          this.renderCell(263),
+          this.renderCell(264),
+          this.renderCell(265),
+          this.renderCell(266),
+          this.renderCell(267),
+          this.renderCell(268),
+          this.renderCell(269),
+          this.renderCell(270),
+          this.renderCell(271),
+          this.renderCell(272),
+          this.renderCell(273),
+          this.renderCell(274),
+          this.renderCell(275),
+          this.renderCell(276),
+          this.renderCell(277),
+          this.renderCell(278),
+          this.renderCell(279)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(280),
+          this.renderCell(281),
+          this.renderCell(282),
+          this.renderCell(283),
+          this.renderCell(284),
+          this.renderCell(285),
+          this.renderCell(286),
+          this.renderCell(287),
+          this.renderCell(288),
+          this.renderCell(289),
+          this.renderCell(290),
+          this.renderCell(291),
+          this.renderCell(292),
+          this.renderCell(293),
+          this.renderCell(294),
+          this.renderCell(295),
+          this.renderCell(296),
+          this.renderCell(297),
+          this.renderCell(298),
+          this.renderCell(299)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(300),
+          this.renderCell(301),
+          this.renderCell(302),
+          this.renderCell(303),
+          this.renderCell(304),
+          this.renderCell(305),
+          this.renderCell(306),
+          this.renderCell(307),
+          this.renderCell(308),
+          this.renderCell(309),
+          this.renderCell(310),
+          this.renderCell(311),
+          this.renderCell(312),
+          this.renderCell(313),
+          this.renderCell(314),
+          this.renderCell(315),
+          this.renderCell(316),
+          this.renderCell(317),
+          this.renderCell(318),
+          this.renderCell(319)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(320),
+          this.renderCell(321),
+          this.renderCell(322),
+          this.renderCell(323),
+          this.renderCell(324),
+          this.renderCell(325),
+          this.renderCell(326),
+          this.renderCell(327),
+          this.renderCell(328),
+          this.renderCell(329),
+          this.renderCell(330),
+          this.renderCell(331),
+          this.renderCell(332),
+          this.renderCell(333),
+          this.renderCell(334),
+          this.renderCell(335),
+          this.renderCell(336),
+          this.renderCell(337),
+          this.renderCell(338),
+          this.renderCell(339)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(340),
+          this.renderCell(341),
+          this.renderCell(342),
+          this.renderCell(343),
+          this.renderCell(344),
+          this.renderCell(345),
+          this.renderCell(346),
+          this.renderCell(347),
+          this.renderCell(348),
+          this.renderCell(349),
+          this.renderCell(350),
+          this.renderCell(351),
+          this.renderCell(352),
+          this.renderCell(353),
+          this.renderCell(354),
+          this.renderCell(355),
+          this.renderCell(356),
+          this.renderCell(357),
+          this.renderCell(358),
+          this.renderCell(359)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(360),
+          this.renderCell(361),
+          this.renderCell(362),
+          this.renderCell(363),
+          this.renderCell(364),
+          this.renderCell(365),
+          this.renderCell(366),
+          this.renderCell(367),
+          this.renderCell(368),
+          this.renderCell(369),
+          this.renderCell(370),
+          this.renderCell(371),
+          this.renderCell(372),
+          this.renderCell(373),
+          this.renderCell(374),
+          this.renderCell(375),
+          this.renderCell(376),
+          this.renderCell(377),
+          this.renderCell(378),
+          this.renderCell(379)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'grid-row' },
+          this.renderCell(380),
+          this.renderCell(381),
+          this.renderCell(382),
+          this.renderCell(383),
+          this.renderCell(384),
+          this.renderCell(385),
+          this.renderCell(386),
+          this.renderCell(387),
+          this.renderCell(388),
+          this.renderCell(389),
+          this.renderCell(390),
+          this.renderCell(391),
+          this.renderCell(392),
+          this.renderCell(393),
+          this.renderCell(394),
+          this.renderCell(395),
+          this.renderCell(396),
+          this.renderCell(397),
+          this.renderCell(398),
+          this.renderCell(399)
+        )
+      );
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Grid);
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const play = (grid, rowLen) => {
+  //console.log('play...')
+
+  let newGrid = Array(grid.length).fill(false);
+
+  for (let i = 0; i < grid.length; i++) {
+
+    //console.log('CELL', i)
+    let firstRowLastCell = rowLen - 1;
+    let cells;
+
+    // Relative cells to check.
+    if (rowLen === 10) {
+      if (i === 0) {
+        // Top-left corner cell.
+        cells = [1, 10, 11];
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell) {
+        // Top-right corner cell.
+        cells = [-1, 9, 10];
+        //console.log('Top-right corner cell...')
+      } else if (i === grid.length - rowLen) {
+        // Botton-left corner cell.
+        cells = [-10, -9, 1];
+        //console.log('Botton-left corner cell...')
+      } else if (i === grid.length - 1) {
+        // Bottom-right corner cell.
+        cells = [-11, -10, -1];
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell) {
+        // Top row cells/ not corners.
+        cells = [-1, 1, 9, 10, 11];
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0) {
+        // Far-left column cells/ not corners
+        cells = [-10, -9, 1, 10, 11];
+        //console.log('Far-left column cells/ not corners...')
+        // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell) {
+        cells = [-11, -10, -1, 9, 10];
+        //console.log('Far-right column cells/ not corners...')
+        // Bottom row cells/ not corners.
+      } else if (i > grid.length - rowLen && i < grid.length - 1) {
+        cells = [-11, -10, -9, -1, 1];
+        //console.log('Bottom row cells/ not corners...')
+      } else {
+        // All non-boundary cells.
+        cells = [-11, -10, -9, -1, 1, 9, 10, 11];
+        //console.log('All non-boundary cells...')
+      }
+    }
+
+    // Relative cells to check.
+    if (rowLen === 20) {
+      if (i === 0) {
+        // Top-left corner cell.
+        cells = [1, 20, 21];
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell) {
+        // Top-right corner cell.
+        cells = [-1, 19, 20];
+        //console.log('Top-right corner cell...')
+      } else if (i === grid.length - rowLen) {
+        // Botton-left corner cell.
+        cells = [-20, -19, 1];
+        //console.log('Botton-left corner cell...')
+      } else if (i === grid.length - 1) {
+        // Bottom-right corner cell.
+        cells = [-21, -20, -1];
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell) {
+        // Top row cells/ not corners.
+        cells = [-1, 1, 19, 20, 21];
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0) {
+        // Far-left column cells/ not corners
+        cells = [-20, -19, 1, 20, 21];
+        //console.log('Far-left column cells/ not corners...')
+        // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell) {
+        cells = [-21, -20, -1, 19, 20];
+        //console.log('Far-right column cells/ not corners...')
+        // Bottom row cells/ not corners.
+      } else if (i > grid.length - rowLen && i < grid.length - 1) {
+        cells = [-21, -20, -19, -1, 1];
+        //console.log('Bottom row cells/ not corners...')
+      } else {
+        // All non-boundary cells.
+        cells = [-21, -20, -19, -1, 1, 19, 20, 21];
+        //console.log('All non-boundary cells...')
+      }
+    }
+
+    let count = 0;
+    for (let j = 0; j < cells.length; j++) {
+      if (grid[i + cells[j]]) {
+        count++;
+      }
+    }
+
+    if (grid[i] && (count < 2 || count > 3)) {
+      newGrid[i] = false; // Live cell dies.
+      //console.log ('Live cell dies...', newGrid[i])
+    } else if (!grid[i] && count === 3) {
+      newGrid[i] = true; // Dead cell lives.
+      //console.log('Dead cell lives...', newGrid[i])
+    } else if (grid[i]) {
+      newGrid[i] = true; // Live cell remains alive.
+      //console.log('Live cell remains alive...', newGrid[i])
+    } else {
+      newGrid[i] = false; // Dead cell remains dead.
+      //console.log('Dead cell remains dead...', newGrid[i])
+    }
+    //console.log(newGrid[i])
+  }
+
+  return newGrid;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = play;
+
+
+/***/ }),
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22089,6 +23179,2039 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 189 */,
+/* 190 */,
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  handleChange(event) {
+    //console.log('PatternSelector, handleChange...')
+    this.props.onSelectPattern(this.props.patterns[event.target.value]);
+  }
+
+  render() {
+    //console.log('PatternSelector, render...')
+    const patterns = this.props.patterns.map((pattern, index) => {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'option',
+        { className: 'option', value: index, key: index },
+        pattern.name
+      );
+    });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'select',
+      { id: 'patterns', className: 'select', value: this.props.selectedPattern, onChange: event => this.handleChange(event) },
+      patterns
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (PatternSelector);
+
+/***/ }),
+/* 192 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const dynamicPatterns = rowLen => {
+  //console.log('dynamicPatterns...')
+
+  if (rowLen === 10) {
+    return [{
+      "name": "",
+      "cells": []
+    }, {
+      "name": "Blinker",
+      "cells": [12, 22, 32]
+    }, {
+      "name": "Toad",
+      "cells": [22, 23, 24, 31, 32, 33]
+    }, {
+      "name": "Beacon",
+      "cells": [11, 12, 21, 22, 33, 34, 43, 44]
+    }, {
+      "name": "Glider",
+      "cells": [1, 12, 20, 21, 22]
+    }, {
+      "name": "Lightweight spaceship",
+      "cells": [0, 3, 14, 20, 24, 31, 32, 33, 34]
+    }];
+  }
+
+  if (rowLen === 20) {
+    return [{
+      "name": "",
+      "cells": []
+    }, {
+      "name": "Blinker",
+      "cells": [22, 42, 62]
+    }, {
+      "name": "Toad",
+      "cells": [42, 43, 44, 61, 62, 63]
+    }, {
+      "name": "Beacon",
+      "cells": [21, 22, 41, 42, 63, 64, 83, 84]
+    }, {
+      "name": "Glider",
+      "cells": [1, 22, 40, 41, 42]
+    }, {
+      "name": "Lightweight spaceship",
+      "cells": [0, 3, 24, 40, 44, 61, 62, 63, 64]
+    }, {
+      "name": "Pulsar",
+      "cells": [44, 45, 46, 50, 51, 52, 82, 87, 89, 94, 102, 107, 109, 114, 122, 127, 129, 134, 144, 145, 146, 150, 151, 152, 184, 185, 186, 190, 191, 192, 202, 207, 209, 214, 222, 227, 229, 234, 242, 247, 249, 254, 284, 285, 286, 290, 291, 292]
+    }, {
+      "name": "Pentadecathlon",
+      "cells": [26, 46, 65, 66, 67, 125, 126, 127, 146, 166, 186, 206, 225, 226, 227, 285, 286, 287, 306, 326]
+    }];
+  }
+
+  if (rowLen === 40) {
+    return [{
+      "name": "",
+      "cells": []
+    }, {
+      "name": "Gosper's Glider Gun",
+      "cells": []
+    }];
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = dynamicPatterns;
+
+
+//   if (rowLen === 10){
+//     return [
+//       {
+//         "name": "",
+//         "cells": []
+//       },
+//       {
+//         "name": "Blinker",
+//         "cells": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+//       },
+//       {
+//         "name": "Toad",
+//         "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+//       },
+//       {
+//         "name": "Beacon",
+//         "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
+//       },
+//       {
+//         "name": "Glider",
+//         "cells": [false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+//       },
+//       {
+//         "name": "Lightweight spaceship",
+//         "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+//       }
+//     ]
+//   }
+
+//   if (rowLen === 20){
+//     return [
+//       {
+//         "name": "",
+//         "cells": []
+//       },
+//       {
+//         "name": "Blinker",
+//         "cells": [
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           true,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           true,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           true,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false,
+//           false
+//           ]
+//       },
+//       {
+//         "name": "Toad",
+//         "cells": [
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false
+//         ]
+//       },
+//       {
+//         "name": "Beacon",
+//         "cells": [
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false
+//         ]
+//       },
+//       {
+//         "name": "Glider",
+//         "cells": [
+//         false,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         true,
+//         true,
+//         true,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         false,
+//         101
+//         102
+//         103
+//         104
+//         105
+//         106
+//         107
+//         108
+//         109
+//         110
+//         111
+//         112
+//         113
+//         114
+//         115
+//         116
+//         117
+//         118
+//         119
+//         120
+//         121
+//         122
+//         123
+//         124
+//         125
+//         126
+//         127
+//         128
+//         129
+//         130
+//         131
+//         132
+//         133
+//         134
+//         135
+//         136
+//         137
+//         138
+//         139
+//         140
+//         141
+//         142
+//         143
+//         144
+//         145
+//         146
+//         147
+//         148
+//         149
+//         150
+//         151
+//         152
+//         153
+//         154
+//         155
+//         156
+//         157
+//         158
+//         159
+//         160
+//         161
+//         162
+//         163
+//         164
+//         165
+//         166
+//         167
+//         168
+//         169
+//         170
+//         171
+//         172
+//         173
+//         174
+//         175
+//         176
+//         177
+//         178
+//         179
+//         180
+//         181
+//         182
+//         183
+//         184
+//         185
+//         186
+//         187
+//         188
+//         189
+//         190
+//         191
+//         192
+//         193
+//         194
+//         195
+//         196
+//         197
+//         198
+//         199
+//         ]
+//       },
+//       {
+//         "name": "Lightweight spaceship",
+//         "cells": [
+//         true,
+//         1
+//         2
+//         true,
+//         4
+//         5
+//         6
+//         7
+//         8
+//         9
+//         10
+//         11
+//         12
+//         13
+//         14
+//         15
+//         16
+//         17
+//         18
+//         19
+//         20
+//         21
+//         22
+//         23
+//         true,
+//         25
+//         26
+//         27
+//         28
+//         29
+//         30
+//         31
+//         32
+//         33
+//         34
+//         35
+//         36
+//         37
+//         38
+//         39
+//         true,
+//         41
+//         42
+//         43
+//         true,
+//         45
+//         46
+//         47
+//         48
+//         49
+//         50
+//         51
+//         52
+//         53
+//         54
+//         55
+//         56
+//         57
+//         58
+//         59
+//         60
+//         true,
+//         true,
+//         true,
+//         true,
+//         65
+//         66
+//         67
+//         68
+//         69
+//         70
+//         71
+//         72
+//         73
+//         74
+//         75
+//         76
+//         77
+//         78
+//         79
+//         80
+//         81
+//         82
+//         83
+//         84
+//         85
+//         86
+//         87
+//         88
+//         89
+//         90
+//         91
+//         92
+//         93
+//         94
+//         95
+//         96
+//         97
+//         98
+//         99
+//         100
+//         101
+//         102
+//         103
+//         104
+//         105
+//         106
+//         107
+//         108
+//         109
+//         110
+//         111
+//         112
+//         113
+//         114
+//         115
+//         116
+//         117
+//         118
+//         119
+//         120
+//         121
+//         122
+//         123
+//         124
+//         125
+//         126
+//         127
+//         128
+//         129
+//         130
+//         131
+//         132
+//         133
+//         134
+//         135
+//         136
+//         137
+//         138
+//         139
+//         140
+//         141
+//         142
+//         143
+//         144
+//         145
+//         146
+//         147
+//         148
+//         149
+//         150
+//         151
+//         152
+//         153
+//         154
+//         155
+//         156
+//         157
+//         158
+//         159
+//         160
+//         161
+//         162
+//         163
+//         164
+//         165
+//         166
+//         167
+//         168
+//         169
+//         170
+//         171
+//         172
+//         173
+//         174
+//         175
+//         176
+//         177
+//         178
+//         179
+//         180
+//         181
+//         182
+//         183
+//         184
+//         185
+//         186
+//         187
+//         188
+//         189
+//         190
+//         191
+//         192
+//         193
+//         194
+//         195
+//         196
+//         197
+//         198
+//         199
+//         200
+//         ]
+//       }
+//       {
+//         "name": "Pulsar",
+//         "cells": [
+//         0
+//         1
+//         2
+//         3
+//         4
+//         5
+//         6
+//         7
+//         8
+//         9
+//         10
+//         11
+//         12
+//         13
+//         14
+//         15
+//         16
+//         17
+//         18
+//         19
+//         20
+//         21
+//         22
+//         23
+//         24
+//         25
+//         26
+//         27
+//         28
+//         29
+//         30
+//         31
+//         32
+//         33
+//         34
+//         35
+//         36
+//         37
+//         38
+//         39
+//         40
+//         41
+//         42
+//         43
+//         true,
+//         true,
+//         true,
+//         47
+//         48
+//         49
+//         50
+//         true,
+//         true,
+//         true,
+//         54
+//         55
+//         56
+//         57
+//         58
+//         59
+//         60
+//         61
+//         62
+//         63
+//         64
+//         65
+//         66
+//         67
+//         68
+//         69
+//         70
+//         71
+//         72
+//         73
+//         74
+//         75
+//         76
+//         77
+//         78
+//         79
+//         80
+//         81
+//         true,
+//         83
+//         84
+//         85
+//         86
+//         true,
+//         88
+//         89
+//         true,
+//         91
+//         92
+//         93
+//         94
+//         true,
+//         96
+//         97
+//         98
+//         99
+//         100
+//         101
+//         true,
+//         103
+//         104
+//         105
+//         106
+//         true,
+//         108
+//         109
+//         true,
+//         111
+//         112
+//         113
+//         114
+//         true,
+//         116
+//         117
+//         118
+//         119
+//         120
+//         121
+//         true,
+//         123
+//         124
+//         125
+//         126
+//         true,
+//         128
+//         129
+//         true,
+//         131
+//         132
+//         133
+//         134
+//         true,
+//         136
+//         137
+//         138
+//         139
+//         140
+//         141
+//         142
+//         143
+//         true,
+//         true,
+//         true,
+//         147
+//         148
+//         149
+//         150
+//         true,
+//         true,
+//         true,
+//         154
+//         155
+//         156
+//         157
+//         158
+//         159
+//         160
+//         161
+//         162
+//         163
+//         164
+//         165
+//         166
+//         167
+//         168
+//         169
+//         170
+//         171
+//         172
+//         173
+//         174
+//         175
+//         176
+//         177
+//         178
+//         179
+//         180
+//         181
+//         182
+//         183
+//         true,
+//         true,
+//         true,
+//         187
+//         188
+//         189
+//         190
+//         true,
+//         true,
+//         true,
+//         194
+//         195
+//         196
+//         197
+//         198
+//         199
+//         200
+//         201
+//         true,
+//         203
+//         204
+//         205
+//         206
+//         true,
+//         208
+//         209
+//         true,
+//         211
+//         212
+//         213
+//         214
+//         true,
+//         216
+//         217
+//         218
+//         219
+//         220
+//         221
+//         true,
+//         223
+//         224
+//         225
+//         226
+//         true,
+//         228
+//         229
+//         true,
+//         231
+//         232
+//         233
+//         234
+//         true,
+//         236
+//         237
+//         238
+//         239
+//         240
+//         241
+//         true,
+//         243
+//         244
+//         245
+//         246
+//         true,
+//         248
+//         249
+//         true,
+//         251
+//         252
+//         253
+//         254
+//         true,
+//         256
+//         257
+//         258
+//         259
+//         260
+//         261
+//         262
+//         263
+//         264
+//         265
+//         266
+//         267
+//         268
+//         269
+//         270
+//         271
+//         272
+//         273
+//         274
+//         275
+//         276
+//         277
+//         278
+//         279
+//         280
+//         281
+//         282
+//         283
+//         true,
+//         true,
+//         true,
+//         287
+//         288
+//         289
+//         290
+//         true,
+//         true,
+//         true,
+//         294
+//         295
+//         296
+//         297
+//         298
+//         299
+//         300
+//         301
+//         302
+//         303
+//         304
+//         305
+//         306
+//         307
+//         308
+//         309
+//         310
+//         311
+//         312
+//         313
+//         314
+//         315
+//         316
+//         317
+//         318
+//         319
+//         320
+//         321
+//         322
+//         323
+//         324
+//         325
+//         326
+//         326
+//         327
+//         328
+//         329
+//         330
+//         331
+//         332
+//         333
+//         334
+//         335
+//         336
+//         337
+//         338
+//         339
+//         340
+//         341
+//         342
+//         343
+//         344
+//         345
+//         346
+//         347
+//         348
+//         349
+//         350
+//         351
+//         352
+//         353
+//         354
+//         355
+//         356
+//         357
+//         358
+//         359
+//         360
+//         361
+//         362
+//         363
+//         364
+//         365
+//         366
+//         367
+//         368
+//         369
+//         370
+//         371
+//         372
+//         373
+//         374
+//         375
+//         376
+//         377
+//         378
+//         379
+//         380
+//         381
+//         382
+//         383
+//         384
+//         385
+//         386
+//         387
+//         388
+//         389
+//         390
+//         391
+//         392
+//         393
+//         394
+//         395
+//         396
+//         397
+//         398
+//         399
+//         ]
+//       }
+//       {
+//         "name": "Pentadecathlon",
+//         "cells": [
+//         0
+//         1
+//         2
+//         3
+//         4
+//         5
+//         6
+//         7
+//         8
+//         9
+//         10
+//         11
+//         12
+//         13
+//         14
+//         15
+//         16
+//         17
+//         18
+//         19
+//         20
+//         21
+//         22
+//         23
+//         24
+//         25
+//         true,
+//         27
+//         28
+//         29
+//         30
+//         31
+//         32
+//         33
+//         34
+//         35
+//         36
+//         37
+//         38
+//         39
+//         40
+//         41
+//         42
+//         43
+//         44
+//         45
+//         true,
+//         47
+//         48
+//         49
+//         50
+//         51
+//         52
+//         53
+//         54
+//         55
+//         56
+//         57
+//         58
+//         59
+//         60
+//         61
+//         62
+//         63
+//         64
+//         true,
+//         true,
+//         true,
+//         68
+//         69
+//         70
+//         71
+//         72
+//         73
+//         74
+//         75
+//         76
+//         77
+//         78
+//         79
+//         80
+//         81
+//         82
+//         83
+//         84
+//         85
+//         86
+//         87
+//         88
+//         89
+//         90
+//         91
+//         92
+//         93
+//         94
+//         95
+//         96
+//         97
+//         98
+//         99
+//         100
+//         101
+//         102
+//         103
+//         104
+//         105
+//         106
+//         107
+//         108
+//         109
+//         110
+//         111
+//         112
+//         113
+//         114
+//         115
+//         116
+//         117
+//         118
+//         119
+//         120
+//         121
+//         122
+//         123
+//         124
+//         true,
+//         true,
+//         true,
+//         128
+//         129
+//         130
+//         131
+//         132
+//         133
+//         134
+//         135
+//         136
+//         137
+//         138
+//         139
+//         140
+//         141
+//         142
+//         143
+//         144
+//         145
+//         true,
+//         147
+//         148
+//         149
+//         150
+//         151
+//         152
+//         153
+//         154
+//         155
+//         156
+//         157
+//         158
+//         159
+//         160
+//         161
+//         162
+//         163
+//         164
+//         165
+//         true,
+//         167
+//         168
+//         169
+//         170
+//         171
+//         172
+//         173
+//         174
+//         175
+//         176
+//         177
+//         178
+//         179
+//         180
+//         181
+//         182
+//         183
+//         184
+//         185
+//         true,
+//         187
+//         188
+//         189
+//         190
+//         191
+//         192
+//         193
+//         194
+//         195
+//         196
+//         197
+//         198
+//         199
+//         200
+//         201
+//         202
+//         203
+//         204
+//         205
+//         true
+//         207
+//         208
+//         209
+//         210
+//         211
+//         212
+//         213
+//         214
+//         215
+//         216
+//         217
+//         218
+//         219
+//         220
+//         221
+//         222
+//         223
+//         224
+//         true
+//         true
+//         true
+//         228
+//         229
+//         230
+//         231
+//         232
+//         233
+//         234
+//         235
+//         236
+//         237
+//         238
+//         239
+//         240
+//         241
+//         242
+//         243
+//         244
+//         245
+//         246
+//         247
+//         248
+//         249
+//         250
+//         251
+//         252
+//         253
+//         254
+//         255
+//         256
+//         257
+//         258
+//         259
+//         260
+//         261
+//         262
+//         263
+//         264
+//         265
+//         266
+//         267
+//         268
+//         269
+//         270
+//         271
+//         272
+//         273
+//         274
+//         275
+//         276
+//         277
+//         278
+//         279
+//         280
+//         281
+//         282
+//         283
+//         284
+//         true,
+//         true,
+//         true,
+//         288
+//         289
+//         290
+//         291
+//         292
+//         293
+//         294
+//         295
+//         296
+//         297
+//         298
+//         299
+//         300
+//         301
+//         302
+//         303
+//         304
+//         305
+//         true,
+//         307
+//         308
+//         309
+//         310
+//         311
+//         312
+//         313
+//         314
+//         315
+//         316
+//         317
+//         318
+//         319
+//         320
+//         321
+//         322
+//         323
+//         324
+//         325
+//         true,
+//         327
+//         328
+//         329
+//         330
+//         331
+//         332
+//         333
+//         334
+//         335
+//         336
+//         337
+//         338
+//         339
+//         340
+//         341
+//         342
+//         343
+//         344
+//         345
+//         346
+//         347
+//         348
+//         349
+//         350
+//         351
+//         352
+//         353
+//         354
+//         355
+//         356
+//         357
+//         358
+//         359
+//         360
+//         361
+//         362
+//         363
+//         364
+//         365
+//         366
+//         367
+//         368
+//         369
+//         370
+//         371
+//         372
+//         373
+//         374
+//         375
+//         376
+//         377
+//         378
+//         379
+//         380
+//         381
+//         382
+//         383
+//         384
+//         385
+//         386
+//         386
+//         387
+//         388
+//         389
+//         390
+//         391
+//         392
+//         393
+//         394
+//         395
+//         396
+//         397
+//         398
+//         399
+//         ]
+//       }
+//     ]
+//   }
+// }
+
+/***/ }),
+/* 193 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const createCells = rowLen => {
+
+  let cells = [];
+  for (let i = 0; i < rowLen; i++) {
+    for (let j = 0; j < rowLen; j++) {
+      let index = i * rowLen + j;
+      // cells.push('this.renderCell(' + index + ')')
+      cells.push(indez);
+    }
+  }
+  //console.log(cells)
+  return cells;
+};
+/* unused harmony export createCells */
+
+
+// <div className='grid-row'>{cells.splice(0,9)}</div>
+
+// createCells().forEach( (index) => {
+//   this.renderCell(index);
+// })
+
+/***/ }),
+/* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const compareArrays = (arr1, arr2) => {
+  //console.log('compareArrays...')
+
+  for (let i = 0; i < arr1.length - 1; i++) {
+    //console.log(arr1[i], arr2[i])
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
+
 
 /***/ })
 /******/ ]);
