@@ -22859,37 +22859,16 @@ const dynamicPatterns = rowLen => {
 
 /***/ }),
 /* 193 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-const createCells = rowLen => {
-
-  let cells = [];
-  for (let i = 0; i < rowLen; i++) {
-    for (let j = 0; j < rowLen; j++) {
-      let index = i * rowLen + j;
-      // cells.push('this.renderCell(' + index + ')')
-      cells.push(indez);
-    }
-  }
-  //console.log(cells)
-  return cells;
-};
-/* unused harmony export createCells */
-
-
-// <div className='grid-row'>{cells.splice(0,9)}</div>
-
-// createCells().forEach( (index) => {
-//   this.renderCell(index);
-// })
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/stuartmoir/Desktop/Final Project/Scratch/client/src/models/create_cells.js'");
 
 /***/ }),
 /* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 const compareArrays = (arr1, arr2) => {
   //console.log('compareArrays...')
 
