@@ -15,7 +15,6 @@ class Grid extends React.Component{
     />
   }
 
-
   render(){
     //console.log('Grid, render...')
     let rows = []
