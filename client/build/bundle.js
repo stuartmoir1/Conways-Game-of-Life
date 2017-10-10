@@ -9779,7 +9779,8 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     this.setState({
       cells: cells,
       rowLen: rowLen,
-      selectedGrid: grid
+      selectedGrid: grid,
+      counter: 0
     });
   }
 

@@ -147,7 +147,8 @@ class Game extends React.Component{
     this.setState({
       cells: cells,
       rowLen: rowLen,
-      selectedGrid: grid
+      selectedGrid: grid,
+      counter: 0
     })
   }
 
