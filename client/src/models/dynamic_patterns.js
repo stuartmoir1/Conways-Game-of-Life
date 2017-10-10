@@ -75,28 +75,24 @@ export const dynamicPatterns = (rowLen) => {
         "cells": []
       },
       {
-        "name": "",
-        "cells": []
-      },
-      {
         "name": "Blinker",
-        "cells": []
+        "cells": [42, 82, 122]
       },
       {
         "name": "Toad",
-        "cells": []
+        "cells": [82, 83, 84, 121, 122, 123]
       },
       {
         "name": "Beacon",
-        "cells": []
+        "cells": [41, 42, 81, 82, 123, 124, 163, 164]
       },
       {
         "name": "Glider",
-        "cells": []
+        "cells": [1, 42, 80, 81, 82]
       },
       {
         "name": "Lightweight Spaceship",
-        "cells": []
+        "cells": [0, 3, 44, 80, 84, 121, 122, 123, 124]
       },
       {
         "name": "Pulsar",
@@ -108,7 +104,7 @@ export const dynamicPatterns = (rowLen) => {
       },
       {
         "name": "Gosper's Glider Gun",
-        "cells": []
+        "cells": [65, 103, 105, 133, 134, 141, 142, 155, 156, 172, 176, 181, 182, 195, 196, 201, 202, 211, 217, 221, 222, 241, 242, 251, 255, 257, 258, 263, 265, 291, 297, 305, 331, 336, 373, 374]
       }
     ]
   }
