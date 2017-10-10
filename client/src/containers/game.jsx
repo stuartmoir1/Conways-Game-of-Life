@@ -15,7 +15,7 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      history: [{steps: Array(100)}].slice(0, 0), // Array of empty arrays.
+      history: [{steps: Array(100)}].slice(0, 0),
       cells: Array(400).fill(false),
       btnStartStopLabel: 'Start',
       btnFastSlowLabel: 'Fast',
@@ -152,7 +152,7 @@ class Game extends React.Component{
   }
 
   handleClickFastSlowBtn(){
-    console.log('Game, handleClickFastSlowBtn...')
+    //console.log('Game, handleClickFastSlowBtn...')
 
     let label = undefined
     let period = undefined
