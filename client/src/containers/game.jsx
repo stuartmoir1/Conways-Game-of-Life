@@ -1,11 +1,13 @@
 import React from 'react'
 
+import BorderSelector from '../components/border_selector'
 import Cell from '../components/cell'
 import Control from '../components/control'
 import Grid from '../components/grid'
 import GridSelector from '../components/grid_selector'
 import PatternSelector from '../components/pattern_selector'
 
+import {borders} from '../models/borders.js'
 import {compareArrays} from '../models/compare_arrays.js'
 import {dynamicPatterns} from '../models/dynamic_patterns.js'
 import {gridSizes} from '../models/grid_sizes.js'
@@ -177,13 +179,17 @@ class Game extends React.Component{
   }
 
   render(){
-    let patterns = dynamicPatterns(this.state.rowLen)
-    let selectedPatternIndex = patterns.findIndex((element) => {
-        return element.name === this.state.selectedPattern.name
-      })
     let grids = gridSizes()
     let selectedGridIndex = grids.findIndex((element) => {
         return element.name === this.state.selectedGrid.name
+      })
+    let borders = borders()
+    let selectedBorderIndex = grids.findIndex((element) => {
+        return element.name === this.state.selectedBorder.name
+      })
+    let patterns = dynamicPatterns(this.state.rowLen)
+    let selectedPatternIndex = patterns.findIndex((element) => {
+        return element.name === this.state.selectedPattern.name
       })
 
     return (
@@ -193,6 +199,8 @@ class Game extends React.Component{
         <div>
           <GridSelector grids={grids} selectedGridIndex={selectedGridIndex} onSelectGrid={(grid) => this.handleGridSelect(grid)}>
           </GridSelector>
+          <BorderSelector>
+          </BorderSelector>
         </div>
         <h5>Select a pattern and/ or click on the cells to create your own pattern. Then click 'Start' (to play) or '+' (to step through).</h5>
         <div>
