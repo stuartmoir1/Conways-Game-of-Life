@@ -1,4 +1,3 @@
-
 export const dynamicPatterns = (rowLen) => {
   //console.log('dynamicPatterns...')
 

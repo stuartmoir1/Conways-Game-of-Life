@@ -1,4 +1,3 @@
-
 export const play = (grid, rowLen) => {
   //console.log('play...')
 

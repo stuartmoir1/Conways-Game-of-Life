@@ -9667,9 +9667,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     if (counter > 0) {
       const oldGrid = history[history.length - 1].steps;
       this.setState({
-        history: history.slice(0, history.length - 1),
         cells: oldGrid,
-        counter: counter - 1
+        counter: counter - 1,
+        history: history.slice(0, history.length - 1)
       });
     }
   }
@@ -9709,9 +9709,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let counter = this.state.counter;
 
     this.setState({
-      history: history.concat([{ steps: grid }]),
       cells: newGrid,
-      counter: counter + 1
+      counter: counter + 1,
+      history: history.concat([{ steps: grid }])
     });
   }
 
@@ -9743,10 +9743,10 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let counter = this.state.counter;
 
         this.setState({
-          history: history.concat([{ steps: grid }]),
+          btnDisabled: true,
           cells: newGrid,
           counter: counter + 1,
-          btnDisabled: true
+          history: history.concat([{ steps: grid }])
         });
         if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
           clearInterval(playGame);
@@ -9777,9 +9777,10 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     this.setState({
       cells: cells,
+      counter: 0,
       rowLen: rowLen,
       selectedGrid: grid,
-      counter: 0
+      selectedPattern: ''
     });
   }
 
@@ -10110,7 +10111,6 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 const play = (grid, rowLen) => {
   //console.log('play...')
 
@@ -22768,7 +22768,6 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 const dynamicPatterns = rowLen => {
   //console.log('dynamicPatterns...')
 
@@ -22916,7 +22915,6 @@ class GridSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compone
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 const gridSizes = () => {
 
   return [{

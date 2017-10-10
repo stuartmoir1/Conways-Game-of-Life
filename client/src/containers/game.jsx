@@ -37,9 +37,9 @@ class Game extends React.Component{
     if (counter > 0){
       const oldGrid = history[history.length - 1].steps
       this.setState({
-        history: history.slice(0, history.length - 1),
         cells: oldGrid,
-        counter: counter - 1
+        counter: counter - 1,
+        history: history.slice(0, history.length - 1),
       })
     }
   }
@@ -79,9 +79,9 @@ class Game extends React.Component{
     let counter = this.state.counter
 
     this.setState({
-      history: history.concat([{steps: grid}]),
       cells: newGrid,
-      counter: counter + 1
+      counter: counter + 1,
+      history: history.concat([{steps: grid}]),
     })
   }
 
@@ -112,10 +112,10 @@ class Game extends React.Component{
         let counter = this.state.counter
 
         this.setState({
-          history: history.concat([{steps: grid}]),
+          btnDisabled: true,
           cells: newGrid,
           counter: counter + 1,
-          btnDisabled: true
+          history: history.concat([{steps: grid}])
         })
         if (compareArrays(grid, newGrid)){
           clearInterval(playGame)
@@ -145,9 +145,10 @@ class Game extends React.Component{
 
     this.setState({
       cells: cells,
+      counter: 0,
       rowLen: rowLen,
       selectedGrid: grid,
-      counter: 0
+      selectedPattern: ''
     })
   }
 
