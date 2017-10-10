@@ -10207,7 +10207,7 @@ const play = (grid, rowLen, bordersClosed) => {
     }
 
     // Relative cells to check.
-    if (rowLen === 20) {
+    if (rowLen === 20 && bordersClosed === true) {
       if (i === 0) {
         // Top-left corner cell.
         cells = [1, 20, 21];
@@ -10247,8 +10247,48 @@ const play = (grid, rowLen, bordersClosed) => {
       }
     }
 
+    if (rowLen === 20 && bordersClosed === false) {
+      if (i === 0) {
+        // Top-left corner cell.
+        cells = [1, 19, 20, 21, 39, 380, 381, 399];
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell) {
+        // Top-right corner cell.
+        cells = [-19, -1, 1, 19, 20, 361, 379, 380];
+        //console.log('Top-right corner cell...')
+      } else if (i === grid.length - rowLen) {
+        // Botton-left corner cell.
+        cells = [-380, -379, -361, -20, -19, -1, 1, 19];
+        //console.log('Botton-left corner cell...')
+      } else if (i === grid.length - 1) {
+        // Bottom-right corner cell.
+        cells = [-399, -381, -380, -39, -21, -20, -19, -1];
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell) {
+        // Top row cells/ not corners.
+        cells = [-1, 1, 19, 20, 21, 379, 380, 381];
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0) {
+        // Far-left column cells/ not corners
+        cells = [-20, -19, -1, 1, 19, 20, 21, 39];
+        //console.log('Far-left column cells/ not corners...')
+        // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell) {
+        cells = [-39, -21, -20, -19, -1, 1, 19, 20];
+        //console.log('Far-right column cells/ not corners...')
+        // Bottom row cells/ not corners.
+      } else if (i > grid.length - rowLen && i < grid.length - 1) {
+        cells = [-381, -380, -379, -21, -20, -19, -1, 1];
+        //console.log('Bottom row cells/ not corners...')
+      } else {
+        // All non-boundary cells.
+        cells = [-21, -20, -19, -1, 1, 19, 20, 21];
+        //console.log('All non-boundary cells...')
+      }
+    }
+
     // Relative cells to check.
-    if (rowLen === 40) {
+    if (rowLen === 40 && bordersClosed === true) {
       if (i === 0) {
         // Top-left corner cell.
         cells = [1, 40, 41];
@@ -10280,6 +10320,47 @@ const play = (grid, rowLen, bordersClosed) => {
         // Bottom row cells/ not corners.
       } else if (i > grid.length - rowLen && i < grid.length - 1) {
         cells = [-41, -40, -39, -1, 1];
+        //console.log('Bottom row cells/ not corners...')
+      } else {
+        // All non-boundary cells.
+        cells = [-41, -40, -39, -1, 1, 39, 40, 41];
+        //console.log('All non-boundary cells...')
+      }
+    }
+
+    // Relative cells to check.
+    if (rowLen === 40 && bordersClosed === false) {
+      if (i === 0) {
+        // Top-left corner cell.
+        cells = [1, 39, 40, 41, 79, 760, 761, 799];
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell) {
+        // Top-right corner cell.
+        cells = [-39, -1, 1, 39, 40, 721, 759, 760];
+        //console.log('Top-right corner cell...')
+      } else if (i === grid.length - rowLen) {
+        // Botton-left corner cell.
+        cells = [-760, -759, -721, -40, -39, -21, 1, 39];
+        //console.log('Botton-left corner cell...')
+      } else if (i === grid.length - 1) {
+        // Bottom-right corner cell.
+        cells = [-799, -761, -760, -41, -40, -39, -1, 1];
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell) {
+        // Top row cells/ not corners.
+        cells = [-1, 1, 39, 40, 41, 759, 760, 761];
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0) {
+        // Far-left column cells/ not corners
+        cells = [-40, -39, -1, 1, 39, 40, 41, 79];
+        //console.log('Far-left column cells/ not corners...')
+        // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell) {
+        cells = [-79, -41, -40, -39, -1, 1, 39, 40];
+        //console.log('Far-right column cells/ not corners...')
+        // Bottom row cells/ not corners.
+      } else if (i > grid.length - rowLen && i < grid.length - 1) {
+        cells = [-761, -760, -759, -41, -40, -39, -1, 1];
         //console.log('Bottom row cells/ not corners...')
       } else {
         // All non-boundary cells.
