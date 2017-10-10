@@ -23,22 +23,22 @@ class Grid extends React.Component{
     //}
 
     //let rows = createCells().forEach((row) => {
-    //  if (index % this.state.rowLen === 0){
-    //    return <div className='grid-row'> 
-    //  } else if (index % this.state.rowLen === rowLen - 1) {
-    //    return <div>{this.renderCell}(index)</div></div>
-    // } else {
-    //    return <div>{this.renderCell}(index)</div>
-    //  }
+    // if (index % this.state.rowLen === 0){
+    //   return <div className='grid-row'> 
+    // } else if (index % this.state.rowLen === rowLen - 1) {
+    //   return <div>{this.renderCell}(index)</div></div>
+    //} else {
+    //   return <div>{this.renderCell}(index)</div>
+    // }
     //})
     //console.log(rows)
 
     //render(){
-    //  return (
-    //    <div>
-    //      {rows} 
-    //    </div>
-    //  )
+    //return (
+    //   <div>
+    //     {rows} 
+    //   </div>
+    // )
     //}
     
     if (this.props.rowLen === 10){

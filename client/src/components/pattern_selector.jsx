@@ -17,7 +17,7 @@ class PatternSelector extends React.Component{
       )
     })
     return (
-      <select id='patterns' className='select' value={this.props.selectedPattern} onChange={(event) => this.handleChange(event)}>
+      <select id='patterns' className='select' value={this.props.selectedPatternIndex} onChange={(event) => this.handleChange(event)}>
         {patterns}
       </select>
     )

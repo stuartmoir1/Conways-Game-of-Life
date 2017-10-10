@@ -9623,9 +9623,13 @@ module.exports = getIteratorFn;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__ = __webpack_require__(191);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_play_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_grid_selector__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_play_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_compare_arrays_js__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_dynamic_patterns_js__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_grid_sizes_js__ = __webpack_require__(196);
+
+
 
 
 
@@ -9643,12 +9647,14 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     this.state = {
       history: [{ steps: Array(100) }].slice(0, 0), // Array of empty arrays.
       cells: Array(400).fill(false),
-      btnLabel: 'Start',
+      btnStartStopLabel: 'Start',
+      btnFastSlowLabel: 'Fast',
       counter: 0,
       period: 500,
       selectedPattern: '',
       btnDisabled: false,
-      rowLen: 20
+      rowLen: 10,
+      selectedGrid: ''
     };
   }
 
@@ -9663,7 +9669,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     //console.log('Game, handleClickStartStopBtn...')
 
     let playGame = setInterval(() => {
-      const label = this.state.btnLabel;
+      const label = this.state.btnStartStopLabel;
       // console.log(label)
 
       if (label === 'Stop') {
@@ -9671,7 +9677,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const history = this.state.history;
         const grid = this.state.cells;
         const rowLen = this.state.rowLen;
-        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_play_js__["a" /* play */])(grid, rowLen);
         let counter = this.state.counter;
 
         this.setState({
@@ -9680,9 +9686,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           counter: counter + 1,
           btnDisabled: true
         });
-        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
           clearInterval(playGame);
-          this.setState({ btnLabel: 'Start' });
+          this.setState({
+            btnStartStopLabel: 'Start',
+            btnDisabled: false
+          });
         }
       } else {
         // Button displays 'Stop'
@@ -9693,9 +9702,9 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       }
     }, this.state.period);
 
-    let label = this.state.btnLabel;
+    let label = this.state.btnStartStopLabel;
     label === 'Start' ? label = 'Stop' : label = 'Start';
-    this.setState({ btnLabel: label });
+    this.setState({ btnStartStopLabel: label });
   }
 
   handleClickBackBtn() {
@@ -9718,7 +9727,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     const history = this.state.history;
     const grid = this.state.cells;
     const rowLen = this.state.rowLen;
-    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__models_play_js__["a" /* play */])(grid, rowLen);
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_play_js__["a" /* play */])(grid, rowLen);
     let counter = this.state.counter;
 
     this.setState({
@@ -9741,7 +9750,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   handlePatternSelect(pattern) {
-    console.log('Game, handlePatternSelect...');
+    //console.log('Game, handlePatternSelect...')
     const selectedCells = pattern.cells;
     let j = 0;
     let cells = [];
@@ -9761,29 +9770,48 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
   }
 
-  // handlePatternSelect(pattern){
-  //   // console.log('Game, handlePatternSelect...')
-  //   const name = pattern.name
-  //   if (this.state.rowLen === 10){
-  //     const cells = pattern.cells.concat(Array(50).fill(false))
-  //   }
-  //   else if (this.state.rowLen === 20){
-  //     const cells = pattern.cells.concat(Array(200).fill(false))
-  //   }
-  //   else {
-  //     null
-  //   }
-  //   this.setState({
-  //     cells: cells,
-  //     selectedPattern: pattern
-  //   })
-  // }
+  handleGridSelect(grid) {
+    //console.log('Game, handleGridSelect...')
+    const rowLen = grid.rowLen;
+    const cells = this.state.cells;
+    cells.fill(false);
+
+    this.setState({
+      cells: cells,
+      rowLen: rowLen,
+      selectedGrid: grid
+    });
+  }
+
+  handleClickFastSlowBtn() {
+    console.log('Game, handleClickFastSlowBtn...');
+
+    let label = undefined;
+    let period = undefined;
+    if (this.state.btnFastSlowLabel === 'Fast') {
+      label = 'Slow';
+      period = 250;
+    } else {
+      label = 'Fast';
+      period = 500;
+    }
+
+    this.setState({
+      btnFastSlowLabel: label,
+      period: period
+    });
+  }
 
   render() {
-    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])(this.state.rowLen);
+    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__models_dynamic_patterns_js__["a" /* dynamicPatterns */])(this.state.rowLen);
     let selectedPatternIndex = patterns.findIndex(element => {
       return element.name === this.state.selectedPattern.name;
     });
+    let grids = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__models_grid_sizes_js__["a" /* gridSizes */])();
+    let selectedGridIndex = grids.findIndex(element => {
+      return element.name === this.state.selectedGrid.name;
+    });
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -9795,12 +9823,22 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h5',
         null,
-        'Select a pattern and/ or click on the cells to create your own pattern. Then click \'Start\' or \'+\'.'
+        'Select a grid size.'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPattern: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_grid_selector__["a" /* default */], { grids: grids, selectedGridIndex: selectedGridIndex, onSelectGrid: grid => this.handleGridSelect(grid) })
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h5',
+        null,
+        'Select a pattern and/ or click on the cells to create your own pattern. Then click \'Start\' (to play) or \'+\' (to step through).'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPatternIndex: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -9825,12 +9863,14 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           'div',
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
-            label: this.state.btnLabel,
+            labelStartStop: this.state.btnStartStopLabel,
             disabled: this.state.btnDisabled,
             onClickStartStop: () => this.handleClickStartStopBtn(),
             onClickBack: () => this.handleClickBackBtn(),
             onClickForward: () => this.handleClickForwardBtn(),
-            onClickReset: () => this.handleClickResetBtn()
+            onClickReset: () => this.handleClickResetBtn(),
+            onClickSlowFast: () => this.handleClickFastSlowBtn(),
+            labelFastSlow: this.state.btnFastSlowLabel
           })
         )
       )
@@ -9888,7 +9928,7 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
         { id: 'btn-start-stop', className: 'btn', onClick: this.props.onClickStartStop },
-        this.props.label
+        this.props.labelStartStop
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'button',
@@ -9904,6 +9944,11 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         'button',
         { id: 'btn-reset', className: 'btn', disabled: this.props.disabled, onClick: this.props.onClickReset },
         'Reset'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { id: 'btn-fast-slow', className: 'btn', disabled: this.props.disabled, onClick: this.props.onClickSlowFast },
+        this.props.labelFastSlow
       )
     );
   }
@@ -9944,22 +9989,22 @@ class Grid extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     //}
 
     //let rows = createCells().forEach((row) => {
-    //  if (index % this.state.rowLen === 0){
-    //    return <div className='grid-row'> 
-    //  } else if (index % this.state.rowLen === rowLen - 1) {
-    //    return <div>{this.renderCell}(index)</div></div>
-    // } else {
-    //    return <div>{this.renderCell}(index)</div>
-    //  }
+    // if (index % this.state.rowLen === 0){
+    //   return <div className='grid-row'> 
+    // } else if (index % this.state.rowLen === rowLen - 1) {
+    //   return <div>{this.renderCell}(index)</div></div>
+    //} else {
+    //   return <div>{this.renderCell}(index)</div>
+    // }
     //})
     //console.log(rows)
 
     //render(){
-    //  return (
-    //    <div>
-    //      {rows} 
-    //    </div>
-    //  )
+    //return (
+    //   <div>
+    //     {rows} 
+    //   </div>
+    // )
     //}
 
     if (this.props.rowLen === 10) {
@@ -23209,7 +23254,7 @@ class PatternSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
     });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'select',
-      { id: 'patterns', className: 'select', value: this.props.selectedPattern, onChange: event => this.handleChange(event) },
+      { id: 'patterns', className: 'select', value: this.props.selectedPatternIndex, onChange: event => this.handleChange(event) },
       patterns
     );
   }
@@ -23243,7 +23288,7 @@ const dynamicPatterns = rowLen => {
       "name": "Glider",
       "cells": [1, 12, 20, 21, 22]
     }, {
-      "name": "Lightweight spaceship",
+      "name": "Lightweight Spaceship",
       "cells": [0, 3, 14, 20, 24, 31, 32, 33, 34]
     }];
   }
@@ -23265,7 +23310,7 @@ const dynamicPatterns = rowLen => {
       "name": "Glider",
       "cells": [1, 22, 40, 41, 42]
     }, {
-      "name": "Lightweight spaceship",
+      "name": "Lightweight Spaceship",
       "cells": [0, 3, 24, 40, 44, 61, 62, 63, 64]
     }, {
       "name": "Pulsar",
@@ -23281,1890 +23326,34 @@ const dynamicPatterns = rowLen => {
       "name": "",
       "cells": []
     }, {
-      "name": "Gosper's Glider Gun",
+      "name": "Blinker",
+      "cells": [42, 82, 122]
+    }, {
+      "name": "Toad",
+      "cells": [82, 83, 84, 121, 122, 123]
+    }, {
+      "name": "Beacon",
+      "cells": [41, 42, 81, 82, 123, 124, 163, 164]
+    }, {
+      "name": "Glider",
+      "cells": [1, 42, 80, 81, 82]
+    }, {
+      "name": "Lightweight Spaceship",
+      "cells": [0, 3, 44, 80, 84, 121, 122, 123, 124]
+    }, {
+      "name": "Pulsar",
       "cells": []
+    }, {
+      "name": "Pentadecathlon",
+      "cells": []
+    }, {
+      "name": "Gosper's Glider Gun",
+      "cells": [65, 103, 105, 133, 134, 141, 142, 155, 156, 172, 176, 181, 182, 195, 196, 201, 202, 211, 217, 221, 222, 241, 242, 251, 255, 257, 258, 263, 265, 291, 297, 305, 331, 336, 373, 374]
     }];
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = dynamicPatterns;
 
-
-//   if (rowLen === 10){
-//     return [
-//       {
-//         "name": "",
-//         "cells": []
-//       },
-//       {
-//         "name": "Blinker",
-//         "cells": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-//       },
-//       {
-//         "name": "Toad",
-//         "cells": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-//       },
-//       {
-//         "name": "Beacon",
-//         "cells": [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false]
-//       },
-//       {
-//         "name": "Glider",
-//         "cells": [false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-//       },
-//       {
-//         "name": "Lightweight spaceship",
-//         "cells": [true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-//       }
-//     ]
-//   }
-
-//   if (rowLen === 20){
-//     return [
-//       {
-//         "name": "",
-//         "cells": []
-//       },
-//       {
-//         "name": "Blinker",
-//         "cells": [
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           true,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           true,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           true,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false,
-//           false
-//           ]
-//       },
-//       {
-//         "name": "Toad",
-//         "cells": [
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false
-//         ]
-//       },
-//       {
-//         "name": "Beacon",
-//         "cells": [
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false
-//         ]
-//       },
-//       {
-//         "name": "Glider",
-//         "cells": [
-//         false,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         true,
-//         true,
-//         true,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         false,
-//         101
-//         102
-//         103
-//         104
-//         105
-//         106
-//         107
-//         108
-//         109
-//         110
-//         111
-//         112
-//         113
-//         114
-//         115
-//         116
-//         117
-//         118
-//         119
-//         120
-//         121
-//         122
-//         123
-//         124
-//         125
-//         126
-//         127
-//         128
-//         129
-//         130
-//         131
-//         132
-//         133
-//         134
-//         135
-//         136
-//         137
-//         138
-//         139
-//         140
-//         141
-//         142
-//         143
-//         144
-//         145
-//         146
-//         147
-//         148
-//         149
-//         150
-//         151
-//         152
-//         153
-//         154
-//         155
-//         156
-//         157
-//         158
-//         159
-//         160
-//         161
-//         162
-//         163
-//         164
-//         165
-//         166
-//         167
-//         168
-//         169
-//         170
-//         171
-//         172
-//         173
-//         174
-//         175
-//         176
-//         177
-//         178
-//         179
-//         180
-//         181
-//         182
-//         183
-//         184
-//         185
-//         186
-//         187
-//         188
-//         189
-//         190
-//         191
-//         192
-//         193
-//         194
-//         195
-//         196
-//         197
-//         198
-//         199
-//         ]
-//       },
-//       {
-//         "name": "Lightweight spaceship",
-//         "cells": [
-//         true,
-//         1
-//         2
-//         true,
-//         4
-//         5
-//         6
-//         7
-//         8
-//         9
-//         10
-//         11
-//         12
-//         13
-//         14
-//         15
-//         16
-//         17
-//         18
-//         19
-//         20
-//         21
-//         22
-//         23
-//         true,
-//         25
-//         26
-//         27
-//         28
-//         29
-//         30
-//         31
-//         32
-//         33
-//         34
-//         35
-//         36
-//         37
-//         38
-//         39
-//         true,
-//         41
-//         42
-//         43
-//         true,
-//         45
-//         46
-//         47
-//         48
-//         49
-//         50
-//         51
-//         52
-//         53
-//         54
-//         55
-//         56
-//         57
-//         58
-//         59
-//         60
-//         true,
-//         true,
-//         true,
-//         true,
-//         65
-//         66
-//         67
-//         68
-//         69
-//         70
-//         71
-//         72
-//         73
-//         74
-//         75
-//         76
-//         77
-//         78
-//         79
-//         80
-//         81
-//         82
-//         83
-//         84
-//         85
-//         86
-//         87
-//         88
-//         89
-//         90
-//         91
-//         92
-//         93
-//         94
-//         95
-//         96
-//         97
-//         98
-//         99
-//         100
-//         101
-//         102
-//         103
-//         104
-//         105
-//         106
-//         107
-//         108
-//         109
-//         110
-//         111
-//         112
-//         113
-//         114
-//         115
-//         116
-//         117
-//         118
-//         119
-//         120
-//         121
-//         122
-//         123
-//         124
-//         125
-//         126
-//         127
-//         128
-//         129
-//         130
-//         131
-//         132
-//         133
-//         134
-//         135
-//         136
-//         137
-//         138
-//         139
-//         140
-//         141
-//         142
-//         143
-//         144
-//         145
-//         146
-//         147
-//         148
-//         149
-//         150
-//         151
-//         152
-//         153
-//         154
-//         155
-//         156
-//         157
-//         158
-//         159
-//         160
-//         161
-//         162
-//         163
-//         164
-//         165
-//         166
-//         167
-//         168
-//         169
-//         170
-//         171
-//         172
-//         173
-//         174
-//         175
-//         176
-//         177
-//         178
-//         179
-//         180
-//         181
-//         182
-//         183
-//         184
-//         185
-//         186
-//         187
-//         188
-//         189
-//         190
-//         191
-//         192
-//         193
-//         194
-//         195
-//         196
-//         197
-//         198
-//         199
-//         200
-//         ]
-//       }
-//       {
-//         "name": "Pulsar",
-//         "cells": [
-//         0
-//         1
-//         2
-//         3
-//         4
-//         5
-//         6
-//         7
-//         8
-//         9
-//         10
-//         11
-//         12
-//         13
-//         14
-//         15
-//         16
-//         17
-//         18
-//         19
-//         20
-//         21
-//         22
-//         23
-//         24
-//         25
-//         26
-//         27
-//         28
-//         29
-//         30
-//         31
-//         32
-//         33
-//         34
-//         35
-//         36
-//         37
-//         38
-//         39
-//         40
-//         41
-//         42
-//         43
-//         true,
-//         true,
-//         true,
-//         47
-//         48
-//         49
-//         50
-//         true,
-//         true,
-//         true,
-//         54
-//         55
-//         56
-//         57
-//         58
-//         59
-//         60
-//         61
-//         62
-//         63
-//         64
-//         65
-//         66
-//         67
-//         68
-//         69
-//         70
-//         71
-//         72
-//         73
-//         74
-//         75
-//         76
-//         77
-//         78
-//         79
-//         80
-//         81
-//         true,
-//         83
-//         84
-//         85
-//         86
-//         true,
-//         88
-//         89
-//         true,
-//         91
-//         92
-//         93
-//         94
-//         true,
-//         96
-//         97
-//         98
-//         99
-//         100
-//         101
-//         true,
-//         103
-//         104
-//         105
-//         106
-//         true,
-//         108
-//         109
-//         true,
-//         111
-//         112
-//         113
-//         114
-//         true,
-//         116
-//         117
-//         118
-//         119
-//         120
-//         121
-//         true,
-//         123
-//         124
-//         125
-//         126
-//         true,
-//         128
-//         129
-//         true,
-//         131
-//         132
-//         133
-//         134
-//         true,
-//         136
-//         137
-//         138
-//         139
-//         140
-//         141
-//         142
-//         143
-//         true,
-//         true,
-//         true,
-//         147
-//         148
-//         149
-//         150
-//         true,
-//         true,
-//         true,
-//         154
-//         155
-//         156
-//         157
-//         158
-//         159
-//         160
-//         161
-//         162
-//         163
-//         164
-//         165
-//         166
-//         167
-//         168
-//         169
-//         170
-//         171
-//         172
-//         173
-//         174
-//         175
-//         176
-//         177
-//         178
-//         179
-//         180
-//         181
-//         182
-//         183
-//         true,
-//         true,
-//         true,
-//         187
-//         188
-//         189
-//         190
-//         true,
-//         true,
-//         true,
-//         194
-//         195
-//         196
-//         197
-//         198
-//         199
-//         200
-//         201
-//         true,
-//         203
-//         204
-//         205
-//         206
-//         true,
-//         208
-//         209
-//         true,
-//         211
-//         212
-//         213
-//         214
-//         true,
-//         216
-//         217
-//         218
-//         219
-//         220
-//         221
-//         true,
-//         223
-//         224
-//         225
-//         226
-//         true,
-//         228
-//         229
-//         true,
-//         231
-//         232
-//         233
-//         234
-//         true,
-//         236
-//         237
-//         238
-//         239
-//         240
-//         241
-//         true,
-//         243
-//         244
-//         245
-//         246
-//         true,
-//         248
-//         249
-//         true,
-//         251
-//         252
-//         253
-//         254
-//         true,
-//         256
-//         257
-//         258
-//         259
-//         260
-//         261
-//         262
-//         263
-//         264
-//         265
-//         266
-//         267
-//         268
-//         269
-//         270
-//         271
-//         272
-//         273
-//         274
-//         275
-//         276
-//         277
-//         278
-//         279
-//         280
-//         281
-//         282
-//         283
-//         true,
-//         true,
-//         true,
-//         287
-//         288
-//         289
-//         290
-//         true,
-//         true,
-//         true,
-//         294
-//         295
-//         296
-//         297
-//         298
-//         299
-//         300
-//         301
-//         302
-//         303
-//         304
-//         305
-//         306
-//         307
-//         308
-//         309
-//         310
-//         311
-//         312
-//         313
-//         314
-//         315
-//         316
-//         317
-//         318
-//         319
-//         320
-//         321
-//         322
-//         323
-//         324
-//         325
-//         326
-//         326
-//         327
-//         328
-//         329
-//         330
-//         331
-//         332
-//         333
-//         334
-//         335
-//         336
-//         337
-//         338
-//         339
-//         340
-//         341
-//         342
-//         343
-//         344
-//         345
-//         346
-//         347
-//         348
-//         349
-//         350
-//         351
-//         352
-//         353
-//         354
-//         355
-//         356
-//         357
-//         358
-//         359
-//         360
-//         361
-//         362
-//         363
-//         364
-//         365
-//         366
-//         367
-//         368
-//         369
-//         370
-//         371
-//         372
-//         373
-//         374
-//         375
-//         376
-//         377
-//         378
-//         379
-//         380
-//         381
-//         382
-//         383
-//         384
-//         385
-//         386
-//         387
-//         388
-//         389
-//         390
-//         391
-//         392
-//         393
-//         394
-//         395
-//         396
-//         397
-//         398
-//         399
-//         ]
-//       }
-//       {
-//         "name": "Pentadecathlon",
-//         "cells": [
-//         0
-//         1
-//         2
-//         3
-//         4
-//         5
-//         6
-//         7
-//         8
-//         9
-//         10
-//         11
-//         12
-//         13
-//         14
-//         15
-//         16
-//         17
-//         18
-//         19
-//         20
-//         21
-//         22
-//         23
-//         24
-//         25
-//         true,
-//         27
-//         28
-//         29
-//         30
-//         31
-//         32
-//         33
-//         34
-//         35
-//         36
-//         37
-//         38
-//         39
-//         40
-//         41
-//         42
-//         43
-//         44
-//         45
-//         true,
-//         47
-//         48
-//         49
-//         50
-//         51
-//         52
-//         53
-//         54
-//         55
-//         56
-//         57
-//         58
-//         59
-//         60
-//         61
-//         62
-//         63
-//         64
-//         true,
-//         true,
-//         true,
-//         68
-//         69
-//         70
-//         71
-//         72
-//         73
-//         74
-//         75
-//         76
-//         77
-//         78
-//         79
-//         80
-//         81
-//         82
-//         83
-//         84
-//         85
-//         86
-//         87
-//         88
-//         89
-//         90
-//         91
-//         92
-//         93
-//         94
-//         95
-//         96
-//         97
-//         98
-//         99
-//         100
-//         101
-//         102
-//         103
-//         104
-//         105
-//         106
-//         107
-//         108
-//         109
-//         110
-//         111
-//         112
-//         113
-//         114
-//         115
-//         116
-//         117
-//         118
-//         119
-//         120
-//         121
-//         122
-//         123
-//         124
-//         true,
-//         true,
-//         true,
-//         128
-//         129
-//         130
-//         131
-//         132
-//         133
-//         134
-//         135
-//         136
-//         137
-//         138
-//         139
-//         140
-//         141
-//         142
-//         143
-//         144
-//         145
-//         true,
-//         147
-//         148
-//         149
-//         150
-//         151
-//         152
-//         153
-//         154
-//         155
-//         156
-//         157
-//         158
-//         159
-//         160
-//         161
-//         162
-//         163
-//         164
-//         165
-//         true,
-//         167
-//         168
-//         169
-//         170
-//         171
-//         172
-//         173
-//         174
-//         175
-//         176
-//         177
-//         178
-//         179
-//         180
-//         181
-//         182
-//         183
-//         184
-//         185
-//         true,
-//         187
-//         188
-//         189
-//         190
-//         191
-//         192
-//         193
-//         194
-//         195
-//         196
-//         197
-//         198
-//         199
-//         200
-//         201
-//         202
-//         203
-//         204
-//         205
-//         true
-//         207
-//         208
-//         209
-//         210
-//         211
-//         212
-//         213
-//         214
-//         215
-//         216
-//         217
-//         218
-//         219
-//         220
-//         221
-//         222
-//         223
-//         224
-//         true
-//         true
-//         true
-//         228
-//         229
-//         230
-//         231
-//         232
-//         233
-//         234
-//         235
-//         236
-//         237
-//         238
-//         239
-//         240
-//         241
-//         242
-//         243
-//         244
-//         245
-//         246
-//         247
-//         248
-//         249
-//         250
-//         251
-//         252
-//         253
-//         254
-//         255
-//         256
-//         257
-//         258
-//         259
-//         260
-//         261
-//         262
-//         263
-//         264
-//         265
-//         266
-//         267
-//         268
-//         269
-//         270
-//         271
-//         272
-//         273
-//         274
-//         275
-//         276
-//         277
-//         278
-//         279
-//         280
-//         281
-//         282
-//         283
-//         284
-//         true,
-//         true,
-//         true,
-//         288
-//         289
-//         290
-//         291
-//         292
-//         293
-//         294
-//         295
-//         296
-//         297
-//         298
-//         299
-//         300
-//         301
-//         302
-//         303
-//         304
-//         305
-//         true,
-//         307
-//         308
-//         309
-//         310
-//         311
-//         312
-//         313
-//         314
-//         315
-//         316
-//         317
-//         318
-//         319
-//         320
-//         321
-//         322
-//         323
-//         324
-//         325
-//         true,
-//         327
-//         328
-//         329
-//         330
-//         331
-//         332
-//         333
-//         334
-//         335
-//         336
-//         337
-//         338
-//         339
-//         340
-//         341
-//         342
-//         343
-//         344
-//         345
-//         346
-//         347
-//         348
-//         349
-//         350
-//         351
-//         352
-//         353
-//         354
-//         355
-//         356
-//         357
-//         358
-//         359
-//         360
-//         361
-//         362
-//         363
-//         364
-//         365
-//         366
-//         367
-//         368
-//         369
-//         370
-//         371
-//         372
-//         373
-//         374
-//         375
-//         376
-//         377
-//         378
-//         379
-//         380
-//         381
-//         382
-//         383
-//         384
-//         385
-//         386
-//         386
-//         387
-//         388
-//         389
-//         390
-//         391
-//         392
-//         393
-//         394
-//         395
-//         396
-//         397
-//         398
-//         399
-//         ]
-//       }
-//     ]
-//   }
-// }
 
 /***/ }),
 /* 193 */
@@ -25211,6 +23400,63 @@ const compareArrays = (arr1, arr2) => {
   return true;
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = compareArrays;
+
+
+/***/ }),
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+class GridSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+  handleChange(event) {
+    //console.log('GridSelector, handleChange...')
+    this.props.onSelectGrid(this.props.grids[event.target.value]);
+  }
+
+  render() {
+    //console.log('GridSelector, render...')
+    const grids = this.props.grids.map((grid, index) => {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'option',
+        { className: 'option', value: index, key: index },
+        grid.name
+      );
+    });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'select',
+      { id: 'grids', className: 'select', value: this.props.selectedGridIndex, onChange: event => this.handleChange(event) },
+      grids
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (GridSelector);
+
+/***/ }),
+/* 196 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+const gridSizes = () => {
+
+  return [{
+    "name": "10 x 10",
+    "rowLen": 10
+  }, {
+    "name": "20 x 20",
+    "rowLen": 20
+  }, {
+    "name": "20 x 40",
+    "rowLen": 40
+  }];
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = gridSizes;
 
 
 /***/ })

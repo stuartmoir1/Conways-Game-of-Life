@@ -7,7 +7,7 @@ class Control extends React.Component{
     return (
       <div> 
         <button id='btn-start-stop' className='btn' onClick={this.props.onClickStartStop}>
-          {this.props.label}
+          {this.props.labelStartStop}
         </button>
         <button id='btn-back' className='btn-small' disabled={this.props.disabled} onClick={this.props.onClickBack}>
           -
@@ -17,6 +17,9 @@ class Control extends React.Component{
         </button>
         <button id='btn-reset' className='btn' disabled={this.props.disabled} onClick={this.props.onClickReset}>
           Reset
+        </button>
+        <button id='btn-fast-slow' className='btn' disabled={this.props.disabled} onClick={this.props.onClickSlowFast}>
+          {this.props.labelFastSlow}
         </button>
       </div>
     )
