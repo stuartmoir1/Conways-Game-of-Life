@@ -15,16 +15,16 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      history: [{steps: Array(100)}].slice(0, 0),
-      cells: Array(400).fill(false),
-      btnStartStopLabel: 'Start',
-      btnFastSlowLabel: 'Fast',
-      counter: 0,
-      period: 500,
-      selectedPattern: '',
       btnDisabled: false,
+      btnFastSlowLabel: 'Fast',
+      btnStartStopLabel: 'Start',
+      cells: Array(400).fill(false),
+      counter: 0,
+      history: [{steps: Array(100)}].slice(0, 0),
+      period: 500,
       rowLen: 10,
-      selectedGrid: '',
+      selectedPattern: '',
+      selectedGrid: ''
     }  
   }
 

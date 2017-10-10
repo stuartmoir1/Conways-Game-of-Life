@@ -9645,15 +9645,15 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor() {
     super();
     this.state = {
-      history: [{ steps: Array(100) }].slice(0, 0),
-      cells: Array(400).fill(false),
-      btnStartStopLabel: 'Start',
-      btnFastSlowLabel: 'Fast',
-      counter: 0,
-      period: 500,
-      selectedPattern: '',
       btnDisabled: false,
+      btnFastSlowLabel: 'Fast',
+      btnStartStopLabel: 'Start',
+      cells: Array(400).fill(false),
+      counter: 0,
+      history: [{ steps: Array(100) }].slice(0, 0),
+      period: 500,
       rowLen: 10,
+      selectedPattern: '',
       selectedGrid: ''
     };
   }
