@@ -9966,8 +9966,6 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cell__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_create_cells_js__ = __webpack_require__(193);
-
 
 
 
@@ -22845,10 +22843,10 @@ const dynamicPatterns = rowLen => {
       "cells": [0, 3, 44, 80, 84, 121, 122, 123, 124]
     }, {
       "name": "Pulsar",
-      "cells": []
+      "cells": [84, 85, 86, 90, 91, 92, 162, 167, 169, 174, 202, 207, 209, 214, 242, 247, 249, 254, 284, 285, 286, 290, 291, 292, 364, 365, 366, 370, 371, 372, 402, 407, 409, 414, 442, 447, 449, 454, 482, 487, 489, 494, 564, 565, 566, 570, 571, 572]
     }, {
       "name": "Pentadecathlon",
-      "cells": []
+      "cells": [46, 86, 125, 126, 127, 245, 246, 247, 286, 326, 366, 406, 445, 446, 447, 565, 566, 567, 606, 646]
     }, {
       "name": "Gosper's Glider Gun",
       "cells": [65, 103, 105, 133, 134, 141, 142, 155, 156, 172, 176, 181, 182, 195, 196, 201, 202, 211, 217, 221, 222, 241, 242, 251, 255, 257, 258, 263, 265, 291, 297, 305, 332, 336, 373, 374]
@@ -22859,13 +22857,7 @@ const dynamicPatterns = rowLen => {
 
 
 /***/ }),
-/* 193 */
-/***/ (function(module, __webpack_exports__) {
-
-"use strict";
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/stuartmoir/Desktop/Final Project/Scratch/client/src/models/create_cells.js'");
-
-/***/ }),
+/* 193 */,
 /* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
