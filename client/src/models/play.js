@@ -111,6 +111,7 @@ export const play = (grid, rowLen) => {
         //console.log('All non-boundary cells...')
       }
     }
+
     let count = 0
     for (let j = 0; j < cells.length; j++){
       if (grid[i + cells[j]]) { count++ }
