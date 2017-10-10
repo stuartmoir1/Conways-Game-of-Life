@@ -28,11 +28,72 @@ class Game extends React.Component{
     }  
   }
 
+  handleClickBackBtn(){
+    //console.log('Game, handleClickBackBtn...')
+    const history = this.state.history
+    const counter = this.state.counter
+
+    if (counter > 0){
+      const oldGrid = history[history.length - 1].steps
+      this.setState({
+        history: history.slice(0, history.length - 1),
+        cells: oldGrid,
+        counter: counter - 1
+      })
+    }
+  }
+
   handleClickCell(i){
     //console.log('Game, handleClickCell; Cell selected...', i, this.state.cells[i])
     const cells = this.state.cells
     cells[i] ? cells[i] = false : cells[i] = true
     this.setState({cells: cells})
+  }
+
+  handleClickFastSlowBtn(){
+    //console.log('Game, handleClickFastSlowBtn...')
+
+    let label = undefined
+    let period = undefined
+    if (this.state.btnFastSlowLabel === 'Fast'){
+      label = 'Slow'
+      period = 250
+    } else {
+      label = 'Fast'
+      period = 500
+    }
+
+    this.setState({
+      btnFastSlowLabel: label,
+      period: period
+    })
+  }
+
+  handleClickForwardBtn(){
+    //console.log('Game, handleClickForwardBtn...')
+    const history = this.state.history
+    const grid = this.state.cells
+    const rowLen = this.state.rowLen
+    const newGrid = play(grid, rowLen)
+    let counter = this.state.counter
+
+    this.setState({
+      history: history.concat([{steps: grid}]),
+      cells: newGrid,
+      counter: counter + 1
+    })
+  }
+
+  handleClickResetBtn(){
+    //console.log('Game, handleClickResetBtn...')
+    const cells = this.state.cells
+    cells.fill(false)
+
+    this.setState({
+      cells: cells,
+      counter: 0,
+      selectedPattern: ''
+    })
   }
 
   handleClickStartStopBtn(){
@@ -75,45 +136,17 @@ class Game extends React.Component{
     this.setState({btnStartStopLabel: label})
   }
 
-  handleClickBackBtn(){
-    //console.log('Game, handleClickBackBtn...')
-    const history = this.state.history
-    const counter = this.state.counter
-
-    if (counter > 0){
-      const oldGrid = history[history.length - 1].steps
-      this.setState({
-        history: history.slice(0, history.length - 1),
-        cells: oldGrid,
-        counter: counter - 1
-      })
-    }
-  }
-
-  handleClickForwardBtn(){
-    //console.log('Game, handleClickForwardBtn...')
-    const history = this.state.history
-    const grid = this.state.cells
-    const rowLen = this.state.rowLen
-    const newGrid = play(grid, rowLen)
-    let counter = this.state.counter
-
-    this.setState({
-      history: history.concat([{steps: grid}]),
-      cells: newGrid,
-      counter: counter + 1
-    })
-  }
-
-  handleClickResetBtn(){
-    //console.log('Game, handleClickResetBtn...')
+  handleGridSelect(grid){
+    //console.log('Game, handleGridSelect...')
+    const rowLen = grid.rowLen
     const cells = this.state.cells
     cells.fill(false)
 
     this.setState({
       cells: cells,
-      counter: 0,
-      selectedPattern: ''
+      rowLen: rowLen,
+      selectedGrid: grid,
+      counter: 0
     })
   }
 
@@ -135,39 +168,6 @@ class Game extends React.Component{
     this.setState({
       cells: cells,
       selectedPattern: pattern
-    })
-  }
-
-  handleGridSelect(grid){
-    //console.log('Game, handleGridSelect...')
-    const rowLen = grid.rowLen
-    const cells = this.state.cells
-    cells.fill(false)
-
-    this.setState({
-      cells: cells,
-      rowLen: rowLen,
-      selectedGrid: grid,
-      counter: 0
-    })
-  }
-
-  handleClickFastSlowBtn(){
-    //console.log('Game, handleClickFastSlowBtn...')
-
-    let label = undefined
-    let period = undefined
-    if (this.state.btnFastSlowLabel === 'Fast'){
-      label = 'Slow'
-      period = 250
-    } else {
-      label = 'Fast'
-      period = 500
-    }
-
-    this.setState({
-      btnFastSlowLabel: label,
-      period: period
     })
   }
 
