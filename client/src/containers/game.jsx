@@ -1,14 +1,15 @@
 import React from 'react'
-import Grid from '../components/grid'
+
 import Cell from '../components/cell'
 import Control from '../components/control'
-import PatternSelector from '../components/pattern_selector'
+import Grid from '../components/grid'
 import GridSelector from '../components/grid_selector'
+import PatternSelector from '../components/pattern_selector'
 
-import {play} from '../models/play.js'
 import {compareArrays} from '../models/compare_arrays.js'
 import {dynamicPatterns} from '../models/dynamic_patterns.js'
 import {gridSizes} from '../models/grid_sizes.js'
+import {play} from '../models/play.js'
 
 class Game extends React.Component{
 

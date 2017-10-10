@@ -9619,15 +9619,16 @@ module.exports = getIteratorFn;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_grid__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_cell__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_control__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__ = __webpack_require__(191);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_grid_selector__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_play_js__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_compare_arrays_js__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_dynamic_patterns_js__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_grid_sizes_js__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_cell__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_control__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_grid__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_grid_selector__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pattern_selector__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_grid_sizes_js__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_play_js__ = __webpack_require__(88);
+
 
 
 
@@ -9704,7 +9705,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     const history = this.state.history;
     const grid = this.state.cells;
     const rowLen = this.state.rowLen;
-    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_play_js__["a" /* play */])(grid, rowLen);
+    const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__models_play_js__["a" /* play */])(grid, rowLen);
     let counter = this.state.counter;
 
     this.setState({
@@ -9738,7 +9739,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const history = this.state.history;
         const grid = this.state.cells;
         const rowLen = this.state.rowLen;
-        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_play_js__["a" /* play */])(grid, rowLen);
+        const newGrid = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__models_play_js__["a" /* play */])(grid, rowLen);
         let counter = this.state.counter;
 
         this.setState({
@@ -9747,7 +9748,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           counter: counter + 1,
           btnDisabled: true
         });
-        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__models_compare_arrays_js__["a" /* compareArrays */])(grid, newGrid)) {
           clearInterval(playGame);
           this.setState({
             btnStartStopLabel: 'Start',
@@ -9804,11 +9805,11 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__models_dynamic_patterns_js__["a" /* dynamicPatterns */])(this.state.rowLen);
+    let patterns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__models_dynamic_patterns_js__["a" /* dynamicPatterns */])(this.state.rowLen);
     let selectedPatternIndex = patterns.findIndex(element => {
       return element.name === this.state.selectedPattern.name;
     });
-    let grids = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__models_grid_sizes_js__["a" /* gridSizes */])();
+    let grids = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__models_grid_sizes_js__["a" /* gridSizes */])();
     let selectedGridIndex = grids.findIndex(element => {
       return element.name === this.state.selectedGrid.name;
     });
@@ -9829,7 +9830,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_grid_selector__["a" /* default */], { grids: grids, selectedGridIndex: selectedGridIndex, onSelectGrid: grid => this.handleGridSelect(grid) })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_grid_selector__["a" /* default */], { grids: grids, selectedGridIndex: selectedGridIndex, onSelectGrid: grid => this.handleGridSelect(grid) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h5',
@@ -9839,7 +9840,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPatternIndex: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_pattern_selector__["a" /* default */], { patterns: patterns, selectedPatternIndex: selectedPatternIndex, onSelectPattern: pattern => this.handlePatternSelect(pattern) })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -9853,7 +9854,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             'Counter: ',
             this.state.counter
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_grid__["a" /* default */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_grid__["a" /* default */], {
             rowLen: this.state.rowLen,
             disabled: this.state.btnDisabled,
             cells: this.state.cells,
@@ -9863,7 +9864,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_control__["a" /* default */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_control__["a" /* default */], {
             labelStartStop: this.state.btnStartStopLabel,
             disabled: this.state.btnDisabled,
             onClickStartStop: () => this.handleClickStartStopBtn(),
