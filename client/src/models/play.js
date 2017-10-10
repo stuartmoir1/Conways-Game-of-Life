@@ -1,4 +1,4 @@
-export const play = (grid, rowLen) => {
+export const play = (grid, rowLen, bordersClosed) => {
   //console.log('play...')
 
   let newGrid = Array(grid.length).fill(false)
@@ -10,7 +10,7 @@ export const play = (grid, rowLen) => {
     let cells
 
     // Relative cells to check.
-    if (rowLen === 10){
+    if (rowLen === 10 && bordersClosed === true){
       if (i === 0){ // Top-left corner cell.
         cells = [1, 10, 11]
         //console.log('Top-left corner cell...')
@@ -42,6 +42,39 @@ export const play = (grid, rowLen) => {
         //console.log('All non-boundary cells...')
       }
     }
+
+    if (rowLen === 10 && bordersClosed === false){
+      if (i === 0){ // Top-left corner cell.
+        cells = [1, 9, 10, 11, 19, 90, 91, 99]
+        //console.log('Top-left corner cell...')
+      } else if (i === firstRowLastCell){ // Top-right corner cell.
+        cells = [-9, -1, 1, 9, 10, 81, 89, 90]      
+        //console.log('Top-right corner cell...')
+      } else if (i === (grid.length - rowLen)){ // Botton-left corner cell.
+        cells = [-90, -89, -81, -10, -9, -1, 1, 9]
+        //console.log('Botton-left corner cell...')
+      } else if (i === (grid.length - 1)){ // Bottom-right corner cell.
+        cells = [-99, -91, -90, -11, -10, -9, -1]
+        //console.log('Bottom-right corner cell...')
+      } else if (i > 0 && i < firstRowLastCell){ // Top row cells/ not corners.
+        cells = [-1, 1, 9, 10, 11, 89, 90, 91]
+        //console.log('Top row cells/ not corners...')
+      } else if (i % rowLen === 0){ // Far-left column cells/ not corners
+        cells = [-10, -9, -1, 1, 9, 10, 11, 19]
+        //console.log('Far-left column cells/ not corners...')
+      // Far-right column cells/ not corners.
+      } else if (i % rowLen === firstRowLastCell){
+        cells = [-19, -11, -10, -9, -1, 1, 9, 10]
+        //console.log('Far-right column cells/ not corners...')
+      // Bottom row cells/ not corners.
+      } else if (i > (grid.length - rowLen) && i < (grid.length - 1)){
+        cells = [-91, -90, -89, -11, -10, -9, -1, 1]
+        //console.log('Bottom row cells/ not corners...')
+      } else { // All non-boundary cells.
+        cells = [-11, -10, -9, -1, 1, 9, 10, 11]
+        //console.log('All non-boundary cells...')
+      }
+    }    
     
     // Relative cells to check.
     if (rowLen === 20){

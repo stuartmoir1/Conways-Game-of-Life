@@ -16,6 +16,7 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
+      bordersClosed: false,
       btnDisabled: false,
       btnFastSlowLabel: 'Fast',
       btnStartStopLabel: 'Start',
@@ -72,10 +73,11 @@ class Game extends React.Component{
 
   handleClickForwardBtn(){
     //console.log('Game, handleClickForwardBtn...')
+    const bordersClosed = this.state.bordersClosed
     const history = this.state.history
     const grid = this.state.cells
     const rowLen = this.state.rowLen
-    const newGrid = play(grid, rowLen)
+    const newGrid = play(grid, rowLen, bordersClosed)
     let counter = this.state.counter
 
     this.setState({
@@ -105,10 +107,11 @@ class Game extends React.Component{
       // console.log(label)
       
       if (label === 'Stop'){ // Button displays 'Start.'
+        const bordersClosed = this.state.bordersClosed
         const history = this.state.history
         const grid = this.state.cells
         const rowLen = this.state.rowLen
-        const newGrid = play(grid, rowLen)
+        const newGrid = play(grid, rowLen, bordersClosed)
         let counter = this.state.counter
 
         this.setState({
