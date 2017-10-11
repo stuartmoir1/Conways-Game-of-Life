@@ -5,8 +5,7 @@ class Grid extends Component{
 
   renderCell(i){
     //console.log('Grid, renderCell...')
-    let bgColor = undefined
-    this.props.cells[i] ? bgColor = '#000' : bgColor = '#fff'
+    let bgColor = this.props.cells[i] ? '#000' : '#fff'
     return <Cell
       disabled = {this.props.disabled}
       bgColor={{background:bgColor}}

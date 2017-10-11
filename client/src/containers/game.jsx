@@ -138,8 +138,7 @@ class Game extends Component{
       }
     },this.state.period)
 
-    let label = this.state.btnStartStopLabel
-    label === 'Start' ? label = 'Stop' : label = 'Start'
+    let label = this.state.btnStartStopLabel === 'Start' ? 'Stop' : 'Start'
     this.setState({btnStartStopLabel: label})
   }
 
