@@ -2,6 +2,11 @@ import React, {Component} from 'react'
 
 class Selector extends Component{
 
+  constructor(props){
+    super(props)
+    selectedIndex: ''
+  }
+
   handleChange(event){
     //console.log('Selector, handleChange...')
     this.props.onSelect(this.props.options[event.target.value])
@@ -16,11 +21,19 @@ class Selector extends Component{
         </option>
       )
     })
-    return (
-      <select className='select' value={this.props.selectedIndex} onChange={(event) => this.handleChange(event)}>
-        {options}
-      </select>
-    )
+    if (this.props.disabled){
+      return (
+        <select disabled className='select' value={this.selectedIndex} onChange={(event) => this.handleChange(event)}>
+          {options}
+        </select>
+      )
+    } else {
+      return (
+        <select className='select' value={this.selectedIndex} onChange={(event) => this.handleChange(event)}>
+          {options}
+        </select>
+      )
+    }
   }
 }
 

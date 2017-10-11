@@ -36,8 +36,9 @@ class Game extends Component{
       period: 500,
       rowLen: 10,
       selectedBorder: {"name": "Closed", "state": true},
+      selectDisabled: false,
       selectedGrid: '',
-      selectedPattern: '',
+      selectedPattern: ''
     }  
   }
 
@@ -129,7 +130,8 @@ class Game extends Component{
           btnDisabled: true,
           cells: newGrid,
           counter: counter + 1,
-          history: history.concat([{steps: grid}])
+          history: history.concat([{steps: grid}]),
+          selectDisabled: true
         })
         if (compareArrays(grid, newGrid)){
           clearInterval(playGame)
@@ -141,7 +143,8 @@ class Game extends Component{
       } else { // Button displays 'Stop'
         clearInterval(playGame)
         this.setState({
-          btnDisabled: false
+          btnDisabled: false,
+          selectDisabled: false
         })
       }
     },this.state.period)
@@ -201,14 +204,26 @@ class Game extends Component{
         <h1>Conway's Game of Life</h1>
         <h5>Select a grid size and boundary condition.</h5>
         <div>
-          <Selector options={gridSizes()} selectedIndex={selectedGridIndex(this.state.selectedGrid.name)} onSelect={(grid) => this.handleSelectGrid(grid)}>
+          <Selector
+            disabled={this.state.selectDisabled}
+            options={gridSizes()}
+            selectedIndex={selectedGridIndex(this.state.selectedGrid.name)}
+            onSelect={(grid) => this.handleSelectGrid(grid)}>
           </Selector>
-          <Selector options={borderTypes()} selectedIndex={selectedBorderIndex(this.state.selectedBorder.name)} onSelect={(border) => this.handleSelectBorder(border)}>
+          <Selector
+            disabled={this.state.selectDisabled}
+            options={borderTypes()}
+            selectedIndex={selectedBorderIndex(this.state.selectedBorder.name)}
+            onSelect={(border) => this.handleSelectBorder(border)}>
           </Selector>
         </div>
         <h5>Select a pattern and/ or click on the cells to create your own pattern.<br></br>Then click 'Start' (to play) or '+' (to step through).</h5>
         <div>
-          <Selector options={dynamicPatterns(this.state.rowLen)} selectedIndex={selectedPatternIndex(this.state.rowLen, this.state.selectedPattern.name)} onSelect={(pattern) => this.handleSelectPattern(pattern)}>
+          <Selector
+            disabled={this.state.selectDisabled}
+            options={dynamicPatterns(this.state.rowLen)}
+            selectedIndex={selectedPatternIndex(this.state.rowLen, this.state.selectedPattern.name)}
+            onSelect={(pattern) => this.handleSelectPattern(pattern)}>
           </Selector>
         </div>
         <div className='game'>
