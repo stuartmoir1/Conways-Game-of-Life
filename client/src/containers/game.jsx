@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 
-// import BorderSelector from '../components/border_selector'
 import Cell from '../components/cell'
 import Control from '../components/control'
 import Grid from '../components/grid'
-// import GridSelector from '../components/grid_selector'
-// import PatternSelector from '../components/pattern_selector'
 import Selector from '../components/selector'
 
 import {
