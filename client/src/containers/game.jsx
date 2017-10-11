@@ -189,9 +189,6 @@ class Game extends React.Component{
   }
 
   render(){
-
-    console.log(this.state.bordersClosed, this.state.selectedBorder)
-
     let grids = gridSizes()
     let selectedGridIndex = grids.findIndex((element) => {
         return element.name === this.state.selectedGrid.name

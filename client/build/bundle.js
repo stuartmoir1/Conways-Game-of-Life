@@ -9823,9 +9823,6 @@ class Game extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-
-    console.log(this.state.bordersClosed, this.state.selectedBorder);
-
     let grids = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_10__models_grid_sizes_js__["a" /* gridSizes */])();
     let selectedGridIndex = grids.findIndex(element => {
       return element.name === this.state.selectedGrid.name;
