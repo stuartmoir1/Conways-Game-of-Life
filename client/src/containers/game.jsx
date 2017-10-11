@@ -9,12 +9,12 @@ import {
   gridSizes,
   borderTypes,
   dynamicPatterns
-} from '../models/select_menu_options.js'
+} from '../models/select_options.js'
 import {
   selectedGridIndex,
   selectedBorderIndex,
   selectedPatternIndex
-} from '../models/select_menus.js'
+} from '../models/select.js'
 
 import {
   compareArrays,

@@ -1,6 +1,6 @@
-import {gridSizes} from './select_menu_options'
-import {borderTypes} from './select_menu_options'
-import {dynamicPatterns} from './select_menu_options'
+import {gridSizes} from './select_options'
+import {borderTypes} from './select_options'
+import {dynamicPatterns} from './select_options'
 
 const selectedGridIndex = (name) => {
   return gridSizes().findIndex((element) => {
