@@ -1,5 +1,5 @@
 const borderTypes = () => {
-  
+  //console.log('borderTypes...')
   return [
     {
       "name": "Closed",
@@ -124,7 +124,7 @@ const dynamicPatterns = (rowLen) => {
 }
 
 const gridSizes = () => {
-  
+  //console.log('gridSizes...')
   return [
     {
       "name": "10 x 10",
