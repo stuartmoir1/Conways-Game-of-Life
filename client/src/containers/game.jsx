@@ -33,7 +33,7 @@ class Game extends Component{
       cells: Array(400).fill(false),
       counter: 0,
       history: [{steps: Array(100)}].slice(0, 0),
-      period: 500,
+      period: 400,
       rowLen: 10,
       selectedBorder: {"name": "Closed", "state": true},
       selectDisabled: false,
@@ -71,10 +71,10 @@ class Game extends Component{
     let period = null
     if (this.state.btnFastSlowLabel === 'Fast'){
       label = 'Slow'
-      period = 250
+      period = 200
     } else {
       label = 'Fast'
-      period = 500
+      period = 400
     }
 
     this.setState({
@@ -137,7 +137,8 @@ class Game extends Component{
           clearInterval(playGame)
           this.setState({
             btnDisabled: false,
-            btnStartStopLabel: 'Start'
+            btnStartStopLabel: 'Start',
+            selectDisabled: false
           })
         }
       } else { // Button displays 'Stop'
