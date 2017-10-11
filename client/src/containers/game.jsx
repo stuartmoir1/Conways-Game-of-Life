@@ -7,7 +7,7 @@ import Grid from '../components/grid'
 import GridSelector from '../components/grid_selector'
 import PatternSelector from '../components/pattern_selector'
 
-import {borders} from '../models/borders.js'
+import {borderTypes} from '../models/borderTypes.js'
 import {compareArrays} from '../models/compare_arrays.js'
 import {dynamicPatterns} from '../models/dynamic_patterns.js'
 import {gridSizes} from '../models/grid_sizes.js'
@@ -18,7 +18,7 @@ class Game extends React.Component{
   constructor(){
     super()
     this.state = {
-      bordersClosed: false,
+      bordersClosed: true,
       btnDisabled: false,
       btnFastSlowLabel: 'Fast',
       btnStartStopLabel: 'Start',
@@ -27,8 +27,9 @@ class Game extends React.Component{
       history: [{steps: Array(100)}].slice(0, 0),
       period: 500,
       rowLen: 10,
+      selectedBorder: {"name": "Closed", "state": true},
+      selectedGrid: '',
       selectedPattern: '',
-      selectedGrid: ''
     }  
   }
 
@@ -142,8 +143,17 @@ class Game extends React.Component{
     this.setState({btnStartStopLabel: label})
   }
 
-  handleGridSelect(grid){
-    //console.log('Game, handleGridSelect...')
+  handleSelectBorder(border){
+    //console.log('Game, handleSelectBorder...')
+    const state = border.state
+    this.setState({
+      bordersClosed: state,
+      selectedBorder: border
+    })
+  }
+
+  handleSelectGrid(grid){
+    //console.log('Game, handleSelectGrid...')
     const rowLen = grid.rowLen
     const cells = this.state.cells
     cells.fill(false)
@@ -157,8 +167,8 @@ class Game extends React.Component{
     })
   }
 
-  handlePatternSelect(pattern){
-    //console.log('Game, handlePatternSelect...')
+  handleSelectPattern(pattern){
+    //console.log('Game, handleSelectPattern...')
     const selectedCells = pattern.cells  
     let j = 0
     let cells = []
@@ -179,12 +189,15 @@ class Game extends React.Component{
   }
 
   render(){
+
+    console.log(this.state.bordersClosed, this.state.selectedBorder)
+
     let grids = gridSizes()
     let selectedGridIndex = grids.findIndex((element) => {
         return element.name === this.state.selectedGrid.name
       })
-    let borders = borders()
-    let selectedBorderIndex = grids.findIndex((element) => {
+    let borders = borderTypes()
+    let selectedBorderIndex = borders.findIndex((element) => {
         return element.name === this.state.selectedBorder.name
       })
     let patterns = dynamicPatterns(this.state.rowLen)
@@ -195,16 +208,16 @@ class Game extends React.Component{
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <h5>Select a grid size and boundary conditions.</h5>
+        <h5>Select a grid size and boundary condition.</h5>
         <div>
-          <GridSelector grids={grids} selectedGridIndex={selectedGridIndex} onSelectGrid={(grid) => this.handleGridSelect(grid)}>
+          <GridSelector grids={grids} selectedGridIndex={selectedGridIndex} onSelectGrid={(grid) => this.handleSelectGrid(grid)}>
           </GridSelector>
-          <BorderSelector>
+          <BorderSelector borders={borders} selectedBorderIndex={selectedBorderIndex} onSelectBorder={(border) => this.handleSelectBorder(border)}>>
           </BorderSelector>
         </div>
-        <h5>Select a pattern and/ or click on the cells to create your own pattern. Then click 'Start' (to play) or '+' (to step through).</h5>
+        <h5>Select a pattern and/ or click on the cells to create your own pattern.<br></br>Then click 'Start' (to play) or '+' (to step through).</h5>
         <div>
-          <PatternSelector patterns={patterns} selectedPatternIndex={selectedPatternIndex} onSelectPattern={(pattern) => this.handlePatternSelect(pattern)}>
+          <PatternSelector patterns={patterns} selectedPatternIndex={selectedPatternIndex} onSelectPattern={(pattern) => this.handleSelectPattern(pattern)}>
           </PatternSelector>
         </div>
         <div className='game'>

@@ -3,6 +3,10 @@ body {
   margin: 20px;
 }
 
+#borders {
+  margin-left: 20px;
+}
+
 .btn {
   background: #808080;
   border: 1px solid #000;
