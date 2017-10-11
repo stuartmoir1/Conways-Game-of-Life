@@ -3,8 +3,8 @@ body {
   margin: 20px;
 }
 
-#borders {
-  margin-left: 20px;
+select {
+  margin-right: 20px;
 }
 
 .btn {
