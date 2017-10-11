@@ -18,7 +18,7 @@ import {
 
 import {
   compareArrays,
-  play
+  run
 } from '../models/play.js'
 
 class Game extends Component{
