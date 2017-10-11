@@ -58,8 +58,8 @@ class Game extends Component{
   handleClickFastSlowBtn(){
     //console.log('Game, handleClickFastSlowBtn...')
 
-    let label = undefined
-    let period = undefined
+    let label = null
+    let period = null
     if (this.state.btnFastSlowLabel === 'Fast'){
       label = 'Slow'
       period = 250
