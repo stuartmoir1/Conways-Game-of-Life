@@ -16,8 +16,10 @@ import {
   selectedPatternIndex
 } from '../models/select_menus.js'
 
-import {compareArrays} from '../models/compare_arrays.js'
-import {play} from '../models/play.js'
+import {
+  compareArrays,
+  play
+} from '../models/play.js'
 
 class Game extends Component{
 
@@ -86,7 +88,7 @@ class Game extends Component{
     const history = this.state.history
     const grid = this.state.cells
     const rowLen = this.state.rowLen
-    const newGrid = play(grid, rowLen, bordersClosed)
+    const newGrid = run(grid, rowLen, bordersClosed)
     let counter = this.state.counter
 
     this.setState({
@@ -120,7 +122,7 @@ class Game extends Component{
         const history = this.state.history
         const grid = this.state.cells
         const rowLen = this.state.rowLen
-        const newGrid = play(grid, rowLen, bordersClosed)
+        const newGrid = run(grid, rowLen, bordersClosed)
         let counter = this.state.counter
 
         this.setState({
