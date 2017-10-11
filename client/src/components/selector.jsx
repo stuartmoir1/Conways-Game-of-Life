@@ -2,14 +2,6 @@ import React, {Component} from 'react'
 
 class Selector extends Component{
 
-  constructor(props){
-    super(props)
-    this.state = {
-      disabled: '',
-      selectedIndex: ''
-  }
-  }
-
   handleChange(event){
     //console.log('Selector, handleChange...')
     this.props.onSelect(this.props.options[event.target.value])
@@ -24,18 +16,19 @@ class Selector extends Component{
         </option>
       )
     })
-    if (this.disabled){
+
+    if (this.props.disabled){
       return (
-        <select disabled className='select' value={this.selectedIndex} onChange={(event) => this.handleChange(event)}>
+        <select disabled className='select' value={this.props.selectedIndex} onChange={(event) => this.handleChange(event)}>
           {options}
         </select>
       )
     } else {
       return (
-        <select className='select' value={this.selectedIndex} onChange={(event) => this.handleChange(event)}>
-          {options}
+        <select className='select' value={this.props.selectedIndex} onChange={(event) => this.handleChange(event)}>
+            {options}
         </select>
-      )
+      )        
     }
   }
 }
