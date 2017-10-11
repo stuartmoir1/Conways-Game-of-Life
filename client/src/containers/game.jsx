@@ -136,8 +136,8 @@ class Game extends Component{
         if (compareArrays(grid, newGrid)){
           clearInterval(playGame)
           this.setState({
-            btnStartStopLabel: 'Start',
-            btnDisabled: false
+            btnDisabled: false,
+            btnStartStopLabel: 'Start'
           })
         }
       } else { // Button displays 'Stop'
@@ -206,46 +206,46 @@ class Game extends Component{
         <div>
           <Selector
             disabled={this.state.selectDisabled}
+            onSelect={(grid) => this.handleSelectGrid(grid)}
             options={gridSizes()}
-            selectedIndex={selectedGridIndex(this.state.selectedGrid.name)}
-            onSelect={(grid) => this.handleSelectGrid(grid)}>
+            selectedIndex={selectedGridIndex(this.state.selectedGrid.name)}>
           </Selector>
           <Selector
             disabled={this.state.selectDisabled}
+            onSelect={(border) => this.handleSelectBorder(border)}
             options={borderTypes()}
-            selectedIndex={selectedBorderIndex(this.state.selectedBorder.name)}
-            onSelect={(border) => this.handleSelectBorder(border)}>
+            selectedIndex={selectedBorderIndex(this.state.selectedBorder.name)}>
           </Selector>
         </div>
         <h5>Select a pattern and/ or click on the cells to create your own pattern.<br></br>Then click 'Start' (to play) or '+' (to step through).</h5>
         <div>
           <Selector
             disabled={this.state.selectDisabled}
+            onSelect={(pattern) => this.handleSelectPattern(pattern)}
             options={dynamicPatterns(this.state.rowLen)}
-            selectedIndex={selectedPatternIndex(this.state.rowLen, this.state.selectedPattern.name)}
-            onSelect={(pattern) => this.handleSelectPattern(pattern)}>
+            selectedIndex={selectedPatternIndex(this.state.rowLen, this.state.selectedPattern.name)}>
           </Selector>
         </div>
         <div className='game'>
           <div className='grid'>
             <p className='counter'>Counter: {this.state.counter}</p>
             <Grid
-              rowLen = {this.state.rowLen}
-              disabled = {this.state.btnDisabled}
               cells={this.state.cells}
+              disabled = {this.state.btnDisabled}
               onClick={(i) => this.handleClickCell(i)}
+              rowLen = {this.state.rowLen}
             />
           </div>
           <div>
             <Control
-              labelStartStop = {this.state.btnStartStopLabel}
               disabled = {this.state.btnDisabled}
-              onClickStartStop = {() => this.handleClickStartStopBtn()}
+              labelFastSlow = {this.state.btnFastSlowLabel}
+              labelStartStop = {this.state.btnStartStopLabel}
               onClickBack = {() => this.handleClickBackBtn()}
               onClickForward = {() => this.handleClickForwardBtn()}
               onClickReset = {() => this.handleClickResetBtn()}
               onClickSlowFast = {() => this.handleClickFastSlowBtn()}
-              labelFastSlow = {this.state.btnFastSlowLabel}
+              onClickStartStop = {() => this.handleClickStartStopBtn()}
             />
           </div>
         </div>
