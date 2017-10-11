@@ -4,7 +4,10 @@ class Selector extends Component{
 
   constructor(props){
     super(props)
-    selectedIndex: ''
+    this.state = {
+      disabled: '',
+      selectedIndex: ''
+  }
   }
 
   handleChange(event){
@@ -21,7 +24,7 @@ class Selector extends Component{
         </option>
       )
     })
-    if (this.props.disabled){
+    if (this.disabled){
       return (
         <select disabled className='select' value={this.selectedIndex} onChange={(event) => this.handleChange(event)}>
           {options}
