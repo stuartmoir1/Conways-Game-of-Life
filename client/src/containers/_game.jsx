@@ -7,11 +7,10 @@ import Grid from '../components/grid'
 import GridSelector from '../components/grid_selector'
 import PatternSelector from '../components/pattern_selector'
 
-import {borderTypes} from '../models/borderTypes.js'
 import {compareArrays} from '../models/compare_arrays.js'
-import {dynamicPatterns} from '../models/dynamic_patterns.js'
-import {gridSizes} from '../models/grid_sizes.js'
 import {play} from '../models/play.js'
+import {gridSizes, borderTypes, dynamicPatterns} from '../models/select_menu_options.js'
+import {selectedGridIndex, selectedBorderIndex, selectedPatternIndex} from '../models/select_menus.js'
 
 class Game extends Component{
 
@@ -188,32 +187,19 @@ class Game extends Component{
   }
 
   render(){
-    let grids = gridSizes()
-    let selectedGridIndex = grids.findIndex((element) => {
-        return element.name === this.state.selectedGrid.name
-      })
-    let borders = borderTypes()
-    let selectedBorderIndex = borders.findIndex((element) => {
-        return element.name === this.state.selectedBorder.name
-      })
-    let patterns = dynamicPatterns(this.state.rowLen)
-    let selectedPatternIndex = patterns.findIndex((element) => {
-        return element.name === this.state.selectedPattern.name
-      })
-
     return (
       <div>
         <h1>Conway's Game of Life</h1>
         <h5>Select a grid size and boundary condition.</h5>
         <div>
-          <GridSelector grids={grids} selectedGridIndex={selectedGridIndex} onSelectGrid={(grid) => this.handleSelectGrid(grid)}>
+          <GridSelector grids={gridSizes()} selectedGridIndex={selectedGridIndex(this.state.selectedGrid.name)} onSelectGrid={(grid) => this.handleSelectGrid(grid)}>
           </GridSelector>
-          <BorderSelector borders={borders} selectedBorderIndex={selectedBorderIndex} onSelectBorder={(border) => this.handleSelectBorder(border)}>>
+          <BorderSelector borders={borderTypes()} selectedBorderIndex={selectedBorderIndex(this.state.selectedBorder.name)} onSelectBorder={(border) => this.handleSelectBorder(border)}>
           </BorderSelector>
         </div>
         <h5>Select a pattern and/ or click on the cells to create your own pattern.<br></br>Then click 'Start' (to play) or '+' (to step through).</h5>
         <div>
-          <PatternSelector patterns={patterns} selectedPatternIndex={selectedPatternIndex} onSelectPattern={(pattern) => this.handleSelectPattern(pattern)}>
+          <PatternSelector patterns={dynamicPatterns(this.state.rowLen)} selectedPatternIndex={selectedPatternIndex(this.state.rowLen, this.state.selectedPattern.name)} onSelectPattern={(pattern) => this.handleSelectPattern(pattern)}>
           </PatternSelector>
         </div>
         <div className='game'>
