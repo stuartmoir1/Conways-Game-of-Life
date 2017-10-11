@@ -7,12 +7,9 @@ import Grid from '../components/grid'
 import GridSelector from '../components/grid_selector'
 import PatternSelector from '../components/pattern_selector'
 
-import {borderTypes} from '../models/border_types.js'
 import {compareArrays} from '../models/compare_arrays.js'
-import {dynamicPatterns} from '../models/dynamic_patterns.js'
-import {gridSizes} from '../models/grid_sizes.js'
 import {play} from '../models/play.js'
-
+import {gridSizes, borderTypes, dynamicPatterns} from '../models/select_menu_options.js'
 import {selectedGridIndex, selectedBorderIndex, selectedPatternIndex} from '../models/select_menus.js'
 
 class Game extends Component{
