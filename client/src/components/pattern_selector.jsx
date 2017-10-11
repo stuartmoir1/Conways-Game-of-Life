@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-class PatternSelector extends React.Component{
+class PatternSelector extends Component{
 
   handleChange(event){
     //console.log('PatternSelector, handleChange...')

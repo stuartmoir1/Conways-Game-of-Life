@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Cell from './cell'
 
-class Grid extends React.Component{
+class Grid extends Component{
 
   renderCell(i){
     //console.log('Grid, renderCell...')

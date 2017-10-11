@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-class GridSelector extends React.Component{
+class GridSelector extends Component{
 
   handleChange(event){
     //console.log('GridSelector, handleChange...')

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-class BorderSelector extends React.Component{
+class BorderSelector extends Component{
 
   handleChange(event){
     //console.log('GridSelector, handleChange...')

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import BorderSelector from '../components/border_selector'
 import Cell from '../components/cell'
@@ -13,7 +13,7 @@ import {dynamicPatterns} from '../models/dynamic_patterns.js'
 import {gridSizes} from '../models/grid_sizes.js'
 import {play} from '../models/play.js'
 
-class Game extends React.Component{
+class Game extends Component{
 
   constructor(){
     super()

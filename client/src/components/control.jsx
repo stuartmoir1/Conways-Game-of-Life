@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-class Control extends React.Component{
+class Control extends Component{
 
   render(){
     //console.log('Control, render...')
