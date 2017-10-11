@@ -1,21 +1,3 @@
-const gridSizes = () => {
-  
-  return [
-    {
-      "name": "10 x 10",
-      "rowLen": 10
-    },
-    {
-      "name": "20 x 20",
-      "rowLen": 20
-    },
-    {
-      "name": "20 x 40",
-      "rowLen": 40
-    }
-  ]
-}
-
 const borderTypes = () => {
   
   return [
@@ -139,6 +121,24 @@ const dynamicPatterns = (rowLen) => {
       }
     ]
   }
+}
+
+const gridSizes = () => {
+  
+  return [
+    {
+      "name": "10 x 10",
+      "rowLen": 10
+    },
+    {
+      "name": "20 x 20",
+      "rowLen": 20
+    },
+    {
+      "name": "20 x 40",
+      "rowLen": 40
+    }
+  ]
 }
 
 export {gridSizes, borderTypes, dynamicPatterns}
